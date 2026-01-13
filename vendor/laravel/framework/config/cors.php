@@ -19,7 +19,11 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'],
+    'allowed_origins' => [
+        'https://umaragroup.com',
+        'https://www.umaragroup.com',
+        'http://localhost:3000', // Untuk development lokal
+    ],
 
     'allowed_origins_patterns' => [],
 

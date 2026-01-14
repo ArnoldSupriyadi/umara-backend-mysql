@@ -3,13 +3,17 @@
 namespace App\Filament\Resources\Careers\Tables;
 
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Schemas\Components\Section;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use Filament\Tables\Actions\ViewAction;
 
 class CareersTable
 {
@@ -41,6 +45,7 @@ class CareersTable
                         'PT Rasa Nusantara Baru' => 'success', // Warna Hijau
                         default => 'gray',
                     })
+
                     ->sortable(),
                 // 4. Status Aktif (Bisa diklik langsung untuk ON/OFF)
                 ToggleColumn::make('is_active')
@@ -67,8 +72,28 @@ class CareersTable
                         '0' => 'Tidak Aktif',
                     ]),
             ])
+
             ->recordActions([
                 EditAction::make(),
+                DeleteAction::make(), // Tombol hapus satuan
+                \Filament\Actions\ViewAction::make()
+                    ->label('Lihat Detail')
+                    ->modalHeading('Detail Lowongan Kerja')
+                    ->modalWidth('4xl') // '4xl' atau '7xl' direkomendasikan karena deskripsi Anda panjang
+                    ->infolist([
+                        Section::make('Informasi Lowongan')
+                            ->schema([
+                                TextEntry::make('job_title')
+                                    ->label('Posisi')
+                                    ->weight('bold'),
+
+                                TextEntry::make('description')
+                                    ->label('Deskripsi & Kualifikasi')
+                                    // --- INI BAGIAN PENTING ---
+                                    ->html() // Ini akan merender <h3>, <ul>, dan <li> Anda dengan benar
+                                    ->columnSpanFull(),
+                            ])
+                    ]),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

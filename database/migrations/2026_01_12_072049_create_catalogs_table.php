@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('business_unit_id')->constrained()->cascadeOnDelete();
             $table->string('title');
-            $table->string('image')->nullable(); //Cover Image
             $table->string('file_path');
             $table->timestamps();
         });

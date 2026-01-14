@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Catalogs\Tables;
 
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\ImageColumn;
@@ -16,10 +17,6 @@ class CatalogsTable
     {
         return $table
             ->columns([
-                ImageColumn::make('image')
-                    ->label('Cover')
-                    ->circular()
-                    ->getStateUsing(fn($record) => $record->image ? asset($record->image) : null),
                 TextColumn::make('title')
                     ->label('Judul')
                     ->searchable()
@@ -30,10 +27,17 @@ class CatalogsTable
                     ->sortable(),
                 TextColumn::make('file_path')
                     ->label('File')
-                    ->formatStateUsing(fn($state) => basename($state))
-                    ->url(fn($record) => asset($record->file_path))
+                    ->formatStateUsing(fn($state) => basename($state)) // Mengambil nama filenya saja
+
+                    // SOLUSI: Tambahkan string 'storage/' di depannya
+                    ->url(fn($record) => asset('storage/' . $record->file_path))
+
+                    // ATAU cara yang lebih 'Laravel Way' (pilih salah satu):
+                    // ->url(fn($record) => Storage::url($record->file_path))
+
                     ->openUrlInNewTab()
-                    ->color('primary'),
+                    ->color('primary')
+                    ->icon('heroicon-o-document-arrow-down'), // Tambah icon biar cantik
                 TextColumn::make('created_at')
                     ->label('Dibuat Pada')
                     ->dateTime()
@@ -47,6 +51,7 @@ class CatalogsTable
             ])
             ->recordActions([
                 EditAction::make(),
+                DeleteAction::make(), // Tombol hapus satuan
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

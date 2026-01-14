@@ -2,98 +2,43 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
+use App\Models\Catalog;
+use App\Models\BusinessUnit;
 
 class CatalogSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        // Clear existing catalogs
-        DB::table('catalogs')->delete();
+        // 1. Cari Business Unit "Rasa Nusantara Baru"
+        // Pastikan namanya sesuai dengan yang ada di database Anda
+        $rnb = BusinessUnit::where('name', 'like', '%Rasa Nusantara Baru%')->first();
 
-        $baseDir = public_path('images/catalog');
-        if (!is_dir($baseDir)) {
-            $this->command?->warn("Catalog folder not found: images/catalog");
+        // Cek keamanan jika data tidak ditemukan
+        if (!$rnb) {
+            $this->command->error('Error: Business Unit "Rasa Nusantara Baru" tidak ditemukan. Pastikan sudah menjalankan BusinessUnitSeeder.');
             return;
         }
 
-        // Fetch Business Units
-        $rasaUnit = DB::table('business_units')->where('slug', 'rasa-nusantara-baru')->first();
-        $umaraUnit = DB::table('business_units')->where('slug', 'umara-cipta-rasa')->first();
+        // 2. Data Katalog yang ingin dimasukkan
+        $catalogs = [
+            [
+                'title' => 'Menu Umara House',
+                // Saya hilangkan slash awal '/' agar path terbaca rapi oleh helper asset() Laravel
+                // Jadi nanti urlnya: domain.com/storage/images/catalog/...
+                'file_path' => 'images/catalog/menu-umara-house.pdf',
+                'business_unit_id' => $rnb->id,
+            ],
+            [
+                'title' => 'Menu Rasa Umara Cikarang 2025',
+                'file_path' => 'images/catalog/MENU-RASA-UMARA-CIKARANG-2025.pdf',
+                'business_unit_id' => $rnb->id,
+            ],
+        ];
 
-        // Ensure units exist or fallback
-        if (!$rasaUnit) {
-             $rasaId = DB::table('business_units')->insertGetId([
-                 'name' => 'PT Rasa Nusantara Baru',
-                 'slug' => 'rasa-nusantara-baru',
-                 'created_at' => Carbon::now(),
-                 'updated_at' => Carbon::now(),
-             ]);
-        } else {
-            $rasaId = $rasaUnit->id;
+        // 3. Masukkan ke Database
+        foreach ($catalogs as $data) {
+            Catalog::create($data);
         }
-
-        if (!$umaraUnit) {
-             $umaraId = DB::table('business_units')->insertGetId([
-                 'name' => 'PT Umara Cipta Rasa',
-                 'slug' => 'umara-cipta-rasa',
-                 'created_at' => Carbon::now(),
-                 'updated_at' => Carbon::now(),
-             ]);
-        } else {
-            $umaraId = $umaraUnit->id;
-        }
-
-        $files = glob($baseDir . '/*.pdf');
-        $count = 0;
-
-        foreach ($files as $absPath) {
-            $filename = basename($absPath);
-            $relative = str_replace(public_path(), '', $absPath);
-            // Ensure relative path starts with /
-            if (!str_starts_with($relative, '/')) {
-                $relative = '/' . ltrim($relative, '/');
-            }
-
-            $upperName = strtoupper($filename);
-            
-            // Logic to determine Business Unit
-            if (str_contains($upperName, 'RASA')) {
-                $buId = $rasaId;
-            } elseif (str_contains($upperName, 'UMARA')) {
-                $buId = $umaraId;
-            } else {
-                $buId = $rasaId; // Default
-            }
-
-            $title = Str::of(pathinfo($filename, PATHINFO_FILENAME))
-                ->replace(['-', '_'], ' ')
-                ->replaceMatches('/\\s+/', ' ')
-                ->title()
-                ->toString();
-
-            DB::table('catalogs')->updateOrInsert(
-                [
-                    'file_path' => $relative,
-                ],
-                [
-                    'business_unit_id' => $buId,
-                    'title' => $title,
-                    'image' => null, // No cover image available
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now(),
-                ]
-            );
-            $count++;
-        }
-
-        $this->command?->info("Seeded {$count} catalogs.");
     }
 }

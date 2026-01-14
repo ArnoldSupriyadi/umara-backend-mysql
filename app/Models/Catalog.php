@@ -10,7 +10,6 @@ class Catalog extends Model
     protected $fillable = [
         'business_unit_id',
         'title',
-        'image',
         'file_path',
     ];
 

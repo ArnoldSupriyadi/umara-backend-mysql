@@ -20,7 +20,21 @@ class ClientsTable
                 ImageColumn::make('logo')
                     ->label('Logo')
                     ->circular()
-                    ->getStateUsing(fn($record) => $record->logo ? asset($record->logo) : null),
+                    ->getStateUsing(function ($record) {
+                        if (! $record->logo) {
+                            return null;
+                        }
+
+                        if (str_starts_with($record->logo, 'http')) {
+                            return $record->logo;
+                        }
+
+                        if (str_starts_with($record->logo, '/')) {
+                            return asset($record->logo);
+                        }
+
+                        return asset('storage/' . $record->logo);
+                    }),
                 TextColumn::make('name')
                     ->label('Nama Client')
                     ->searchable()
@@ -42,6 +56,7 @@ class ClientsTable
             ])
             ->recordActions([
                 EditAction::make(),
+                \Filament\Actions\DeleteAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

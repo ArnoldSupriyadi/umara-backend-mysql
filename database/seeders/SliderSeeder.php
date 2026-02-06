@@ -19,7 +19,7 @@ class SliderSeeder extends Seeder
         DB::table('sliders')->truncate();
 
         $sliderDir = public_path('images/slider');
-        
+
         if (!is_dir($sliderDir)) {
             $this->command?->warn("Slider directory not found: {$sliderDir}");
             return;
@@ -31,6 +31,9 @@ class SliderSeeder extends Seeder
             $files = array_merge($files, glob($sliderDir . '/' . $pattern));
         }
 
+        // Deduplicate file list defensively
+        $files = array_values(array_unique($files));
+
         if (empty($files)) {
             $this->command?->warn('No slider images found in public/images/slider.');
             return;
@@ -39,11 +42,13 @@ class SliderSeeder extends Seeder
         // Fetch Business Units
         $units = DB::table('business_units')->select('id', 'slug')->get()->pluck('id', 'slug');
 
+        $orderByUnit = [];
+
         $count = 0;
         foreach ($files as $absPath) {
             $filename = basename($absPath);
             $lowerName = strtolower($filename);
-            
+
             $relative = str_replace(public_path(), '', $absPath);
             if (!str_starts_with($relative, '/')) {
                 $relative = '/' . ltrim($relative, '/');
@@ -64,22 +69,38 @@ class SliderSeeder extends Seeder
                 continue;
             }
 
+            if (! isset($orderByUnit[$buId])) {
+                $orderByUnit[$buId] = 1;
+            }
+
+            $sortOrder = $orderByUnit[$buId];
+
+            if ($sortOrder > 30) {
+                continue;
+            }
+
             $headline = Str::of(pathinfo($filename, PATHINFO_FILENAME))
                 ->replace(['-', '_'], ' ')
                 ->replaceMatches('/\s+/', ' ')
                 ->title()
                 ->toString();
 
-            DB::table('sliders')->insert([
-                'business_unit_id' => $buId,
-                'headline' => $headline,
-                'subheadline' => 'headline On Progress',
-                'image' => $relative,
-                'sort_order' => 0,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ]);
-            
+            DB::table('sliders')->updateOrInsert(
+                [
+                    'business_unit_id' => $buId,
+                    'image' => $relative,
+                ],
+                [
+                    'headline' => $headline,
+                    'subheadline' => 'headline On Progress',
+                    'sort_order' => $sortOrder,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ]
+            );
+
+            $orderByUnit[$buId]++;
+
             $count++;
         }
 

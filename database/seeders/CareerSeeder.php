@@ -19,7 +19,7 @@ class CareerSeeder extends Seeder
         $ucr = BusinessUnit::updateOrCreate(
             ['slug' => 'umara-cipta-rasa'],
             [
-                'name' => 'PT Umara Cipta Rasa',
+                'name' => 'Umara Cipta Rasa',
                 // Saya hilangkan slash di depan agar kompatibel dengan helper asset() laravel
                 'logo' => 'images/logo/ucr-logo.png'
             ]
@@ -29,7 +29,7 @@ class CareerSeeder extends Seeder
         $rnb = BusinessUnit::updateOrCreate(
             ['slug' => 'rasa-nusantara-baru'],
             [
-                'name' => 'PT Rasa Nusantara Baru',
+                'name' => 'Rasa Nusantara Baru',
                 'logo' => 'images/logo/logo-rnb.png'
             ]
         );

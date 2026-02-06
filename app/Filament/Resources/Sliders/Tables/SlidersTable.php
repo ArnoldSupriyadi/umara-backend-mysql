@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Sliders\Tables;
 
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\ImageColumn;
@@ -19,7 +20,18 @@ class SlidersTable
                 ImageColumn::make('image')
                     ->label('Image')
                     ->circular()
-                    ->getStateUsing(fn($record) => $record->image ? asset($record->image) : null),
+                    ->getStateUsing(function ($record) {
+                        if (! $record->image) {
+                            return null;
+                        }
+                        if (str_starts_with($record->image, 'http')) {
+                            return $record->image;
+                        }
+                        if (str_starts_with($record->image, '/')) {
+                            return asset($record->image);
+                        }
+                        return asset('storage/' . $record->image);
+                    }),
                 TextColumn::make('headline')
                     ->label('Headline')
                     ->searchable()
@@ -47,6 +59,7 @@ class SlidersTable
             ])
             ->recordActions([
                 EditAction::make(),
+                DeleteAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

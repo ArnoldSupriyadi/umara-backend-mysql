@@ -29,7 +29,7 @@ class MenuSeeder extends Seeder
 
         if (!$unit) {
             $unitId = DB::table('business_units')->insertGetId([
-                'name' => 'PT Rasa Nusantara Baru',
+                'name' => 'Rasa Nusantara Baru',
                 'slug' => 'rasa-nusantara-baru',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),

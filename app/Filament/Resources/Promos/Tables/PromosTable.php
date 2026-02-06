@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Promos\Tables;
 
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\ImageColumn;
@@ -19,7 +20,18 @@ class PromosTable
                 ImageColumn::make('image')
                     ->label('Gambar')
                     ->circular()
-                    ->getStateUsing(fn($record) => $record->image ? asset($record->image) : null),
+                    ->getStateUsing(function ($record) {
+                        if (! $record->image) {
+                            return null;
+                        }
+                        if (str_starts_with($record->image, 'http')) {
+                            return $record->image;
+                        }
+                        if (file_exists(public_path(ltrim($record->image, '/')))) {
+                            return asset($record->image);
+                        }
+                        return asset('storage/' . $record->image);
+                    }),
                 TextColumn::make('title')
                     ->label('Judul')
                     ->searchable()
@@ -59,6 +71,7 @@ class PromosTable
             ])
             ->recordActions([
                 EditAction::make(),
+                DeleteAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

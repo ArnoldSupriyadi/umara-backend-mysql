@@ -34,6 +34,13 @@ class UsersTable
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('roles.name')
+                    ->badge() // Tampil gaya badge keren
+                    ->color(fn($state) => match ($state) {
+                        'super_admin' => 'danger',
+                        'hero' => 'success',
+                        default => 'gray',
+                    }),
             ])
             ->filters([
                 //

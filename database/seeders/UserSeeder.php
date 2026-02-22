@@ -10,13 +10,25 @@ class UserSeeder extends Seeder
 {
     public function run(): void
     {
-        User::updateOrCreate(
-            ['email' => 'marcom@umaragroup.com'], // Cek berdasarkan email agar tidak duplikat
+        $marcom = User::updateOrCreate(
+            ['email' => 'marcom@umaragroup.com'],
             [
                 'name' => 'Marcom',
-                'password' => Hash::make('password'), // Ganti dengan password pilihanmu
+                'password' => Hash::make('password'),
                 'email_verified_at' => now(),
             ]
         );
+
+        $recruitment = User::updateOrCreate(
+            ['email' => 'recruitment@umaragroup.com'],
+            [
+                'name' => 'HRD',
+                'password' => Hash::make('password'),
+                'email_verified_at' => now(),
+            ]
+        );
+
+        $marcom->assignRole('super_admin');
+        $this->command->info("Users created/updated: marcom@umaragroup.com, recruitment@umaragroup.com");
     }
 }

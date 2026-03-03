@@ -1,11 +1,12 @@
 import React from 'react';
 import { Head, Link } from '@inertiajs/react';
+import FrontendLayout from '@/Layouts/FrontendLayout';
 
 export default function Index({careers}) {
     console.log("Data Karir diterima", careers); // cek di console
 
     return (
-        <div className='min-h-screen bg-gray-50 py-12 px-4 font-sans text-gray-800'>
+        <FrontendLayout>
             <Head title="Career at Umara Group" />
 
             {/* Bagian Header Teks */}
@@ -63,6 +64,6 @@ export default function Index({careers}) {
                     </div>
                 )} 
             </div>
-        </div>
+        </FrontendLayout>
     );
 }

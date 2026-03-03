@@ -3,11 +3,13 @@ import { Head } from "@inertiajs/react";
 
 //perhatikan props 'catalogs' diterima disini dari controller
 
+import FrontendLayout from "@/Layouts/FrontendLayout";
+
 export default function Index({catalogs}) {
     console.log("Data Katalog diterima", catalogs);// cek di console
 
     return (
-    <div className="min-h-screen bg-gray-100 p-10 font-sans">
+    <FrontendLayout>
         <Head title="Daftar Katalog" />
 
         <div className="max-w-5-xl mx-auto">
@@ -46,6 +48,6 @@ export default function Index({catalogs}) {
                 )))}
             </div>
         </div>
-    </div>
+    </FrontendLayout>
     )
 }

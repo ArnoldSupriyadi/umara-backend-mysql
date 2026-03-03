@@ -48,13 +48,32 @@ export default function Show({ career }) {
                 <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden mb-10">
                     {career.image_url && (
                         <div className="w-full h-64 m:h-80 bg-gray-200">
-                            <img src={career.image_url} alt="{career.job_title}" className="w-full h-full object-cover" />
+                            <img src={career.image_url} alt="{career.job_title}" className="w-full h-full object-contain" />
                         </div>
                     )}
                     <div className="p-8 md:p-12">
                         <div className="mb-6 border-b border-gray-100 pb-6">
-                            <span className="">
+                            <span className="bg-blue-100 text-blue-800 text-sm font-bold px-3 py-1 rounded-full mb-4 inline-block">
+                                {career.unit_name}
                             </span>
+                            <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900">
+                                {career.job_title}
+                            </h1>
+                        </div>
+
+                        {/* Deskripsi (Menggunakan dangerouslySetInnerHTML karena biasanya Filament menyimpan format HTML dari Rich Editor) */}
+                        <div className="prose prose-blue max-w-none text-gray-700 leading-relaxed mb-10" dangerouslySetInnerHTML={{ __html: career.description }} />
+
+                        {/* Tombol Aksi (Bisa diarahkan ke WhatsApp, Email, atau Form) */}
+                        <div className="bg-gray-50 p-6 rounded-xl flex flex-col sm:flex-row items-center justify-between gap-4 border border-gray-100">
+                            <div>
+                                <h3 className="text-lg font-bold text-gray-900">Tertarik dengan posisi ini?</h3>
+                                <p className="text-gray-500 text-sm">Kirimkan CV terbaru Anda ke tim rekrutmen kami.</p>
+                            </div>
+
+                            <a href={`/careers/${career.slug}/apply`}
+                                className="w-full sm:w-auto px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition text-center"> Lamar Sekarang
+                            </a>
                         </div>
                     </div>
                 </div>

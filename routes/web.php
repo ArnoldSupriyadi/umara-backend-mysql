@@ -1,20 +1,18 @@
 <?php
 
+use App\Http\Controllers\AboutController;
+use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CareerController;
 use App\Http\Controllers\CatalogController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
+Route::get('/', [HomeController::class, 'index'])->name('home.index')->name('home');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
@@ -26,13 +24,34 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+
+// Catalogs
 Route::get('/catalogs', [CatalogController::class, 'index'])->name('catalogs.index');
+
 // Careers
 Route::get('/careers', [CareerController::class, 'index'])->name('careers.index');
 Route::get('/careers/{slug}', [CareerController::class, 'show'])->name('careers.show');
-Route::get('careers/apply', [CareerController::class, 'apply'])->name('careers.apply');
 
+// Route untuk menampilkan halaman form (GET)
+Route::get('/careers/{slug}/apply', [CareerController::class, 'applyForm'])->name('careers.apply.form');
 
+// 👇 Route untuk MENYIMPAN data form (WAJIB POST)
+Route::post('/careers/apply', [CareerController::class, 'apply'])->name('careers.apply');
 
+// Posts
+Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
+Route::get('/posts/{slug}', [PostController::class, 'show'])->name('posts.show');
+
+// About
+Route::get('/about', [AboutController::class, 'index'])->name('about.index');
+
+// Contact
+Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
+
+Route::prefix('{brand_slug}')->group(function () {
+
+    //Route for pages brand
+    Route::get('/', [BrandController::class, 'show'])->name('brands.show');
+});
 
 require __DIR__ . '/auth.php';

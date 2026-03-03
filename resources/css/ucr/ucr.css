@@ -1,0 +1,136 @@
+/* --- resources/css/ucr.css --- */
+
+:root {
+  --ink: #0f1210;
+  --accent: #cbb88a;
+  --muted: #6b6f65;
+}
+
+.ucr-theme .container-wide {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+.ucr-theme .container-hero-fluid {
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}
+
+.ucr-theme .title {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(28px, 4.8vw, 48px);
+  color: var(--ink);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+.ucr-theme .lede {
+  color: #374151;
+  max-width: 860px;
+  margin-top: 12px;
+}
+
+.ucr-theme .grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+@media (max-width: 1024px) {
+  .ucr-theme .grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 640px) {
+  .ucr-theme .grid-3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.ucr-theme .card {
+  border: 1px solid #e1d5a6;
+  border-radius: 0;
+  overflow: hidden;
+  background: #fff;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+.ucr-theme .card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+.ucr-theme .card-media {
+  height: 220px;
+  overflow: hidden;
+}
+.ucr-theme .card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+.ucr-theme .card:hover .card-media img {
+  transform: scale(1.05);
+}
+.ucr-theme .card-body {
+  padding: 24px;
+}
+.ucr-theme .link {
+  color: #111827;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  decoration-color: var(--accent);
+}
+.ucr-theme .link:hover {
+  color: var(--accent);
+}
+
+.ucr-theme .cta-block {
+  border: 1px solid #e1d5a6;
+  border-radius: 0;
+  padding: 48px 32px;
+  background: #faf9f5;
+  text-align: center;
+}
+.ucr-theme .cta-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 24px;
+  justify-content: center;
+}
+.ucr-theme .cta-link {
+  display: inline-block;
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: #fff;
+  border-radius: 0;
+  padding: 14px 28px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+.ucr-theme .cta-link:hover {
+  background: transparent;
+  color: var(--ink);
+}
+
+/* Penyesuaian Swiper untuk Hero */
+.ucr-theme .swiper-hero .swiper-slide {
+  height: clamp(520px, 70vh, 780px);
+}
+.ucr-theme .swiper-hero .swiper-pagination-bullet {
+  background: #fff;
+  opacity: 0.5;
+  width: 12px;
+  height: 12px;
+}
+.ucr-theme .swiper-hero .swiper-pagination-bullet-active {
+  opacity: 1;
+}
+.ucr-theme .swiper-hero .swiper-button-next,
+.ucr-theme .swiper-hero .swiper-button-prev {
+  color: #fff;
+}

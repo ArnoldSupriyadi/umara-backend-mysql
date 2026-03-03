@@ -19,6 +19,7 @@ return new class extends Migration
             $table->longText('description');
             $table->string('image')->nullable();
             $table->boolean('is_active')->default(true);
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -29,5 +30,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('careers');
+        Schema::table('careers', function (Blueprint $table) {
+            $table->dropSoftDeletes();
+        });
     }
 };

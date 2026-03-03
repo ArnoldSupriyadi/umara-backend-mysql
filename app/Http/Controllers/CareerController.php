@@ -12,7 +12,7 @@ class CareerController extends Controller
 {
     public function index()
     {
-        // 1. Ambil data lowongan kerja dari database dan filter yang active saja
+        // 1. Ambil data lowongan kerja dari database dan filter yang active saj
         $careers = Career::with('businessUnit')
             ->latest()
             ->get()
@@ -48,12 +48,33 @@ class CareerController extends Controller
         return Inertia::render('Careers/Show', [
             'career' => [
                 'id' => $career->id,
+                // 👇 TAMBAHKAN BARIS INI 👇
+                'slug' => $career->slug,
                 'job_title' => $career->job_title,
                 'unit_name' => $career->businessUnit->name ?? 'Umara Group',
                 // Ingat: Di halaman detail, kita TIDAK memotong deskripsi (tanpa Str::limit)
                 // Jadi, pastikan di React bagian Show, deskripsi ditampilkan sepenuhnya
                 'description' => $career->description,
                 'image_url' => $career->image ? asset('storage/' . $career->image) : null,
+            ]
+        ]);
+    }
+
+    public function applyForm($slug)
+    {
+        // 1. Cari data berdasarkan slug, dan pastikan is_active = true
+        // firstOrFail() akan memunculkan error 404 jika slug tidak ditemukan
+        $career = Career::with('businessUnit')
+            ->where('slug', $slug)
+            ->where('is_active', true)
+            ->firstOrFail();
+
+        return Inertia::render('Careers/Apply', [
+            'career' => [
+                'id' => $career->id,
+                'slug' => $career->slug, // 👈 TAMBAHKAN BARIS INI
+                'job_title' => $career->job_title,
+                'unit_name' => $career->businessUnit->name ?? 'Umara Group',
             ]
         ]);
     }
@@ -69,13 +90,13 @@ class CareerController extends Controller
             'email' => 'required|email|max:255',
             'phone' => 'required|string|max:20',
             'address' => 'nullable|string',
-            'willing_to_relocate' => 'required|in:yes,no', // Harus yes atau no
-            'cv' => 'required|file|mimes:pdf,doc,docx|max:2048', // Allow PDF, DOC, DOCX
-            'photo' => 'required|image|max:2048', // Selfie wajib gambar
+            'willing_to_relocate' => 'required|in:yes,no',
+            'cv' => 'required|file|mimes:pdf,doc,docx|max:2048',
+            'photo' => 'required|image|max:2048',
         ]);
 
         //2 .simpan file cv ke dalam folder stroage/app/public/applications_cv
-        $cvPath = $request->file('cv')->store('applications_cv', 'public');
+        $cvPath = $request->file('cv')->store('applicants_cv', 'public');
         $photoPath = $request->file('photo')->store('applicants_photo', 'public');
 
         //3. Simpan ke database
@@ -92,7 +113,7 @@ class CareerController extends Controller
             'photo_path' => $photoPath,
         ]);
 
-        //4. Kembalikan ke halaman sebelumnya dengan pesan sukses
-        return back()->with('success', 'Terima kasih! Lamaran Anda Berhasil di Submit.');
+        //4. // Setelah sukses, kembalikan user ke halaman loker sebelumnya
+        return back()->with('success', 'Lamaran berhasil dikirim!');
     }
 }

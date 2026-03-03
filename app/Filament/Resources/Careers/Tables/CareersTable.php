@@ -14,6 +14,7 @@ use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Filters\TrashedFilter;
 
 class CareersTable
 {
@@ -60,6 +61,7 @@ class CareersTable
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([
+                TrashedFilter::make(),
                 // Filter berdasarkan Unit Bisnis
                 SelectFilter::make('business_unit_id')
                     ->relationship('businessUnit', 'name')

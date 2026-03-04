@@ -17,11 +17,11 @@ export default function UcrLayout({ children, brand }) {
                         
                         {/* Desktop Nav - Link-nya berbeda tiap Brand! */}
                         <nav className="hidden lg:flex items-center gap-6">
-                            <Link href="/umara-catering" className="nav-link font-medium">Home</Link>
-                            <Link href="/umara-catering/wedding" className="nav-link font-medium">Wedding</Link>
-                            <Link href="/umara-catering/meeting" className="nav-link font-medium">Meeting</Link>
-                            <Link href="/umara-catering/gallery" className="nav-link font-medium">Gallery</Link>
-                            <Link href="/umara-catering/news" className="nav-link font-medium">News</Link>
+                            <Link href="/umara-cipta-rasa" className="nav-link font-medium">Home</Link>
+                            <Link href="/umara-cipta-rasa/wedding" className="nav-link font-medium">Wedding</Link>
+                            <Link href="/umara-cipta-rasa/meeting" className="nav-link font-medium">Meeting</Link>
+                            <Link href="/umara-cipta-rasa/gallery" className="nav-link font-medium">Gallery</Link>
+                            <Link href="/umara-cipta-rasa/news" className="nav-link font-medium">News</Link>
                         </nav>
                         
                         {/* Mobile Toggle */}

@@ -50,8 +50,15 @@ Route::get('/contact', [ContactController::class, 'index'])->name('contact.index
 
 Route::prefix('{brand_slug}')->group(function () {
 
-    //Route for pages brand
+    // 1. Halaman Utama Brand (contoh: /umara-catering)
     Route::get('/', [BrandController::class, 'show'])->name('brands.show');
+
+    // 2. Halaman Berita (Jika nanti kita buat khusus berita)
+    // Route::get('/news', [BrandNewsController::class, 'index']);
+
+    // 👇 3. MAGIC ROUTE UNTUK SEMUA HALAMAN SUB-BRAND (TARUH PALING BAWAH DI DALAM GROUP INI)
+    // {page_slug} ini akan otomatis menangkap kata 'wedding', 'meeting', 'gallery', dll  
+    Route::get('/{page_slug}', [BrandController::class, 'page'])->name('brands.page');
 });
 
 require __DIR__ . '/auth.php';

@@ -10,6 +10,12 @@ class UserSeeder extends Seeder
 {
     public function run(): void
     {
+        // pastikan role ada
+        $role = Role::firstOrCreate([
+            'name' => 'super_admin',
+            'guard_name' => 'web'
+        ]);
+
         $marcom = User::updateOrCreate(
             ['email' => 'marcom@umaragroup.com'],
             [
@@ -28,7 +34,9 @@ class UserSeeder extends Seeder
             ]
         );
 
-        $marcom->assignRole('super_admin');
+        // assign role
+        $marcom->assignRole($role);
+
         $this->command->info("Users created/updated: marcom@umaragroup.com, recruitment@umaragroup.com");
     }
 }

@@ -116,7 +116,13 @@ if (! function_exists('Filament\Support\is_slot_empty')) {
 if (! function_exists('Filament\Support\is_app_url')) {
     function is_app_url(string $url): bool
     {
-        return str($url)->startsWith(request()->root());
+        if (str($url)->startsWith('/') && ! str($url)->startsWith('//')) {
+            return true;
+        }
+
+        $urlHost = parse_url($url, PHP_URL_HOST);
+
+        return (! $urlHost) || $urlHost === request()->getHost();
     }
 }
 
@@ -186,7 +192,7 @@ if (! function_exists('Filament\Support\generate_icon_html')) {
             $icon = $icon->value;
         }
 
-        return svg($icon, $attributes->get('class'), array_filter($attributes->except('class')->getAttributes()));
+        return svg($icon, $attributes->get('class'), array_filter($attributes->except('class')->getAttributes(), static fn ($value): bool => $value !== false && $value !== null));
     }
 }
 

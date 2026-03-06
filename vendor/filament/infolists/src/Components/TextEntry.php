@@ -21,6 +21,7 @@ use Filament\Support\Enums\IconPosition;
 use Filament\Support\Enums\IconSize;
 use Filament\Support\Enums\TextSize;
 use Filament\Support\View\Components\BadgeComponent;
+use Illuminate\Contracts\Database\Query\Expression;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
@@ -232,7 +233,9 @@ class TextEntry extends Entry implements HasAffixActions, HasEmbeddedView
             return $item;
         };
 
+        /** @var array<mixed> $state */
         $state = Arr::wrap($state);
+
         $stateCount = count($state);
 
         $listLimit = $this->getListLimit() ?? $stateCount;
@@ -554,7 +557,7 @@ class TextEntry extends Entry implements HasAffixActions, HasEmbeddedView
     /**
      * @param  string | array<int | string, string | Closure> | Closure | null  $relationship
      */
-    public function avg(string | array | Closure | null $relationship, string | Closure | null $column): static
+    public function avg(string | array | Closure | null $relationship, string | Expression | Closure | null $column): static
     {
         $this->state(function (TextEntry $entry, ?Model $record) use ($relationship, $column): int | float | null {
             if (blank($record)) {
@@ -595,7 +598,7 @@ class TextEntry extends Entry implements HasAffixActions, HasEmbeddedView
     /**
      * @param  string | array<int | string, string | Closure> | Closure | null  $relationship
      */
-    public function max(string | array | Closure | null $relationship, string | Closure | null $column): static
+    public function max(string | array | Closure | null $relationship, string | Expression | Closure | null $column): static
     {
         $this->state(function (TextEntry $entry, ?Model $record) use ($relationship, $column): int | float | null {
             if (blank($record)) {
@@ -616,7 +619,7 @@ class TextEntry extends Entry implements HasAffixActions, HasEmbeddedView
     /**
      * @param  string | array<int | string, string | Closure> | Closure | null  $relationship
      */
-    public function min(string | array | Closure | null $relationship, string | Closure | null $column): static
+    public function min(string | array | Closure | null $relationship, string | Expression | Closure | null $column): static
     {
         $this->state(function (TextEntry $entry, ?Model $record) use ($relationship, $column): int | float | null {
             if (blank($record)) {
@@ -637,7 +640,7 @@ class TextEntry extends Entry implements HasAffixActions, HasEmbeddedView
     /**
      * @param  string | array<int | string, string | Closure> | Closure | null  $relationship
      */
-    public function sum(string | array | Closure | null $relationship, string | Closure | null $column): static
+    public function sum(string | array | Closure | null $relationship, string | Expression | Closure | null $column): static
     {
         $this->state(function (TextEntry $entry, ?Model $record) use ($relationship, $column): int | float | null {
             if (blank($record)) {

@@ -30,7 +30,7 @@ export default function Gallery({ brand }) {
             <main>
                 {/* --- HEADER SECTION --- */}
                 <section id="gallery" className="pt-32 pb-16 bg-[#FCFBF7] border-b border-[#E1D5A6]/50">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-4xl">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                         <h1 className="text-5xl md:text-6xl font-playfair font-bold text-[#C5A859] mb-8">
                             Gallery
                         </h1>

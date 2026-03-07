@@ -2,22 +2,18 @@ import React, { useState } from 'react';
 import { Link, usePage } from '@inertiajs/react';
 
 export default function FrontendLayout({ children }) {
-    const { url } = usePage(); // Mengambil URL saat ini untuk mendeteksi menu aktif
+    const { url } = usePage();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-    // Daftar Menu (Hanya Index utama, tanpa slug/show)
     const navigation = [
         { name: 'Home', href: '/' },
         { name: 'About', href: '/about' },
         { name: 'News', href: '/posts' },
         { name: 'Career', href: '/careers' },
         { name: 'Contact', href: '/contact' },
-        // { name: 'Katalog', href: '/catalogs' },
     ];
 
-    // Fungsi untuk mengecek apakah menu sedang aktif
     const isActive = (href) => {
-    console.log(href);
         if (href === '/') {
             return url === '/';
         }
@@ -25,17 +21,15 @@ export default function FrontendLayout({ children }) {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 font-sans text-gray-900">
+        <div className="min-h-screen bg-gray-50 font-sans text-gray-900 flex flex-col">
             {/* --- NAVIGATION BAR --- */}
             <nav className="bg-white shadow-sm sticky top-0 z-50">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex justify-between h-16">
+                    <div className="flex justify-between items-center h-16">
                         
-                        {/* Kiri: Logo & Menu Desktop */}
-                        <div className="flex items-center">
-                            {/* Logo Perusahaan */}
-                            <Link href="/" className="flex-shrink-0 flex items-center gap-2">
-                                {/* Ganti dengan Logo Image Anda jika ada */}
+                        {/* Kiri: Logo Perusahaan */}
+                        <div className="flex-shrink-0 flex items-center">
+                            <Link href="/" className="flex items-center gap-2">
                                 <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-xl">
                                     U
                                 </div>
@@ -43,30 +37,23 @@ export default function FrontendLayout({ children }) {
                                     Umara Group
                                 </span>
                             </Link>
-
-                            {/* Menu Desktop (Sembunyi di HP) */}
-                            <div className="hidden sm:ml-10 sm:flex sm:space-x-8">
-                                {navigation.map((item) => (
-                                    <Link
-                                        key={item.name}
-                                        href={item.href}
-                                        className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors duration-200 ${
-                                            isActive(item.href)
-                                                ? 'border-blue-600 text-blue-600'
-                                                : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
-                                        }`}
-                                    >
-                                        {item.name}
-                                    </Link>
-                                ))}
-                            </div>
                         </div>
 
-                        {/* Kanan: Tombol Login/Contact (Opsional) */}
-                        <div className="hidden sm:ml-6 sm:flex sm:items-center">
-                            <a href="mailto:hrd@umaragroup.com" className="px-4 py-2 bg-blue-50 text-blue-700 hover:bg-blue-100 rounded-lg text-sm font-bold transition">
-                                Hubungi Kami
-                            </a>
+                        {/* Kanan: Menu Desktop (Mentok Kanan) */}
+                        <div className="hidden sm:flex sm:items-center sm:space-x-8">
+                            {navigation.map((item) => (
+                                <Link
+                                    key={item.name}
+                                    href={item.href}
+                                    className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors duration-200 ${
+                                        isActive(item.href)
+                                            ? 'border-blue-600 text-blue-600'
+                                            : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
+                                    }`}
+                                >
+                                    {item.name}
+                                </Link>
+                            ))}
                         </div>
 
                         {/* Tombol Hamburger Menu (Hanya muncul di HP) */}
@@ -84,19 +71,20 @@ export default function FrontendLayout({ children }) {
                                 </svg>
                             </button>
                         </div>
+                        
                     </div>
                 </div>
 
                 {/* --- MENU MOBILE (Tampil saat tombol hamburger diklik) --- */}
                 {isMobileMenuOpen && (
-                    <div className="sm:hidden border-t border-gray-100 bg-white">
+                    <div className="sm:hidden border-t border-gray-100 bg-white shadow-lg absolute w-full">
                         <div className="pt-2 pb-3 space-y-1">
                             {navigation.map((item) => (
                                 <Link
                                     key={item.name}
                                     href={item.href}
-                                    onClick={() => setIsMobileMenuOpen(false)} // Tutup menu setelah diklik
-                                    className={`block pl-3 pr-4 py-2 border-l-4 text-base font-medium ${
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    className={`block pl-3 pr-4 py-3 border-l-4 text-base font-medium transition-colors ${
                                         isActive(item.href)
                                             ? 'bg-blue-50 border-blue-600 text-blue-700'
                                             : 'border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700'
@@ -111,12 +99,14 @@ export default function FrontendLayout({ children }) {
             </nav>
 
             {/* --- KONTEN HALAMAN UTAMA --- */}
-            <main>
+            {/* flex-grow agar footer selalu ada di bawah jika konten sedikit */}
+            <main className="flex-grow">
                 {children}
             </main>
             
             {/* --- FOOTER DESAIN BARU --- */}
             <footer className="bg-[#131313] text-white pt-12 pb-4 mt-auto">
+                {/* ... (Kode Footer Anda tetap sama, tidak saya ubah agar tidak panjang) ... */}
                 <div className="container mx-auto px-4 max-w-7xl sm:px-6 lg:px-8">
                     {/* Footer Content */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
@@ -124,7 +114,7 @@ export default function FrontendLayout({ children }) {
                         <div className="title-footer">
                             <picture>
                                 {/* Nanti path image bisa Anda sesuaikan sendiri */}
-                                <img src="public/assets/images/logo-umara.svg" alt="Umara Group Logo" className="max-w-[150px]" />
+                                <img src="/assets/images/logo-umara.svg" alt="Umara Group Logo" className="max-w-[150px]" />
                             </picture>
                         </div>
                         
@@ -136,7 +126,7 @@ export default function FrontendLayout({ children }) {
                                 <li><Link href="/about" className="text-gray-300 hover:text-white transition-colors">About</Link></li>
                                 <li><Link href="/posts" className="text-gray-300 hover:text-white transition-colors">News</Link></li>
                                 <li><Link href="/careers" className="text-gray-300 hover:text-white transition-colors">Careers</Link></li>
-                                <li><Link href="/contacts" className="text-gray-300 hover:text-white transition-colors">Contacts</Link></li>
+                                <li><Link href="/contact" className="text-gray-300 hover:text-white transition-colors">Contact</Link></li>
                             </ul>
                         </div>
                         

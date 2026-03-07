@@ -61,4 +61,24 @@ Route::prefix('{brand_slug}')->group(function () {
     Route::get('/{page_slug}', [BrandController::class, 'page'])->name('brands.page');
 });
 
+// 1. Lumpang Emas Signature
+Route::get('/rasa-nusantara-baru/outlets/lumpang-emas-signature', function () {
+    return Inertia::render('Brands/Rnb/LumpangEmasSignature');
+});
+
+// 2. Lumpang Emas Bintaro
+Route::get('/rasa-nusantara-baru/outlets/lumpang-emas-bintaro', function () {
+    return Inertia::render('Brands/Rnb/LumpangEmasBintaro');
+});
+
+// 3. Umara House
+Route::get('/rasa-nusantara-baru/outlets/umara-house', function () {
+    return Inertia::render('Brands/Rnb/UmaraHouse');
+});
+
+// 4. Rasa Umara
+Route::get('/rasa-nusantara-baru/outlets/rasa-umara', function () {
+    return Inertia::render('Brands/Rnb/RasaUmara');
+});
+
 require __DIR__ . '/auth.php';

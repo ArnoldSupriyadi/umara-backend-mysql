@@ -2,6 +2,9 @@
 .env
 .env.*
 
+# Tetap izinkan .env.example untuk di-push
+!.env.example
+
 # Ignore Node dependencies
 node_modules/
 

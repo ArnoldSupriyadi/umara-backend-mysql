@@ -165,11 +165,17 @@ trait InteractsWithActions
                 $action->callAfterFormFilled();
             }
         } catch (Halt $exception) {
+            $this->unmountAction(canCancelParentActions: false);
+
             return null;
         } catch (Cancel $exception) {
             $this->unmountAction(canCancelParentActions: false);
 
             return null;
+        } catch (ValidationException $exception) {
+            $this->unmountAction(canCancelParentActions: false);
+
+            throw $exception;
         }
 
         if (! $this->mountedActionShouldOpenModal(mountedAction: $action)) {
@@ -502,6 +508,10 @@ trait InteractsWithActions
                 continue;
             }
 
+            if (filled($action['arguments'] ?? [])) {
+                $resolvedAction->mergeArguments($action['arguments']);
+            }
+
             $resolvedAction->nestingIndex($actionNestingIndex);
             $resolvedAction->boot();
 
@@ -588,6 +598,10 @@ trait InteractsWithActions
         if (filled($action['context']['recordKey'] ?? null)) {
             $record = $this->getTableRecord($action['context']['recordKey']);
 
+            if (! $record) {
+                throw new ActionNotResolvableException("Record [{$action['context']['recordKey']}] no longer exists.");
+            }
+
             $resolvedAction->getRootGroup()?->record($record) ?? $resolvedAction->record($record);
         }
 
@@ -627,7 +641,7 @@ trait InteractsWithActions
     }
 
     /**
-     * @param  string | array<string>  $actions
+     * @param  string | array<string | array<string, mixed>>  $actions
      */
     public function getAction(string | array $actions, bool $isMounting = true): ?Action
     {
@@ -747,7 +761,12 @@ trait InteractsWithActions
 
     protected function syncActionModals(): void
     {
-        $this->dispatch('sync-action-modals', id: $this->getId(), newActionNestingIndex: array_key_last($this->mountedActions));
+        $this->dispatch(
+            'sync-action-modals',
+            id: $this->getId(),
+            newActionNestingIndex: array_key_last($this->mountedActions),
+            shouldOverlayParentActions: $this->getMountedAction()?->shouldOverlayParentActions() ?? false,
+        );
     }
 
     public function getOriginallyMountedActionIndex(): ?int

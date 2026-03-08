@@ -28,7 +28,7 @@ export default function UmkLayout({ children, brand }) {
 
                         {/* Desktop Nav */}
                         <div className="hidden md:flex space-x-8 items-center">
-                            <Link href={basePath} className="text-gray-600 hover:text-[#CBB88A] font-medium text-sm uppercase tracking-wider transition-colors">
+                            <Link href="/" className="text-gray-600 hover:text-[#CBB88A] font-medium text-sm uppercase tracking-wider transition-colors">
                                 Home
                             </Link>
                             {/* UBAH: Tag <a> menjadi <Link>, tambahkan basePath */}
@@ -65,7 +65,7 @@ export default function UmkLayout({ children, brand }) {
                     <ul className="flex flex-col items-center gap-1 py-3">
                         <li className="w-full">
                             <Link 
-                                href={basePath} 
+                                href="/"
                                 onClick={() => setIsMobileMenuOpen(false)}
                                 className="block px-4 py-3 text-center text-gray-600 hover:bg-gray-50 hover:text-[#CBB88A] font-medium text-sm uppercase tracking-wider transition-colors"
                             >

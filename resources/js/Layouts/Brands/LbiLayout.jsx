@@ -29,7 +29,7 @@ export default function LbiLayout({ children, brand }) {
 
                         {/* Desktop Navigation */}
                         <nav className="hidden lg:flex items-center space-x-8">
-                            <Link href={basePath} className="text-gray-700 hover:text-blue-600 font-medium transition-colors">
+                            <Link href="/" className="text-gray-700 hover:text-blue-600 font-medium transition-colors">
                                 Home
                             </Link>
                             <Link href={`${basePath}/catalog`} className="text-gray-700 hover:text-blue-600 font-medium transition-colors">
@@ -63,7 +63,7 @@ export default function LbiLayout({ children, brand }) {
                 <div className={`lg:hidden absolute top-full left-0 right-0 bg-white/95 backdrop-blur-md border-t border-gray-200/50 shadow-lg z-40 transition-all duration-300 origin-top ${isMobileMenuOpen ? 'scale-y-100 opacity-100' : 'scale-y-0 opacity-0 pointer-events-none'}`}>
                     <nav className="flex flex-col space-y-1 p-4 mx-4">
                         <Link 
-                            href={basePath} 
+                            href="/" 
                             onClick={() => setIsMobileMenuOpen(false)}
                             className="text-gray-700 hover:text-blue-600 hover:bg-blue-50 font-medium block px-4 py-3 rounded-lg transition-colors"
                         >

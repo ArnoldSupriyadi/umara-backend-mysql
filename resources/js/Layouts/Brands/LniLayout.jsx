@@ -26,7 +26,7 @@ export default function LniLayout({ children, brand }) {
                     {/* Desktop Navigation */}
                     <ul className="hidden md:flex items-center gap-6 text-sm font-medium text-gray-700">
                         <li>
-                            <Link href={basePath} className="hover:text-amber-700 transition-colors">
+                            <Link href="/" className="hover:text-amber-700 transition-colors">
                                 Home
                             </Link>
                         </li>

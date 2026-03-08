@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 
 export default function UcrLayout({ children, brand }) {
     // State untuk mengontrol menu mobile
@@ -8,9 +8,12 @@ export default function UcrLayout({ children, brand }) {
     // Helper untuk base path URL UCR agar dinamis
     const basePath = `/${brand?.slug || 'umara-cipta-rasa'}`;
 
+    // Mengambil URL saat ini untuk mengecek menu mana yang sedang aktif
+    const { url } = usePage();
+
     // Daftar menu untuk mempermudah mapping (agar kode tidak terlalu panjang)
     const navItems = [
-        { name: 'Home', path: '' },
+        { name: 'Home', path: '/', isRoot: true },
         { name: 'Wedding', path: '/wedding' },
         { name: 'Ballroom', path: '/ballroom' },
         { name: 'Event', path: '/event' },
@@ -42,15 +45,27 @@ export default function UcrLayout({ children, brand }) {
                         
                         {/* Desktop Nav */}
                         <nav className="hidden lg:flex items-center gap-6">
-                            {navItems.map((item, index) => (
-                                <Link 
-                                    key={index} 
-                                    href={`${basePath}${item.path}`} 
-                                    className="text-gray-700 hover:text-[#C5A859] font-medium transition-colors"
-                                >
-                                    {item.name}
-                                </Link>
-                            ))}
+                            {navItems.map((item, index) => {
+                                // 1. Buat URL lengkapnya
+                                const fullPath = `${basePath}${item.path}`;
+                                // 2. Cek apakah URL saat ini cocok dengan fullPath
+                                // (url.startsWith digunakan agar sub-menu dari path tersebut tetap terhitung aktif)
+                                const isActive = url === fullPath || (item.path !== '/' && url.startsWith(fullPath));
+
+                                return (
+                                    <Link 
+                                        key={index} 
+                                        href={item.isRoot ? item.path : `${basePath}${item.path}`} 
+                                        className={`font-medium transition-colors ${
+                                            isActive 
+                                                ? 'text-[#C5A859]' // Warna saat menu sedang aktif
+                                                : 'text-gray-700 hover:text-[#C5A859]' // Warna normal
+                                        }`}
+                                    >
+                                        {item.name}
+                                    </Link>
+                                );
+                            })}
                         </nav>
                         
                         {/* Mobile Toggle Button */}
@@ -72,16 +87,25 @@ export default function UcrLayout({ children, brand }) {
                     {/* Mobile Nav Dropdown */}
                     <div className={`lg:hidden transition-all duration-300 overflow-hidden ${isMobileMenuOpen ? 'max-h-96 opacity-100 py-4' : 'max-h-0 opacity-0'}`}>
                         <div className="flex flex-col gap-3">
-                            {navItems.map((item, index) => (
+                            {navItems.map((item, index) => {
+                            const fullPath = `${basePath}${item.path}`;
+                            const isActive = url === fullPath || (item.path !== '/' && url.startsWith(fullPath));
+
+                            return (
                                 <Link 
                                     key={index} 
-                                    href={`${basePath}${item.path}`} 
+                                    href={item.isRoot ? item.path : `${basePath}${item.path}`} 
                                     onClick={() => setIsMobileMenuOpen(false)}
-                                    className="block text-gray-700 hover:text-[#C5A859] hover:bg-gray-50 px-3 py-2 rounded-md font-medium transition-colors"
+                                    className={`block px-3 py-2 rounded-md font-medium transition-colors ${
+                                        isActive
+                                            ? 'text-[#C5A859] bg-[#C5A859]/10' // Aktif (teks emas & background tipis)
+                                            : 'text-gray-700 hover:text-[#C5A859] hover:bg-gray-50' // Normal
+                                    }`}
                                 >
                                     {item.name}
                                 </Link>
-                            ))}
+                     );
+                 })}
                         </div>
                     </div>
 

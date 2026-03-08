@@ -27,7 +27,7 @@ export default function RnbLayout({ children, brand }) {
                         {/* Desktop Nav */}
                         <div className="hidden md:block">
                             <div className="ml-10 flex items-baseline space-x-4">
-                                <Link href={basePath} className="text-gray-700 hover:text-amber-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                                <Link href="/" className="text-gray-700 hover:text-amber-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
                                     Home
                                 </Link>
                                 <a href="#about" className="text-gray-700 hover:text-amber-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
@@ -68,7 +68,7 @@ export default function RnbLayout({ children, brand }) {
                     <div className={`md:hidden ${isMobileMenuOpen ? 'block' : 'hidden'}`}>
                         <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-gray-100 shadow-inner">
                             <Link 
-                                href={basePath} 
+                                href="/" 
                                 onClick={() => setIsMobileMenuOpen(false)}
                                 className="block text-gray-700 hover:text-amber-600 hover:bg-amber-50 px-3 py-2 rounded-md text-base font-medium transition-colors"
                             >

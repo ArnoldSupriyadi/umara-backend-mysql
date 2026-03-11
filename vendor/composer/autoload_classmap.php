@@ -35,6 +35,7 @@ return array(
     'AnourValar\\EloquentSerialize\\Grammars\\QueryBuilderGrammar' => $vendorDir . '/anourvalar/eloquent-serialize/src/Grammars/QueryBuilderGrammar.php',
     'AnourValar\\EloquentSerialize\\Package' => $vendorDir . '/anourvalar/eloquent-serialize/src/Package.php',
     'AnourValar\\EloquentSerialize\\Service' => $vendorDir . '/anourvalar/eloquent-serialize/src/Service.php',
+    'App\\Console\\Commands\\TestR2' => $baseDir . '/app/Console/Commands/TestR2.php',
     'App\\Filament\\Resources\\Applicants\\ApplicantResource' => $baseDir . '/app/Filament/Resources/Applicants/ApplicantResource.php',
     'App\\Filament\\Resources\\Applicants\\Pages\\CreateApplicant' => $baseDir . '/app/Filament/Resources/Applicants/Pages/CreateApplicant.php',
     'App\\Filament\\Resources\\Applicants\\Pages\\EditApplicant' => $baseDir . '/app/Filament/Resources/Applicants/Pages/EditApplicant.php',

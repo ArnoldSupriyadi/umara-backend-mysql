@@ -54,6 +54,7 @@ export default function Apply({ career }) {
 
         // 6. JIKA AMAN: Lanjut kirim ke backend
         post('/careers/apply', {
+            forceFormData: true,
             onSuccess: () => {
                 setIsSuccess(true);
                 setTimeout(() => {

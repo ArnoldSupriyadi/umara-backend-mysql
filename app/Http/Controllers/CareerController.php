@@ -14,8 +14,9 @@ class CareerController extends Controller
     {
         // 1. Ambil data lowongan kerja dari database dan filter yang active saj
         $careers = Career::with('businessUnit')
+            ->where('is_active', true)
             ->latest()
-            ->get()
+            ->paginate(12)
             ->map(function ($career) {
                 return [
                     'id' => $career->id,

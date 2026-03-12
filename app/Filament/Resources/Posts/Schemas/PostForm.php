@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Posts\Schemas;
 
+use App\Services\ImageService;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
@@ -10,6 +11,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Str;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 class PostForm
 {
@@ -44,18 +46,34 @@ class PostForm
                         RichEditor::make('content')
                             ->columnSpanFull(),
 
+                        // Gambar utama — auto convert ke WebP
                         FileUpload::make('main_image')
-                            ->image()
+                            ->label('Gambar Utama')
+                            ->disk('r2')
                             ->directory('posts')
+                            ->visibility('public')
+                            ->image()
+                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                             ->required()
-                            ->columnSpanFull(),
+                            ->columnSpanFull()
+                            ->saveUploadedFileUsing(function (TemporaryUploadedFile $file) {
+                                return ImageService::convertAndUpload($file, 'posts', quality: 85, maxWidth: 1200);
+                            }),
 
+                        // Galeri — auto convert ke WebP (multiple)
                         FileUpload::make('gallery_images')
+                            ->label('Galeri Foto')
+                            ->disk('r2')
+                            ->directory('posts/gallery')
+                            ->visibility('public')
                             ->image()
                             ->multiple()
                             ->reorderable()
-                            ->directory('posts/gallery')
-                            ->columnSpanFull(),
+                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                            ->columnSpanFull()
+                            ->saveUploadedFileUsing(function (TemporaryUploadedFile $file) {
+                                return ImageService::convertAndUpload($file, 'posts/gallery', quality: 80, maxWidth: 1200);
+                            }),
                     ])
                     ->columns(1)
                     ->columnSpanFull(),

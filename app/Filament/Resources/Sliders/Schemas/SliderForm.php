@@ -2,14 +2,15 @@
 
 namespace App\Filament\Resources\Sliders\Schemas;
 
-use App\Models\BusinessUnit;
 use App\Models\Slider;
+use App\Models\BusinessUnit;
+use App\Services\ImageService;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\TextInput\Mask;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 class SliderForm
 {
@@ -37,15 +38,19 @@ class SliderForm
 
                         FileUpload::make('image')
                             ->label('Gambar Slider')
-                            ->disk('public')
+                            ->disk('r2')
                             ->directory('sliders')
                             ->visibility('public')
                             ->image()
                             ->imageEditor()
-                            ->preserveFilenames()
+                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                             ->nullable()
                             ->dehydrated(fn($state) => filled($state))
-                            ->required(fn($record) => $record === null || blank($record->image)),
+                            ->required(fn($record) => $record === null || blank($record->image))
+                            // Auto-convert ke WebP sebelum disimpan ke R2
+                            ->saveUploadedFileUsing(function (TemporaryUploadedFile $file) {
+                                return ImageService::convertAndUpload($file, 'sliders');
+                            }),
 
                         Select::make('sort_order')
                             ->label('Posisi Urutan')
@@ -53,23 +58,20 @@ class SliderForm
                             ->required()
                             ->options(function (callable $get, $record) {
                                 $buId = $get('business_unit_id') ?? ($record?->business_unit_id ?? null);
-                                if (! $buId) {
-                                    return [];
-                                }
+                                if (!$buId) return [];
 
                                 $used = Slider::where('business_unit_id', $buId)
-                                    ->when($record, fn ($query) => $query->where('id', '!=', $record->id))
+                                    ->when($record, fn($query) => $query->where('id', '!=', $record->id))
                                     ->pluck('sort_order')
                                     ->filter()
                                     ->all();
 
                                 $options = [];
                                 for ($i = 1; $i <= 30; $i++) {
-                                    if (! in_array($i, $used, true)) {
+                                    if (!in_array($i, $used, true)) {
                                         $options[$i] = (string) $i;
                                     }
                                 }
-
                                 return $options;
                             })
                             ->helperText('Pilih nomor urutan yang masih kosong (1–30).')

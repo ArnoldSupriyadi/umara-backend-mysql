@@ -3,11 +3,13 @@
 namespace App\Filament\Resources\Menus\Schemas;
 
 use App\Models\BusinessUnit;
+use App\Services\ImageService;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 class MenuForm
 {
@@ -37,12 +39,16 @@ class MenuForm
 
                         FileUpload::make('image')
                             ->label('Gambar Menu')
-                            ->disk('public')
+                            ->disk('r2')
                             ->directory('menus')
                             ->visibility('public')
                             ->image()
                             ->imageEditor()
-                            ->required(),
+                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                            ->required()
+                            ->saveUploadedFileUsing(function (TemporaryUploadedFile $file) {
+                                return ImageService::convertAndUpload($file, 'menus', quality: 85, maxWidth: 1200);
+                            }),
                     ])
                     ->columns(1)
                     ->columnSpanFull(),

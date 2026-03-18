@@ -5,6 +5,9 @@ export default function FrontendLayout({ children }) {
     const { url } = usePage();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+    // Variabel Base URL Cloudflare R2
+    const r2Url = "https://pub-1d5667a6f7d64367bcaa9f2aafd81844.r2.dev";
+
     const navigation = [
         { name: 'Home', href: '/' },
         { name: 'About', href: '/about' },
@@ -23,19 +26,18 @@ export default function FrontendLayout({ children }) {
     return (
         <div className="min-h-screen bg-gray-50 font-sans text-gray-900 flex flex-col">
             {/* --- NAVIGATION BAR --- */}
-            <nav className="bg-white shadow-sm sticky top-0 z-50">
+            <nav className="bg-gradient-to-r from-card-umara-group-brown-light to-card-umara-group-brown-dark shadow-sm sticky top-0 z-50">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between items-center h-16">
                         
                         {/* Kiri: Logo Perusahaan */}
                         <div className="flex-shrink-0 flex items-center">
                             <Link href="/" className="flex items-center gap-2">
-                                <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-xl">
-                                    U
-                                </div>
-                                <span className="font-bold text-xl tracking-tight text-gray-900">
-                                    Umara Group
-                                </span>
+                                <img 
+                                    src={`${r2Url}/logos/logo-umara.svg`} 
+                                    alt="Umara Group Logo" 
+                                    className="h-10 w-auto object-contain" 
+                                />
                             </Link>
                         </div>
 
@@ -114,7 +116,10 @@ export default function FrontendLayout({ children }) {
                         <div className="title-footer">
                             <picture>
                                 {/* Nanti path image bisa Anda sesuaikan sendiri */}
-                                <img src="/assets/images/logo-umara.svg" alt="Umara Group Logo" className="max-w-[150px]" />
+                                <img 
+                                    src={`${r2Url}/logos/logo-umara.svg`}
+                                    alt="Umara Group Logo" 
+                                />
                             </picture>
                         </div>
                         

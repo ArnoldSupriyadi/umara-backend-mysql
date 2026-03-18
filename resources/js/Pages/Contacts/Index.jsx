@@ -22,11 +22,11 @@ export default function Index() {
                 <div className="container mx-auto px-6 lg:px-8 relative z-10">
                     <div className="text-center max-w-4xl mx-auto">
                         <h1 
-                            className="text-card-umara-group-brown-dark text-4xl md:text-5xl font-bold mb-4 font-['Playfair_Display']" 
+                            className="text-white text-4xl md:text-5xl font-bold mb-4 font-['Playfair_Display']" 
                             data-aos="fade-up" 
                             data-aos-duration="1000"
                         >
-                            Contact <span className="text-card-umara-group-brown-light">Us</span>
+                            Contact Us
                         </h1>
                         <p 
                             className="text-xl lg:text-2xl text-white leading-relaxed mb-8" 
@@ -36,12 +36,6 @@ export default function Index() {
                         >
                             Get in touch with our dedicated teams across different business units
                         </p>
-                        <div 
-                            className="w-24 h-1 bg-gradient-to-r from-card-umara-group-brown-light to-card-umara-group-brown-dark mx-auto" 
-                            data-aos="fade-up" 
-                            data-aos-duration="1000" 
-                            data-aos-delay="400"
-                        ></div>
                     </div>
                 </div>
             </section>

@@ -8,6 +8,9 @@ export default function LbiLayout({ children, brand }) {
     // Helper untuk base path URL
     const basePath = `/${brand?.slug || 'laukita-bersama-indonesia'}`;
 
+    // Variabel Base URL Cloudflare R2
+    const r2Url = "https://assets.bridgeflow.my.id";
+
     return (
         <div className="lbi-theme min-h-screen bg-white font-sans text-gray-800">
             
@@ -20,7 +23,7 @@ export default function LbiLayout({ children, brand }) {
                         <div className="flex items-center space-x-3">
                             <Link href={basePath} className="block">
                                 <img 
-                                    src="/assets/laukkita-bersama/LBI-Logo.png" 
+                                    src={`${r2Url}/logos/LBI-Logo.png`} 
                                     alt="PT Laukita Bersama Indonesia" 
                                     className="w-24 h-auto lg:w-28 transition-transform hover:scale-105 duration-300" 
                                 />

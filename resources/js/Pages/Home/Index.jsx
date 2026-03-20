@@ -14,7 +14,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 
 // Variabel Base URL Cloudflare R2
-const r2Url = "https://pub-1d5667a6f7d64367bcaa9f2aafd81844.r2.dev";
+const r2Url = "https://assets.bridgeflow.my.id";
 
 export default function Index({ sliders, clients, posts }) {
     
@@ -107,8 +107,8 @@ export default function Index({ sliders, clients, posts }) {
                             <div className="w-32 h-32 rounded-full mx-auto mb-6 flex items-center justify-center p-4">
                                 <img src={`${r2Url}/logos/pt-nusantara-baru.svg`} alt="PT Nusantara Baru" className="w-full h-full object-contain" />
                             </div>
-                            <h3 className="font-['Playfair_Display'] text-lg font-bold text-gray-900 mb-4">RESTAURANT <br />& BAR</h3>
-                            <p className="text-sm text-gray-700 flex-grow mb-6">Lightning fast performance and optimization</p>
+                            <h3 className="font-['Playfair_Display'] text-lg font-bold text-white mb-4">RESTAURANT <br />& BAR</h3>
+                            <p className="text-sm text-white flex-grow mb-6">Lightning fast performance and optimization</p>
                             <Link href="/rasa-nusantara-baru" className="bg-[#8D4105] hover:bg-[#6b3003] text-white font-bold py-3 px-4 rounded-xl transition-colors duration-200 text-sm mt-auto shadow-md">
                                 Learn More
                             </Link>
@@ -119,8 +119,8 @@ export default function Index({ sliders, clients, posts }) {
                             <div className="w-32 h-32 rounded-full mx-auto mb-6 flex items-center justify-center p-4">
                                 <img src={`${r2Url}/logos/ucr-logo-white.png`} alt="UCR" className="w-full h-full object-contain" />
                             </div>
-                            <h3 className="font-['Playfair_Display'] text-lg font-bold text-gray-900 mb-4">PREMIUM <br />CATERING</h3>
-                            <p className="text-sm text-gray-700 flex-grow mb-6">Trusted by thousands of customers worldwide</p>
+                            <h3 className="font-['Playfair_Display'] text-lg font-bold text-white mb-4">PREMIUM <br />CATERING</h3>
+                            <p className="text-sm text-white flex-grow mb-6">Trusted by thousands of customers worldwide</p>
                             <Link href="/umara-cipta-rasa" className="bg-[#8D4105] hover:bg-[#6b3003] text-white font-bold py-3 px-4 rounded-xl transition-colors duration-200 text-sm mt-auto shadow-md">
                                 Learn More
                             </Link>
@@ -131,8 +131,8 @@ export default function Index({ sliders, clients, posts }) {
                             <div className="w-32 h-32 rounded-full mx-auto mb-6 flex items-center justify-center p-4">
                                 <img src={`${r2Url}/logos/pt-umara-mitra-kulina.svg`} alt="Umara Mitra Kulina" className="w-full h-full object-contain" />
                             </div>
-                            <h3 className="font-['Playfair_Display'] text-lg font-bold text-gray-900 mb-4">INDUSTRY<br />CATERING</h3>
-                            <p className="text-sm text-gray-700 flex-grow mb-6">Customizable solutions for your needs</p>
+                            <h3 className="font-['Playfair_Display'] text-lg font-bold text-white mb-4">INDUSTRY<br />CATERING</h3>
+                            <p className="text-sm text-white flex-grow mb-6">Customizable solutions for your needs</p>
                             <Link href="/umara-mitra-kulina" className="bg-[#8D4105] hover:bg-[#6b3003] text-white font-bold py-3 px-4 rounded-xl transition-colors duration-200 text-sm mt-auto shadow-md">
                                 Learn More
                             </Link>
@@ -143,8 +143,8 @@ export default function Index({ sliders, clients, posts }) {
                             <div className="w-32 h-32 rounded-full mx-auto mb-6 flex items-center justify-center p-4">
                                 <img src={`${r2Url}/logos/pt-lauk-kita-bersama.svg`} alt="Laukita Bersama" className="w-20 h-auto object-contain" />
                             </div>
-                            <h3 className="font-['Playfair_Display'] text-lg font-bold text-gray-900 mb-4">FOOD<br /> MANUFACTURING</h3>
-                            <p className="text-sm text-gray-700 flex-grow mb-6">Highly rated by our community</p>
+                            <h3 className="font-['Playfair_Display'] text-lg font-bold text-white mb-4">FOOD<br /> MANUFACTURING</h3>
+                            <p className="text-sm text-white flex-grow mb-6">Highly rated by our community</p>
                             <Link href="/laukita-bersama-indonesia" className="bg-[#8D4105] hover:bg-[#6b3003] text-white font-bold py-3 px-4 rounded-xl transition-colors duration-200 text-sm mt-auto shadow-md">
                                 Learn More
                             </Link>
@@ -155,8 +155,8 @@ export default function Index({ sliders, clients, posts }) {
                             <div className="w-32 h-32 rounded-full mx-auto mb-6 flex items-center justify-center p-4">
                                 <img src={`${r2Url}/logos/pt-laukita-niaga.svg`} alt="Laukita Niaga" className="w-full h-full object-contain" />
                             </div>
-                            <h3 className="font-['Playfair_Display'] text-lg font-bold text-gray-900 mb-4">GROWING & <br />QUALITY</h3>
-                            <p className="text-sm text-gray-700 flex-grow mb-6">Continuously expanding and improving</p>
+                            <h3 className="font-['Playfair_Display'] text-lg font-bold text-white mb-4">GROWING & <br />QUALITY</h3>
+                            <p className="text-sm text-white flex-grow mb-6">Continuously expanding and improving</p>
                             <Link href="/laukita-niaga-indonesia" className="bg-[#8D4105] hover:bg-[#6b3003] text-white font-bold py-3 px-4 rounded-xl transition-colors duration-200 text-sm mt-auto shadow-md">
                                 Learn More
                             </Link>

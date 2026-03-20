@@ -2,6 +2,9 @@ import React from 'react';
 import { Head } from '@inertiajs/react';
 import FrontendLayout from '@/Layouts/FrontendLayout';
 
+ // Variabel Base URL Cloudflare R2
+ const r2Url = "https://assets.bridgeflow.my.id";
+
 export default function Index() {
     return (
         <FrontendLayout>
@@ -11,7 +14,7 @@ export default function Index() {
             <section 
                 className="relative py-20" 
                 style={{
-                    backgroundImage: "url('/assets/bg/UG-BACKGROUND-WEB-ABOUT.jpg')",
+                    backgroundImage: `url('${r2Url}/background/UG-BACKGROUND-WEB-ABOUT.jpg')`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center center'
                 }}

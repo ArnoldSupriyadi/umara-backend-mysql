@@ -10,22 +10,33 @@ export default function Index({ posts }) {
     const featuredPost = hasPosts ? posts.data[0] : null;
     const remainingPosts = hasPosts ? posts.data.slice(1) : [];
 
+    const r2Url = "https://assets.bridgeflow.my.id";
+
     return (
         <FrontendLayout>
             <Head title="Latest News & Articles - Umara Group" />
 
-            {/* --- HEADER --- */}
-            <div className="bg-[#131313] py-20 text-center relative overflow-hidden">
-                <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
-                <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-4 font-['Playfair_Display']">Latest Updates</h1>
-                    <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+            {/* --- HERO SECTION --- */}
+        <section className="relative py-28 text-white overflow-hidden" 
+                    style={{ 
+                    backgroundImage: `url('${r2Url}/background/UG-BACKGROUND-WEB-ABOUT.jpg')`, 
+                    backgroundSize: 'cover', 
+                    backgroundPosition: 'center center' 
+                    }}>
+                {/* Overlay gelap transparan agar teks judul tetap kontras dan terbaca jelas */}
+                <div className="absolute inset-0 bg-black/40"></div>
+
+                <div className="container mx-auto px-4 text-center relative z-10">
+                    <h1 className="text-4xl md:text-5xl font-bold mb-4 font-['Playfair_Display']">
+                        News and Activities
+                    </h1>
+                    <p className="text-xl text-gray-100 max-w-2xl mx-auto">
                         Stay updated with the latest news, events, and announcements from Umara Group
                     </p>
                 </div>
-            </div>
+            </section>
 
-            <main>
+        <main>
                 {/* --- FEATURED ARTICLE SECTION --- */}
                 {featuredPost && (
                     <section className="py-16 bg-white">
@@ -173,7 +184,7 @@ export default function Index({ posts }) {
                         
                     </div>
                 </section>
-            </main>
-        </FrontendLayout>
+        </main>
+    </FrontendLayout>
     );
 }

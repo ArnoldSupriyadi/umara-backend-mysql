@@ -6,7 +6,7 @@ export default function FrontendLayout({ children }) {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     // Variabel Base URL Cloudflare R2
-    const r2Url = "https://pub-1d5667a6f7d64367bcaa9f2aafd81844.r2.dev";
+    const r2Url = "https://assets.bridgeflow.my.id";
 
     const navigation = [
         { name: 'Home', href: '/' },
@@ -49,8 +49,8 @@ export default function FrontendLayout({ children }) {
                                     href={item.href}
                                     className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors duration-200 ${
                                         isActive(item.href)
-                                            ? 'border-blue-600 text-blue-600'
-                                            : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
+                                            ? 'border-white text-white'
+                                            : 'border-transparent text-white hover:border-gray-300 hover:text-gray-700'
                                     }`}
                                 >
                                     {item.name}

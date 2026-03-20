@@ -6,7 +6,7 @@ import "aos/dist/aos.css";
 
 export default function About() {
     // Variabel Base URL Cloudflare R2 yang sudah kita setup
-    const r2Url = "https://pub-1d5667a6f7d64367bcaa9f2aafd81844.r2.dev";
+    const r2Url = "https://assets.bridgeflow.my.id";
 
     // Inisialisasi animasi saat halaman pertama kali dimuat
     useEffect(() => {
@@ -22,8 +22,7 @@ export default function About() {
             <Head title="About Us - Umara Group" />
 
             {/* --- HERO SECTION --- */}
-            <section 
-                className="relative bg-gradient-to-br from-card-umara-group-brown-light/10 via-white to-card-umara-group-brown-dark/5 py-32 overflow-hidden" 
+            <section className="relative bg-gradient-to-br from-card-umara-group-brown-light/10 via-white to-card-umara-group-brown-dark/5 py-32 overflow-hidden" 
                 style={{ 
                     backgroundImage: `url(${r2Url}/background/UG-BACKGROUND-WEB-ABOUT.jpg)`, 
                     backgroundSize: 'cover', 
@@ -78,7 +77,7 @@ export default function About() {
                             <div className="relative rounded-2xl overflow-hidden shadow-2xl p-4 bg-gray-50 border border-gray-100">
                                 {/* Memanggil gambar dari R2 */}
                                 <img 
-                                    src="https://pub-1d5667a6f7d64367bcaa9f2aafd81844.r2.dev/about-ug/structure-bu.png"
+                                    src={`${r2Url}/about-ug/structure-bu.png`} 
                                     alt="Umara Group Structure" 
                                     className="w-full h-auto object-contain hover:scale-105 transition-transform duration-500" 
                                     loading="lazy"
@@ -130,8 +129,7 @@ export default function About() {
                         >
                             <div className="w-24 h-24 bg-white rounded-2xl flex items-center justify-center mb-8 mx-auto shadow-inner">
                                 <img 
-                                    // src={`${r2Url}/about-ug/ICON-VISION-MISION-11.png`}
-                                    src={`${r2Url}/background/UG-BACKGROUND-WEB-ABOUT.jpg`} 
+                                    src={`${r2Url}/about-ug/ICON-VISION-MISION-11.png`}
                                     alt="Mission Icon" 
                                     className="w-16 h-16 object-contain" 
                                     loading="lazy"
@@ -169,7 +167,7 @@ export default function About() {
                     
                     <div className="flex justify-center bg-white p-8 rounded-3xl shadow-2xl border border-gray-100" data-aos="zoom-in" data-aos-delay="400">
                         <img 
-                            src={`${r2Url}/images/Organization-Structure.png`} 
+                            src={`${r2Url}/about-ug/Organization-Structure-2.png`} 
                             alt="Organization Structure Diagram" 
                             className="w-full max-w-5xl h-auto" 
                             loading="lazy"

@@ -33,6 +33,9 @@ export default function LumpangEmasSignature() {
         }))
     ];
 
+    // Variabel Base URL Cloudflare R2
+    const r2Url = "https://assets.bridgeflow.my.id";
+
     // --- INISIALISASI CAROUSEL VANILLA JS ---
     useEffect(() => {
         const isMobile = window.innerWidth <= 768;
@@ -185,13 +188,13 @@ export default function LumpangEmasSignature() {
             <Head title="Lumpang Emas Signature - Rasa Nusantara Baru" />
 
             {/* --- HERO SECTION --- */}
-            <section id="home" className="relative bg-cover" style={{ backgroundImage: "url('/assets/lumpang-emas-prapanca/bg-signature.jpg')" }}>
+            <section id="home" className="relative bg-cover" style={{ backgroundImage: `url('${r2Url}/rnb-assets/bg-signature.jpg')` }}>
                 <div className="relative container mx-auto px-4">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center min-h-[calc(100vh-5rem)] py-12">
                         {/* Left Side Content */}
                         <div className="max-w-xl mx-auto lg:mx-0 text-center lg:text-left" data-aos="fade-right">
                             <div className="mb-8 lg:mb-12">
-                                <img src="/assets/lumpang-emas-prapanca/logo-signature.png" alt="Lumpang Emas Logo" className="w-full h-auto max-w-2xl mx-auto lg:mx-0 object-contain" />
+                                <img src={`${r2Url}/logos/logo-signature.png`} alt="Lumpang Emas Logo" className="w-full h-auto max-w-2xl mx-auto lg:mx-0 object-contain" />
                             </div>
                             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight text-white font-serif">
                                 Premium Dining Experience
@@ -212,20 +215,20 @@ export default function LumpangEmasSignature() {
                         {/* Right Side Gallery */}
                         <div className="mt-8 lg:mt-0" data-aos="fade-left">
                             <div className="grid grid-cols-2 grid-rows-3 gap-2 lg:gap-4 h-auto lg:h-[400px]">
-                                <div className="row-span-2 cursor-pointer group rounded-2xl overflow-hidden relative" onClick={() => openModal('/assets/rnb/carousel/3.jpg', 'UMA RAJA')}>
-                                    <img src="/assets/rnb/carousel/3.jpg" alt="Umaraja" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                <div className="row-span-2 cursor-pointer group rounded-2xl overflow-hidden relative" onClick={() => openModal(`${r2Url}/rnb-assets/3.jpg`, 'UMA RAJA')}>
+                                    <img src={`${r2Url}/rnb-assets/3.jpg`} alt="Umaraja" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                                     <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/80 to-transparent text-white"><p className="text-sm font-semibold">UMARAJA</p></div>
                                 </div>
-                                <div className="cursor-pointer group rounded-2xl overflow-hidden relative h-32 lg:h-full" onClick={() => openModal('/assets/rnb/carousel/13.jpg', 'MAIN DINING 1ST FLOOR')}>
-                                    <img src="/assets/rnb/carousel/13.jpg" alt="Sumatra" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                <div className="cursor-pointer group rounded-2xl overflow-hidden relative h-32 lg:h-full" onClick={() => openModal('/assets/rnb/13.jpg', 'MAIN DINING 1ST FLOOR')}>
+                                    <img src={`${r2Url}/rnb-assets/13.jpg`} alt="Sumatra" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                                     <div className="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-black/80 to-transparent text-white"><p className="text-xs font-semibold">MAIN DINING 1ST FLOOR</p></div>
                                 </div>
-                                <div className="cursor-pointer group rounded-2xl overflow-hidden relative h-32 lg:h-full" onClick={() => openModal('/assets/rnb/carousel/2.jpg', 'KALIMANTAN')}>
-                                    <img src="/assets/rnb/carousel/2.jpg" alt="Kalimantan" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                <div className="cursor-pointer group rounded-2xl overflow-hidden relative h-32 lg:h-full" onClick={() => openModal(`${r2Url}/rnb-assets/2.jpg`, 'KALIMANTAN')}>
+                                    <img src={`${r2Url}/rnb-assets/2.jpg`} alt="Kalimantan" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                                     <div className="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-black/80 to-transparent text-white"><p className="text-xs font-semibold">KALIMANTAN</p></div>
                                 </div>
-                                <div className="col-span-2 cursor-pointer group rounded-2xl overflow-hidden relative aspect-video lg:h-48" onClick={() => openModal('/assets/rnb/MAIN-SECOND-FLOOR.jpg', 'MAIN DINING 2ND FLOOR')}>
-                                    <img src="/assets/rnb/MAIN-SECOND-FLOOR.jpg" alt="Main Dining 2" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                <div className="col-span-2 cursor-pointer group rounded-2xl overflow-hidden relative aspect-video lg:h-48" onClick={() => openModal(`${r2Url}/rnb-assets/MAIN-SECOND-FLOOR.jpg`, 'MAIN DINING 2ND FLOOR')}>
+                                    <img src={`${r2Url}/rnb-assets/MAIN-SECOND-FLOOR.jpg`} alt="Main Dining 2" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                                     <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/80 to-transparent text-white"><p className="text-sm font-semibold">MAIN DINING 2ND FLOOR</p></div>
                                 </div>
                             </div>
@@ -261,7 +264,7 @@ export default function LumpangEmasSignature() {
             </section>
 
             {/* --- MENU SECTION (MAP) --- */}
-            <section id="menu" className="py-24 bg-cover relative" style={{ backgroundImage: "url('/assets/lumpang-emas-prapanca/BG-SIGNATURE-OUR.jpg')" }}>
+            <section id="menu" className="py-24 bg-cover relative" style={{ backgroundImage: `url(${r2Url}/rnb-assets/BG-SIGNATURE-OUR.jpg)` }}>
                 <div className="container mx-auto px-4">
                     <div className="text-center mb-16" data-aos="fade-up">
                         <h2 className="text-4xl md:text-6xl font-black text-white mb-4 font-serif">Our Menu</h2>
@@ -302,7 +305,7 @@ export default function LumpangEmasSignature() {
             </section>
 
             {/* --- VIP ROOMS SECTION --- */}
-            <section id="rooms" className="py-24 bg-cover relative" style={{ backgroundImage: "url('/assets/lumpang-emas-prapanca/BG-SIGNATURE-VIP.jpg')" }}>
+            <section id="rooms" className="py-24 bg-cover relative" style={{ backgroundImage: `url(${r2Url}/rnb-assets/BG-SIGNATURE-VIP.jpg)` }}>
                 <div className="absolute inset-0 bg-black/60"></div>
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="text-center mb-16" data-aos="fade-up">

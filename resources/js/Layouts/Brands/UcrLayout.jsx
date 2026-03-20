@@ -24,6 +24,9 @@ export default function UcrLayout({ children, brand }) {
         { name: 'News', path: '/news' },
     ];
 
+    // Variabel Base URL Cloudflare R2
+    const r2Url = "https://assets.bridgeflow.my.id";
+
     return (
         <div className="ucr-theme min-h-screen bg-white text-gray-800">
             
@@ -37,7 +40,7 @@ export default function UcrLayout({ children, brand }) {
                         {/* Logo */}
                         <Link href={basePath} className="flex-shrink-0">
                             <img 
-                                src="/assets/vector/logo-ucr.png" 
+                                src={`${r2Url}/logos/ucr-logo.png`}
                                 alt="Umara Catering" 
                                 className="h-12 w-auto hover:scale-105 transition-transform duration-300" 
                             />

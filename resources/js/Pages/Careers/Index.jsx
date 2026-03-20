@@ -7,7 +7,7 @@ export default function Index({ careers }) {
     console.log("Data Karir diterima", careers); // cek di console
 
     // Variabel Base URL Cloudflare R2
-    const r2Url = "https://pub-1d5667a6f7d64367bcaa9f2aafd81844.r2.dev";
+    const r2Url = "https://assets.bridgeflow.my.id";
 
     return (
         <FrontendLayout>
@@ -17,7 +17,7 @@ export default function Index({ careers }) {
             <section 
                 className="relative py-28 text-white overflow-hidden" 
                 style={{ 
-                    backgroundImage: `url('${r2Url}/bg/UG-BACKGROUND-WEB-ABOUT.jpg')`, 
+                    backgroundImage: `url('${r2Url}/background/UG-BACKGROUND-WEB-ABOUT.jpg')`, 
                     backgroundSize: 'cover', 
                     backgroundPosition: 'center center' 
                 }}

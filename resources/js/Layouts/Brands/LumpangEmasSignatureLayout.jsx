@@ -32,6 +32,9 @@ export default function LumpangEmasSignatureLayout({ children }) {
         }
     };
 
+    // Variabel Base URL Cloudflare R2
+    const r2Url = "https://assets.bridgeflow.my.id";
+
     return (
         <div className="lumpang-emas-signature bg-white min-h-screen text-gray-800 overflow-x-hidden font-sans tracking-wide">
             {/* --- CSS KHUSUS --- */}
@@ -71,7 +74,7 @@ export default function LumpangEmasSignatureLayout({ children }) {
                         {/* Logo */}
                         <div className="flex items-center space-x-3">
                             <Link href="/rasa-nusantara-baru">
-                                <img src="/assets/vector/logo-rnb.png" alt="PT Nusantara Baru" className="w-20 h-auto" />
+                                <img src={`${r2Url}/logos/logo-rnb.png`} alt="PT Nusantara Baru" className="w-20 h-auto" />
                             </Link>
                         </div>
                         
@@ -125,7 +128,7 @@ export default function LumpangEmasSignatureLayout({ children }) {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         <div>
                             <div className="flex items-center space-x-3 mb-4">
-                                <img src="/assets/lumpang-emas-prapanca/logo-signature.png" alt="Lumpang Emas" className="w-20 h-auto" />
+                                <img src={`${r2Url}/logos/logo-signature.png`} alt="Lumpang Emas" className="w-20 h-auto" />
                             </div>
                             <p className="text-gray-300">Premium dining experience with exclusive VIP rooms for your special occasions.</p>
                         </div>

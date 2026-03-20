@@ -9,6 +9,9 @@ export default function RnbLayout({ children, brand }) {
     // Helper untuk base path URL agar rapi
     const basePath = `/${brand?.slug || 'rasa-nusantara-baru'}`;
 
+    // Variabel Base URL Cloudflare R2
+    const r2Url = "https://assets.bridgeflow.my.id";
+
     return (
         <div className="rnb-theme min-h-screen bg-gray-50 tracking-wide">
             
@@ -20,7 +23,7 @@ export default function RnbLayout({ children, brand }) {
                         {/* Logo */}
                         <div className="flex-shrink-0">
                             <Link href={basePath}>
-                                <img src="/assets/vector/logo-rnb.png" alt="Rasa Nusantara Baru" className="w-20 h-auto" />
+                                <img src={`${r2Url}/logos/logo-rnb.png`} alt="Rasa Nusantara Baru" className="w-20 h-auto" />
                             </Link>
                         </div>
 

@@ -5,6 +5,9 @@ export default function LniLayout({ children, brand }) {
     // Helper untuk base path URL LNI
     const basePath = `/${brand?.slug || 'lauk-kita-niaga'}`;
 
+    // Variabel Base URL Cloudflare R2
+    const r2Url = "https://assets.bridgeflow.my.id";
+
     return (
         <div className="lni-theme min-h-screen bg-white font-sans text-gray-800">
             
@@ -16,7 +19,7 @@ export default function LniLayout({ children, brand }) {
                     {/* Logo */}
                     <Link href={basePath} className="flex items-center gap-3">
                         <img 
-                            src="/assets/lauk-kita-niaga/laukkita-logo.png" 
+                            src={`${r2Url}/logos/laukkita-logo.png`} 
                             alt="PT Lauk Kita Niaga" 
                             className="h-20 w-auto hover:scale-105 transition-transform duration-300" 
                         />

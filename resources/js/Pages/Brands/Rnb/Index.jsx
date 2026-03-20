@@ -13,7 +13,7 @@ import 'swiper/css/navigation';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
-const Index = ({ brand }) => {
+const Index = ({ brand, posts }) => {
     useEffect(() => {
         AOS.init({ duration: 1000, once: true, offset: 50 });
     }, []);
@@ -38,19 +38,29 @@ const Index = ({ brand }) => {
         });
     };
 
+    // Variabel Base URL Cloudflare R2
+    const r2Url = "https://assets.bridgeflow.my.id";
+
+    // Logic data post
+    // Memastikan data post tidak kosong
+    const hasPosts = posts && posts.data && posts.data.length > 0;
+    // Memisahkan 1 berita pertama (Featured) dan sisa beritanya (Grid)
+    const featuredPost = hasPosts ? posts.data[0] : null;
+    const remainingPosts = hasPosts ? posts.data.slice(1) : [];
+
     // Data Banner RNB
     const heroSlides = [
-        { image: "/assets/rnb/carousel/main/3.jpg", title: "Premium Dining Experience", desc: "Indulge in our carefully crafted menu featuring the finest local ingredients." },
-        { image: "/assets/rnb/carousel/main/4.jpeg", title: "Elegant Atmosphere", desc: "Enjoy your meal in our beautifully decorated restaurant with floral arrangements." },
-        { image: "/assets/rnb/carousel/main/5.jpeg", title: "Elegant Area", desc: "Enjoy your meal in our beautifully decorated restaurant with floral arrangements." },
-        { image: "/assets/rnb/carousel/main/6.jpg", title: "Food and Drinks", desc: "Savor our diverse menu of delectable foods and refreshing drinks." },
-        { image: "/assets/rnb/carousel/main/14.jpg", title: "Memorable Moments", desc: "Create lasting memories with family and friends in our welcoming environment." }
+        { image: `${r2Url}/sliders/3.jpg`, title: "Premium Dining Experience", desc: "Indulge in our carefully crafted menu featuring the finest local ingredients." },
+        { image: `${r2Url}/sliders/4.jpeg`, title: "Elegant Atmosphere", desc: "Enjoy your meal in our beautifully decorated restaurant with floral arrangements." },
+        { image: `${r2Url}/sliders/5.jpeg`, title: "Elegant Area", desc: "Enjoy your meal in our beautifully decorated restaurant with floral arrangements." },
+        { image: `${r2Url}/sliders/6.jpg`, title: "Food and Drinks", desc: "Savor our diverse menu of delectable foods and refreshing drinks." },
+        { image: `${r2Url}/sliders/14.jpg`, title: "Memorable Moments", desc: "Create lasting memories with family and friends in our welcoming environment." }
     ];
 
     const restaurants = [
         {
             name: "Lumpang Emas Signature",
-            logo: "/assets/vector/-_lumpang prapanca putih.png",
+            logo: `${r2Url}/logos/lumpang prapanca putih.png`,
             desc: "Restaurant at Prapanca, Jl. Prapanca Raya No.40A",
             mapUrl: "https://maps.app.goo.gl/JYcjpy8KrVdiS5KY7",
             // Nanti slug ini dipakai untuk Link halaman detail
@@ -58,25 +68,25 @@ const Index = ({ brand }) => {
         },
         {
             name: "Lumpang Emas By Umara",
-            logo: "/assets/vector/-_lumpang bintaro putih.png",
+            logo: `${r2Url}/logos/lumpang-bintaro-putih.png`,
             desc: "Nusantara Modern Restaurant, Bintaro Jaya CBD",
             mapUrl: "https://maps.app.goo.gl/vCF4k3tXeyZ61tvp7",
             slug: "lumpang-emas-bintaro"
         },
         {
             name: "Umara House",
-            logo: "/assets/vector/-_umarahouse putih.png",
+            logo: `${r2Url}/logos/umarahouse-putih.png`,
             desc: "Modern Resto & Bar, Jl. Bendungan Hilir No.134",
             mapUrl: "https://maps.app.goo.gl/JAnRuS4TpKTF9RSw6",
             slug: "umara-house"
         },
-        {
-            name: "Rasa Umara",
-            logo: "/assets/vector/-_rasa umara putih.png",
-            desc: "Nusantara Prasmanan, Jl. MH. Thamrin Cikarang",
-            mapUrl: "https://maps.app.goo.gl/xA9sincfvQoAAt348",
-            slug: "rasa-umara"
-        }  
+        // {
+            // name: "Rasa Umara",
+            // logo: `${r2Url}/logos/rasa-umara-putih.png`,
+            // desc: "Nusantara Prasmanan, Jl. MH. Thamrin Cikarang",
+            // mapUrl: "https://maps.app.goo.gl/xA9sincfvQoAAt348",
+            // slug: "rasa-umara"
+        // }  
     ]
 
     return (
@@ -106,13 +116,13 @@ const Index = ({ brand }) => {
             </section>
 
             {/* --- 2. SERVICES SECTION --- */}
-            <section id="services" className="py-20" style={{ backgroundImage: "url('/assets/rnb/BG-PAGE-RESTAURANT-RNB.jpg')", backgroundSize: 'cover' }}>
+            <section id="services" className="py-20" style={{ backgroundImage: `url('${r2Url}/background/BG-PAGE-RESTAURANT-RNB.jpg')`, backgroundSize: 'cover' }}>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-16" data-aos="fade-up">
                         <h2 className="text-3xl md:text-4xl font-bold text-palette2-e mb-4">Our Restaurant</h2>
                         <p className="text-xl text-white max-w-2xl mx-auto">We provide comprehensive business solutions tailored to your needs</p>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {restaurants.map((resto, index) => (
                              <div key={index} className="bg-amber-50 border-2 border-[#d7b35c] p-8 rounded-lg hover:shadow-lg transition-shadow flex flex-col h-full" data-aos="fade-up" data-aos-delay={200 * index + 1}>
                                     <div className="w-28 h-28 bg-[#131313] rounded-full flex items-center justify-center mb-6 mx-auto">
@@ -132,7 +142,7 @@ const Index = ({ brand }) => {
             </section>
 
             {/* --- 3. ABOUT SECTION --- */}
-            <section id="about" className="py-20 bg-gray-50" style={{ backgroundImage: "url('/assets/rnb/BG-RNB-PAGE-ABOUT.jpg')", backgroundSize: 'cover' }}>
+            <section id="about" className="py-20 bg-gray-50" style={{ backgroundImage: `url('${r2Url}/background/BG-RNB-PAGE-ABOUT.jpg')`, backgroundSize: 'cover' }}>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
                         <div className="mb-12 lg:mb-0" data-aos="fade-right">
@@ -141,26 +151,26 @@ const Index = ({ brand }) => {
                             <p className="text-lg text-gray-600 mb-8">Restaurant business serves as the "display" of Umara Group in general directly to existing and potential customers.</p>
                             
                             <div className="grid grid-cols-2 gap-8">
-                                <div className="text-center p-6 rounded-lg bg-cover" style={{ backgroundImage: "url('/assets/rnb/bg-buttom-RNB.jpg')" }}>
+                                <div className="text-center p-6 rounded-lg bg-cover" style={{ backgroundImage: `url('${r2Url}/background/bg-buttom-RNB.jpg')` }}>
                                     <div className="text-4xl font-bold text-white mb-2">1000+</div>
                                     <div className="text-white font-medium">Happy Customers</div>
                                 </div>
-                                <div className="text-center p-6 rounded-lg bg-cover" style={{ backgroundImage: "url('/assets/rnb/bg-buttom-RNB.jpg')" }}>
+                                <div className="text-center p-6 rounded-lg bg-cover" style={{ backgroundImage: `url('${r2Url}/background/bg-buttom-RNB.jpg')` }}>
                                     <div className="text-4xl font-bold text-white mb-2">7+</div>
                                     <div className="text-white font-medium">Years Excellence</div>
                                 </div>
-                                <div className="text-center p-6 rounded-lg bg-cover" style={{ backgroundImage: "url('/assets/rnb/bg-buttom-RNB.jpg')" }}>
+                                <div className="text-center p-6 rounded-lg bg-cover" style={{ backgroundImage: `url('${r2Url}/background/bg-buttom-RNB.jpg')` }}>
                                     <div className="text-4xl font-bold text-white mb-2">15+</div>
                                     <div className="text-white font-medium">Menu Varieties</div>
                                 </div>
-                                <div className="text-center p-6 rounded-lg bg-cover" style={{ backgroundImage: "url('/assets/rnb/bg-buttom-RNB.jpg')" }}>
+                                <div className="text-center p-6 rounded-lg bg-cover" style={{ backgroundImage: `url('${r2Url}/background/bg-buttom-RNB.jpg')` }}>
                                     <div className="text-4xl font-bold text-white mb-2">3+</div>
                                     <div className="text-white font-medium">Locations</div>
                                 </div>
                             </div>
                         </div>
                         <div className="relative" data-aos="fade-left">
-                            <div className="rounded-lg p-8 bg-cover" style={{ backgroundImage: "url('/assets/rnb/bg-buttom-RNB.jpg')" }}>
+                            <div className="rounded-lg p-8 bg-cover" style={{ backgroundImage: `url('${r2Url}/background/bg-buttom-RNB.jpg')` }}>
                                 <h3 className="text-2xl font-bold mb-4 text-white">Our Mission</h3>
                                 <p className="text-lg mb-6 text-white/90">To be the leading business solutions provider in Indonesia, empowering companies to achieve their full potential through innovative strategies and exceptional service.</p>
                                 <div className="flex items-center">
@@ -178,61 +188,73 @@ const Index = ({ brand }) => {
             </section>
 
             {/* --- 4. NEWS SECTION --- */}
+            {/* --- 4. NEWS SECTION (DATA DINAMIS) --- */}
             <section id="news" className="py-20 bg-white">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-16" data-aos="fade-up">
                         <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Latest News</h2>
                         <p className="text-xl text-gray-600 max-w-2xl mx-auto">Updates and stories from Rasa Nusantara Baru</p>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {/* News 1 */}
-                        <article className="group bg-white overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
-                            <div className="relative overflow-hidden">
-                                <img src="/assets/news/yoga-at-prapanca/IMG_7978.jpg" alt="Yoga" className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300" />
-                            </div>
-                            <div className="p-6">
-                                <div className="text-gray-500 text-sm mb-3">4 January 2026</div>
-                                <h3 className="text-xl font-bold text-gray-900 mb-3">Wellness Meets Culinary: Yoga at Lumpang Emas</h3>
-                                <p className="text-gray-600 mb-4 line-clamp-3">There is no better way to set the tone for the new year than with mindfulness...</p>
-                                <Link href="#" className="inline-flex items-center text-amber-600 hover:text-amber-700 font-semibold">
-                                    Read More
-                                    <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
-                                </Link>
-                            </div>
-                        </article>
-                        
-                        {/* News 2 */}
-                        <article className="group bg-white overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
-                            <div className="relative overflow-hidden">
-                                <img src="/assets/news/santa-umara/IMG_7935.jpg" alt="Santa" className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300" />
-                            </div>
-                            <div className="p-6">
-                                <div className="text-gray-500 text-sm mb-3">25 Desember 2025</div>
-                                <h3 className="text-xl font-bold text-gray-900 mb-3">A Magical Christmas: Santa Surprises Guests</h3>
-                                <p className="text-gray-600 mb-4 line-clamp-3">Christmas is a season of giving, sharing, and creating beautiful memories...</p>
-                                <Link href="#" className="inline-flex items-center text-amber-600 hover:text-amber-700 font-semibold">
-                                    Read More
-                                    <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
-                                </Link>
-                            </div>
-                        </article>
 
-                        {/* News 3 */}
-                        <article className="group bg-white overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
-                            <div className="relative overflow-hidden">
-                                <img src="/assets/news/hayomoto/1.jpeg" alt="HayoMoto" className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300" />
-                            </div>
-                            <div className="p-6">
-                                <div className="text-gray-500 text-sm mb-3">8 November 2025</div>
-                                <h3 className="text-xl font-bold text-gray-900 mb-3">Lumpang Emas Bintaro Hosts HayoMoto</h3>
-                                <p className="text-gray-600 mb-4 line-clamp-3">Lumpang Emas Bintaro is honored to be part of the vibrant celebration...</p>
-                                <Link href="#" className="inline-flex items-center text-amber-600 hover:text-amber-700 font-semibold">
-                                    Read More
-                                    <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
+                    {!hasPosts ? (
+                        <div className="text-center py-20 text-gray-500 bg-gray-50 rounded-2xl border border-gray-100">
+                            Belum ada berita yang dipublikasikan saat ini.
+                        </div>
+                    ) : (
+                        <div className="flex flex-col gap-8">
+                            
+                            {/* Featured Article (Berita Pertama) */}
+                            {featuredPost && (
+                                <Link href={`/posts/${featuredPost.slug}`} className="group block bg-white rounded-2xl shadow-md border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300">
+                                    <div className="md:flex h-full">
+                                        <div className="md:w-1/2 relative overflow-hidden bg-gray-200 min-h-[250px]">
+                                            {featuredPost.image_url ? (
+                                                <img src={featuredPost.image_url} alt={featuredPost.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                            ) : (
+                                                <div className="absolute inset-0 flex items-center justify-center text-gray-400">No Image</div>
+                                            )}
+                                        </div>
+                                        <div className="md:w-1/2 p-8 lg:p-10 flex flex-col justify-center">
+                                            <div className="text-sm text-gray-500 mb-3">{featuredPost.created_at}</div>
+                                            <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-amber-600 transition-colors line-clamp-2">{featuredPost.title}</h3>
+                                            <p className="text-gray-600 mb-6 line-clamp-3">{featuredPost.excerpt}</p>
+                                            <div className="inline-flex items-center text-amber-600 font-semibold mt-auto">
+                                                Read More
+                                                <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </Link>
-                            </div>
-                        </article>
-                    </div>
+                            )}
+
+                            {/* Sisa Berita Grid */}
+                            {remainingPosts.length > 0 && (
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                    {remainingPosts.map((post) => (
+                                        <Link key={post.id} href={`/posts/${post.slug}`} className="group flex flex-col bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                                            <div className="relative h-56 w-full overflow-hidden bg-gray-200">
+                                                {post.image_url ? (
+                                                    <img src={post.image_url} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                                ) : (
+                                                    <div className="w-full h-full flex items-center justify-center text-gray-400">No Image</div>
+                                                )}
+                                            </div>
+                                            <div className="p-6 flex flex-col flex-grow">
+                                                <div className="text-sm text-gray-500 mb-3">{post.created_at}</div>
+                                                <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-amber-600 transition-colors line-clamp-2">{post.title}</h3>
+                                                <p className="text-gray-600 mb-4 flex-grow line-clamp-3">{post.excerpt}</p>
+                                                <div className="mt-auto inline-flex items-center text-amber-600 font-semibold">
+                                                    Read More
+                                                    <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
+                                                </div>
+                                            </div>
+                                        </Link>
+                                    ))}
+                                </div>
+                            )}
+
+                        </div>
+                    )}
                 </div>
             </section>
 
@@ -249,7 +271,7 @@ const Index = ({ brand }) => {
                         <div className="mb-12 lg:mb-0" data-aos="fade-right">
                             <div className="space-y-8">
                                 <div className="flex items-start">
-                                    <div className="w-12 h-12 rounded-lg flex items-center justify-center mr-4 flex-shrink-0 bg-cover" style={{ backgroundImage: "url('/assets/rnb/bg-buttom-RNB.jpg')" }}>
+                                    <div className="w-12 h-12 rounded-lg flex items-center justify-center mr-4 flex-shrink-0 bg-cover" style={{ backgroundImage: `url('${r2Url}/background/bg-buttom-RNB.jpg')` }}>
                                         <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
@@ -270,7 +292,7 @@ const Index = ({ brand }) => {
                                     </div>
                                 </div>
                                 <div className="flex items-start">
-                                    <div className="w-12 h-12 rounded-lg flex items-center justify-center mr-4 flex-shrink-0 bg-cover" style={{ backgroundImage: "url('/assets/rnb/bg-buttom-RNB.jpg')" }}>
+                                    <div className="w-12 h-12 rounded-lg flex items-center justify-center mr-4 flex-shrink-0 bg-cover" style={{ backgroundImage: `url('${r2Url}/background/bg-buttom-RNB.jpg')` }}>
                                         <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
                                         </svg>

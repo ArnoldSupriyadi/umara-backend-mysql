@@ -27,6 +27,9 @@ export default function LumpangEmasBintaroLayout({ children }) {
         }
     };
 
+    // Variabel Base URL Cloudflare R2
+    const r2Url = "https://assets.bridgeflow.my.id";
+
     return (
         <div className="lumpang-emas-bintaro bg-white min-h-screen text-gray-800 tracking-wide font-sans overflow-x-hidden">
             {/* --- LINK EKSTERNAL & CSS KHUSUS --- */}
@@ -50,7 +53,7 @@ export default function LumpangEmasBintaroLayout({ children }) {
                     <div className="flex justify-between items-center py-4">
                         <div className="flex items-center space-x-2">
                             <Link href="/rasa-nusantara-baru">
-                                <img src="/assets/vector/logo-rnb.png" alt="PT Nusantara Baru" className="w-20 h-auto" />
+                                <img src={`${r2Url}/logos/logo-rnb.png`} alt="PT Nusantara Baru" className="w-20 h-auto" />
                             </Link>
                         </div>
                         <div className="hidden md:flex space-x-8">
@@ -74,7 +77,7 @@ export default function LumpangEmasBintaroLayout({ children }) {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         <div>
                             <div className="flex items-center space-x-2 mb-4">
-                                <img src="/assets/lumpang-emas-bintaro/logo-lumpang-ba.png" alt="Lumpang Emas" className="h-16 w-auto" />
+                                <img src={`${r2Url}/logos/logo-lumpang-ba.png`} alt="Lumpang Emas" className="h-16 w-auto" />
                             </div>
                             <p className="text-gray-400">
                                 Experience authentic Indonesian cuisine in the heart of Bintaro with premium dining atmosphere.

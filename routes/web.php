@@ -8,6 +8,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RnbController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -48,6 +49,15 @@ Route::get('/about', [AboutController::class, 'index'])->name('about.index');
 // Contact
 Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
 
+Route::prefix('rasa-nusantara-baru')->group(function () {
+    // 1. Halaman Utama Rasa Nusantara Baru
+    Route::get('/', [RnbController::class, 'index'])->name('brands.rnb.index');
+    Route::get('/outlets/lumpang-emas-signature', [RnbController::class, 'lumpangEmasSignature'])->name('rnb.outlets.signature');
+    Route::get('/outlets/lumpang-emas-bintaro', [RnbController::class, 'lumpangEmasBintaro'])->name('rnb.outlets.bintaro');
+    Route::get('/outlets/umara-house', [RnbController::class, 'umaraHouse'])->name('rnb.outlets.umarahouse');
+    Route::get('/outlets/rasa-umara', [RnbController::class, 'rasaUmara'])->name('rnb.outlets.rasaumara');
+});
+
 Route::prefix('{brand_slug}')->group(function () {
 
     // 1. Halaman Utama Brand (contoh: /umara-catering)
@@ -59,26 +69,6 @@ Route::prefix('{brand_slug}')->group(function () {
     // 👇 3. MAGIC ROUTE UNTUK SEMUA HALAMAN SUB-BRAND (TARUH PALING BAWAH DI DALAM GROUP INI)
     // {page_slug} ini akan otomatis menangkap kata 'wedding', 'meeting', 'gallery', dll  
     Route::get('/{page_slug}', [BrandController::class, 'page'])->name('brands.page');
-});
-
-// 1. Lumpang Emas Signature
-Route::get('/rasa-nusantara-baru/outlets/lumpang-emas-signature', function () {
-    return Inertia::render('Brands/Rnb/LumpangEmasSignature');
-});
-
-// 2. Lumpang Emas Bintaro
-Route::get('/rasa-nusantara-baru/outlets/lumpang-emas-bintaro', function () {
-    return Inertia::render('Brands/Rnb/LumpangEmasBintaro');
-});
-
-// 3. Umara House
-Route::get('/rasa-nusantara-baru/outlets/umara-house', function () {
-    return Inertia::render('Brands/Rnb/UmaraHouse');
-});
-
-// 4. Rasa Umara
-Route::get('/rasa-nusantara-baru/outlets/rasa-umara', function () {
-    return Inertia::render('Brands/Rnb/RasaUmara');
 });
 
 require __DIR__ . '/auth.php';

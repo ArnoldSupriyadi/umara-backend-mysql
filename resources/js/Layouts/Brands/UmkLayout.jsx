@@ -8,6 +8,9 @@ export default function UmkLayout({ children, brand }) {
     // Helper untuk link UMK
     const basePath = `/${brand?.slug || 'umara-mitra-kulina'}`;
 
+    // Variabel Base URL Cloudflare R2
+    const r2Url = "https://assets.bridgeflow.my.id";
+
     return (
         <div className="umk-theme min-h-screen bg-gray-50 font-sans">
             
@@ -19,7 +22,7 @@ export default function UmkLayout({ children, brand }) {
                         <div className="flex items-center space-x-3">
                             <Link href={basePath} className="flex items-center justify-center">
                                 <img 
-                                    src="/assets/umara-mitra-kulina/logo-umk.png" 
+                                    src={`${r2Url}/logos/logo-umk.png`} 
                                     alt="Umara Mitra Kulina"
                                     className="w-28 h-auto transition-transform hover:scale-105 duration-300" 
                                 />

@@ -80,12 +80,16 @@ export default function LumpangEmasBintaro() {
         alert('Reservation request sent! We will contact you shortly.');
     };
 
+    // Variabel Base URL Cloudflare R2
+    const r2Url = "https://assets.bridgeflow.my.id";
+
     return (
         <>
             <Head title="Lumpang Emas Bintaro - Premium Dining Experience" />
 
             {/* --- HERO SECTION --- */}
-            <section id="home" className="min-h-screen flex items-center relative pt-20" style={{ backgroundImage: "url('/assets/lumpang-emas-bintaro/BG-LUMPANG-BINTARO1.jpg')", backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center center' }}>
+            <section id="home" className="min-h-screen flex items-center relative pt-20" 
+            style={{ backgroundImage: `url(${r2Url}/rnb-assets/BG-LUMPANG-BINTARO1.jpg)`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center center' }}>
                 {/* Overlay tipis agar teks tetap terbaca */}
                 <div className="absolute inset-0 bg-black/30"></div>
                 
@@ -93,7 +97,7 @@ export default function LumpangEmasBintaro() {
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                         {/* Left Side - Content */}
                         <div className="max-w-xl flex flex-col items-center" data-aos="fade-right">
-                            <img src="/assets/lumpang-emas-bintaro/logo-lumpang-ba.png" alt="Lumpang Emas Bintaro" className="w-sm h-auto max-w-full object-contain mb-10" data-aos="zoom-in" data-aos-delay="200" />
+                            <img src={`${r2Url}/logos/logo-lumpang-ba.png`} alt="Lumpang Emas Bintaro" className="w-sm h-auto max-w-full object-contain mb-10" data-aos="zoom-in" data-aos-delay="200" />
                             
                             <div className="flex flex-col sm:flex-row gap-4 justify-center" data-aos="fade-up" data-aos-delay="400">
                                 <a href="https://wa.me/6281222227496" target="_blank" rel="noreferrer" className="bg-gradient-to-b from-[#efd266] to-[#b9932f] text-[#562E12] px-8 py-4 rounded-full font-semibold hover:opacity-90 transition-colors text-center">
@@ -187,7 +191,7 @@ export default function LumpangEmasBintaro() {
             </section>
 
             {/* --- ROOMS SECTION --- */}
-            <section id="rooms" className="py-16 lg:py-24 relative overflow-hidden" style={{ backgroundImage: "url('/assets/lumpang-emas-bintaro/BG-LUMPANG-BINTARO3.jpg')", backgroundSize: 'cover', backgroundPosition: 'center center' }}>
+            <section id="rooms" className="py-16 lg:py-24 relative overflow-hidden" style={{ backgroundImage: `${r2Url}/rnb-assets/BG-LUMPANG-BINTARO3.jpg`, backgroundSize: 'cover', backgroundPosition: 'center center' }}>
                 <div className="absolute inset-0 bg-black/70"></div>
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="text-center mb-16" data-aos="fade-up">

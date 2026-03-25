@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\BusinessUnit;
 use App\Models\Career;
+use Filament\Schemas\Schema;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
@@ -11,17 +12,23 @@ class CareerSeeder extends Seeder
 {
     public function run(): void
     {
-        // ==========================================
-        // 1. UPDATE BUSINESS UNIT DENGAN LOGO BARU
-        // ==========================================
+        // 1. Matikan pengecekan foreign key
+        \Illuminate\Support\Facades\Schema::disableForeignKeyConstraints();
 
-        // PT Umara Cipta Rasa
+        // 2. Kosongkan tabel
+        Career::truncate();
+
+        // 3. Hidupkan kembali pengecekan foreign key
+        \Illuminate\Support\Facades\Schema::enableForeignKeyConstraints();
+
+        $r2Url = "https://assets.bridgeflow.my.id";
+        
         $ucr = BusinessUnit::updateOrCreate(
             ['slug' => 'umara-cipta-rasa'],
             [
                 'name' => 'Umara Cipta Rasa',
                 // Saya hilangkan slash di depan agar kompatibel dengan helper asset() laravel
-                'logo' => 'images/logo/ucr-logo.png'
+                'logo' => $r2Url . '/logos/ucr-logo.png'
             ]
         );
 
@@ -30,7 +37,7 @@ class CareerSeeder extends Seeder
             ['slug' => 'rasa-nusantara-baru'],
             [
                 'name' => 'Rasa Nusantara Baru',
-                'logo' => 'images/logo/logo-rnb.png'
+                'logo' => $r2Url . '/logos/logo-rnb.png'
             ]
         );
 

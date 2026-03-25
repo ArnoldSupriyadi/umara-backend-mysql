@@ -4,6 +4,8 @@ import LniLayout from '@/Layouts/Brands/LniLayout';
 
 const Index = ({ brand }) => {
 
+    const r2Url = "https://assets.bridgeflow.my.id";
+
     // --- DATA PRODUK (Membuat kode lebih bersih dan tidak berulang) ---
     const gourmetProducts = [
         { name: 'Fettucine Carbonara', img: 'fettucine-carbonara.jpeg' },
@@ -43,9 +45,9 @@ const Index = ({ brand }) => {
 
     // Helper untuk merender Tile Produk
     const ProductTile = ({ name, img, bgGradient, folder }) => (
-        <article className={`group relative aspect-[4/5] overflow-hidden ${bgGradient ? 'bg-gradient-to-br from-amber-500 to-amber-800' : 'bg-amber-50'}`}>
+        <article className={`group relative aspect-[4/5] overflow-hidden }`}>
             <img 
-                src={`/assets/lauk-kita-niaga/product/${img}`} 
+                src={`${r2Url}/lni-assets/products/${img}`} 
                 alt={name}
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
                 loading="lazy" 
@@ -62,7 +64,7 @@ const Index = ({ brand }) => {
             <Head title={`Home - ${brand?.name || 'PT Lauk Kita Niaga'}`} />
 
             {/* --- 1. WHAT IS LAUKITA --- */}
-            <section id="what-is-laukita" className="py-16 md:py-20">
+            <section id="what-is-laukita" className="py-10 md:py-20">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                         <div>
@@ -72,14 +74,14 @@ const Index = ({ brand }) => {
                             </p>
                         </div>
                         <div className="flex justify-center">
-                            <img src="/assets/lauk-kita-niaga/web-laukita-1080x1920.jpg" alt="Laukita Product" className="rounded-2xl shadow-xl w-full max-w-md object-cover" />
+                            <img src={`${r2Url}/lni-assets/web-laukita-1080x1920.jpg`} alt="Laukita Product" className="rounded-xl shadow-lg" />
                         </div>
                     </div>
                 </div>
             </section>
 
             {/* --- 2. INSTAGRAM-STYLE PRODUCTS --- */}
-            <div style={{ backgroundImage: "url('/assets/lauk-kita-niaga/BG0-LNI-PRODUCT.svg')", backgroundSize: 'cover', backgroundRepeat: 'no-repeat' }}>
+            <div style={{ backgroundImage: `url('${r2Url}/lni-assets/bg/BG0-LNI-PRODUCT.svg')`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat' }}>
                 <section id="products" className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
                     
                     {/* Gourmet Section */}
@@ -120,39 +122,54 @@ const Index = ({ brand }) => {
             </div>
 
             {/* --- 3. OUR CLIENTS --- */}
-            <section id="clients" className="py-16 md:py-20 bg-white">
-                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="text-center mb-12">
-                        <h2 className="text-3xl md:text-5xl font-bold text-amber-900">Our Clients</h2>
-                        <p className="mt-3 text-amber-700 text-lg">Trusted by leading supermarkets and partners.</p>
-                    </div>
-                    
-                    {/* Grid Render Logo Klien via React Map */}
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
-                        {clientLogos.map((file, idx) => {
-                            // Membersihkan nama file untuk alt text
-                            const altName = file.replace(/\.(png|jpg|jpeg|webp|svg\.png)$/i, '').replace(/[-_]+/g, ' ').trim();
-                            
-                            return (
-                                <figure key={idx} className="flex items-center justify-center bg-amber-50/50 rounded-xl border border-amber-200 shadow-sm p-4 hover:shadow-md transition bg-white">
-                                    <img 
-                                        src={`/assets/lauk-kita-niaga/logo-partnership/${file}`} 
-                                        alt={`Client Logo: ${altName}`} 
-                                        loading="lazy" 
-                                        className="max-h-16 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-80 hover:opacity-100" 
-                                    />
-                                </figure>
-                            );
-                        })}
-                    </div>
-                </div>
-            </section>
+            {/* --- 3. OUR CLIENTS --- */}
+<section id="clients" className="py-16 md:py-10 bg-[#FCF0CE]">
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Header Section */}
+        <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-5xl font-bold text-amber-900">
+                Our Clients
+            </h2>
+            <p className="mt-3 text-amber-700 text-lg">
+                Trusted by leading supermarkets and partners.
+            </p>
+        </div>
+        
+        {/* Grid Render Logo Klien */}
+        <div id="clientsGrid" className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
+            {clientLogos.map((file, idx) => {
+                // Membersihkan nama file untuk alt text
+                const altName = file
+                    .replace(/\.(png|jpg|jpeg|webp|svg\.png)$/i, '')
+                    .replace(/[-_]+/g, ' ')
+                    .trim();
+                
+                return (
+                    <figure 
+                        key={idx} 
+                        className="flex items-center justify-center bg-white rounded-xl border border-amber-200 shadow-sm p-4 hover:shadow-md transition"
+                    >
+                        <img 
+                            src={`${r2Url}/lni-assets/clients/${file}`} 
+                            alt={`Client Logo: ${altName}`} 
+                            loading="lazy" 
+                            /* Di sini class grayscale telah dihapus, warna asli gambar akan muncul */
+                            className="max-h-16 w-auto object-contain transition-all duration-300 opacity-90 hover:opacity-100" 
+                        />
+                    </figure>
+                );
+            })}
+        </div>
+        
+    </div>
+</section>
 
             {/* --- 4. B2B CLIENTS --- */}
-            <section id="b2b" className="py-16 md:py-20 bg-amber-50">
+            <section id="b2b" className="py-16 md:py-10 bg-[#FCF0CE]">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <h2 className="text-3xl md:text-5xl font-bold text-amber-900 mb-8 text-center md:text-left">B2B Partners</h2>
-                    <div className="grid sm:grid-cols-2 gap-4 md:gap-12 bg-white p-8 md:p-12 rounded-3xl shadow-sm border border-amber-100">
+                    <div className="grid sm:grid-cols-2 gap-4 md:gap-12 p-8 md:p-12">
                         <ul className="space-y-3 text-amber-900 text-base md:text-lg">
                             <li className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-amber-500"></span> Kafe Pause & Play</li>
                             <li className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-amber-500"></span> 22 OZ Café</li>
@@ -181,34 +198,53 @@ const Index = ({ brand }) => {
             </section>
 
             {/* --- 5. CONTACT US --- */}
-            <section id="contact" className="py-16 md:py-24 bg-white">
-                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex flex-col md:flex-row justify-center items-center md:items-start gap-10 md:gap-16 text-center md:text-left max-w-5xl mx-auto">
-                        <img 
-                            src="/assets/lauk-kita-niaga/laukkita-logo.png" 
-                            alt="Laukita Niaga Indonesia" 
-                            className="w-48 md:w-64 h-auto drop-shadow-md hover:scale-105 transition-transform" 
-                        />
-                        <div className="w-full">
-                            <h2 className="text-3xl md:text-4xl font-bold text-amber-900 mb-6">CONTACT US</h2>
-                            <div className="space-y-4 text-gray-700 text-lg">
-                                <div>
-                                    <p className="font-bold text-amber-900">Office Address</p>
-                                    <p>Bintaro Avenue Lt.2, Jl. MH Thamrin Blok A2 No. 1<br/>Bintaro Sektor 7, Bintaro Jaya, Tangerang Selatan</p>
-                                </div>
-                                <div>
-                                    <p><span className="font-bold text-amber-900">WhatsApp:</span> <a href="https://wa.me/6281260601055" className="hover:text-amber-600 transition-colors">0812-6060-1055</a></p>
-                                </div>
-                                <div>
-                                    <p><span className="font-bold text-amber-900">Email:</span> <a href="mailto:info@laukitaniaga.com" className="hover:text-amber-600 transition-colors hover:underline">info@laukitaniaga.com</a></p>
-                                </div>
-                                <p className="mt-6 text-xl text-amber-900 font-black tracking-wide">PT. LAUKITA NIAGA INDONESIA</p>
-                            </div>
-                        </div>
+            <section id="contact" className="py-16 md:py-10 bg-[#FCF0CE]">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="flex flex-col md:flex-row justify-center items-center gap-6 md:text-left">
+                
+                {/* Logo Section */}
+                <img 
+                    src={`${r2Url}/logos/laukkita-logo.png`} 
+                    alt="Laukita Niaga Indonesia" 
+                    className="w-48 md:w-64 h-auto" // Ukuran disesuaikan agar proporsional
+                />
+
+                {/* Info Section */}
+                <div className="w-full">
+                    <h2 className="text-3xl md:text-4xl font-bold text-amber-900 mb-4">
+                    CONTACT US
+                    </h2>
+                    
+                    <div className="space-y-2 text-gray-800">
+                    <p className="font-semibold text-amber-900">Office Address</p>
+                    <p>
+                        Bintaro Avenue Lt.2 Jl. MH Thamrin Blok A2 No. 1
+                        Bintaro Sektor 7, Bintaro Jaya, Tangerang Selatan
+                    </p>
+                    
+                    <p>
+                        <span className="font-semibold text-amber-900">WA : </span>
+                        <a href="https://wa.me/6281260601055" className="hover:underline">
+                        0812-6060-1055
+                        </a>
+                    </p>
+                    
+                    <p>
+                        <span className="font-semibold text-amber-900">Email : </span> 
+                        <a href="mailto:info@laukitaniaga.com" className="text-amber-900 hover:underline">
+                        info@laukitaniaga.com
+                        </a>
+                    </p>
+                    
+                    <p className="mt-4 text-amber-900 font-bold uppercase tracking-tight">
+                        PT. LAUKITA NIAGA INDONESIA
+                    </p>
                     </div>
                 </div>
-            </section>
 
+                </div>
+            </div>
+            </section>
         </>
     );
 };

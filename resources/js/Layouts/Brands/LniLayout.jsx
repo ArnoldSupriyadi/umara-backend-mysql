@@ -64,15 +64,38 @@ export default function LniLayout({ children, brand }) {
             </header>
 
             {/* --- MAIN CONTENT AREA --- */}
-            <main> 
+            <main className="bg-[#FCF0CE]"> 
                 {children}
             </main>
 
             {/* --- FOOTER KHUSUS LNI --- */}
-            <footer className="bg-gray-900 text-white py-10 border-t-4 border-[#FCF0CE]">
-                <div className="container mx-auto px-4 text-center">
-                    <p className="text-gray-400 text-sm">© {new Date().getFullYear()} PT Lauk Kita Niaga. All rights reserved.</p>
+            <footer className="bg-[#131313] text-white">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-5">
+                <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-6">
+                
+                {/* Bagian Logo dan Tagline */}
+                <div className="flex items-center gap-3">
+                    <img 
+                    src={`${r2Url}/lni-assets/logos/pt-laukita-niaga.svg`} 
+                    alt="Laukita Logo" 
+                    className="h-10 w-10" 
+                    />
+                    <div>
+                    <p className="text-white/90 text-sm">
+                        Laukita is the home of premium ready-to-eat products.
+                    </p>
+                    </div>
                 </div>
+
+                {/* Bagian Copyright */}
+                <div className="flex">
+                    <div className="pt-4 text-sm text-white/80">
+                    © {new Date().getFullYear()} Laukita. All rights reserved.
+                    </div>
+                </div>
+                
+                </div>
+            </div>
             </footer>
 
         </div>

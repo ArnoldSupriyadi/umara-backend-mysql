@@ -15,36 +15,38 @@ class BusinessUnitSeeder extends Seeder
      */
     public function run(): void
     {
+        $r2Url = "https://assets.bridgeflow.my.id";
+        
         $units = [
             [
                 'name' => 'Rasa Nusantara Baru',
                 'slug' => 'rasa-nusantara-baru',
-                'logo' => 'images/logo/logo-rnb.png',
+                'logo' => $r2Url . '/logos/logo-rnb.png',
             ],
             [
                 'name' => 'Umara Cipta Rasa',
                 'slug' => 'umara-cipta-rasa',
-                'logo' => 'images/logo/ucr-logo.png',
+                'logo' => $r2Url . '/logos/ucr-logo.png',
             ],
             [
                 'name' => 'Umara Mitra Kulina',
                 'slug' => 'umara-mitra-kulina',
-                'logo' => 'images/logo/logo-umk.png',
+                'logo' => $r2Url . '/logos/logo-umk.png',
             ],
             [
                 'name' => 'Laukita Bersama Indonesia',
                 'slug' => 'laukita-bersama-indonesia',
-                'logo' => 'images/logo/LBI-Logo.png',
+                'logo' => $r2Url . '/logos/LBI-Logo.png',
             ],
             [
                 'name' => 'Laukita Niaga Indonesia',
                 'slug' => 'laukita-niaga-indonesia',
-                'logo' => 'images/logo/laukkita-logo.png',
+                'logo' => $r2Url . '/logos/laukkita-logo.png',
             ],
             [
                 'name' => 'Umara Nikmat Boga',
                 'slug' => 'umara-nikmat-boga',
-                'logo' => 'images/logo/umara-group.png',
+                'logo' => $r2Url . '/logos/umara-group.png',
             ],
         ];
 

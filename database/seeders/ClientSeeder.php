@@ -2,41 +2,37 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ClientSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        $clientImageDir = public_path('images/client');
-        $patterns = ['*.png', '*.jpg', '*.jpeg', '*.webp', '*.svg'];
-        $files = [];
-        foreach ($patterns as $pattern) {
-            $files = array_merge($files, glob($clientImageDir . '/' . $pattern));
-        }
+        $allFiles   = Storage::disk('r2')->files('clients');
+        $extensions = ['png', 'jpg', 'jpeg', 'webp', 'svg'];
+        $files      = array_filter($allFiles, fn($file) => in_array(
+            strtolower(pathinfo($file, PATHINFO_EXTENSION)),
+            $extensions
+        ));
 
         if (empty($files)) {
-            $this->command?->warn('No client images found in public/images/client. Skipping client seeding.');
+            $this->command?->warn('No client images found in R2 clients/ folder. Skipping client seeding.');
             return;
         }
 
-        // Clear existing clients to ensure only "Umara Nikmat Boga" clients exist
         DB::table('clients')->delete();
 
         $unit = DB::table('business_units')->where('slug', 'umara-nikmat-boga')->first();
 
         if (!$unit) {
             $unitId = DB::table('business_units')->insertGetId([
-                'name' => 'Umara Nikmat Boga',
-                'slug' => 'umara-nikmat-boga',
-                'logo-path' => null,
+                'name'       => 'Umara Nikmat Boga',
+                'slug'       => 'umara-nikmat-boga',
+                'logo_path'  => null,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]);
@@ -44,15 +40,14 @@ class ClientSeeder extends Seeder
             $unitId = $unit->id;
         }
 
+        $r2Url = env('CLOUDFLARE_R2_PUBLIC_URL');
         $count = 0;
-        foreach ($files as $absPath) {
-            $filename = basename($absPath);
-            $relative = str_replace(public_path(), '', $absPath);
-            if (!str_starts_with($relative, '/')) {
-                $relative = '/' . ltrim($relative, '/');
-            }
 
-            $base = pathinfo($filename, PATHINFO_FILENAME);
+        foreach ($files as $key) {
+            $filename   = basename($key);
+            $publicUrl  = $r2Url . '/' . $key;
+
+            $base       = pathinfo($filename, PATHINFO_FILENAME);
             $clientName = Str::of($base)
                 ->replace(['-', '_'], ' ')
                 ->replaceMatches('/\s+/', ' ')
@@ -61,11 +56,11 @@ class ClientSeeder extends Seeder
 
             DB::table('clients')->updateOrInsert(
                 [
-                    'name' => $clientName,
+                    'name'             => $clientName,
                     'business_unit_id' => $unitId,
                 ],
                 [
-                    'logo' => $relative,
+                    'logo'       => $publicUrl,
                     'updated_at' => Carbon::now(),
                 ]
             );

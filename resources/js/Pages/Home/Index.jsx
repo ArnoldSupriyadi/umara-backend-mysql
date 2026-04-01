@@ -76,22 +76,21 @@ export default function Index({ sliders, clients, posts }) {
             </section>
 
             {/* --- 2. SECTION BRANDING OVERVIEW --- */}
-            <section 
+           <section 
                 id="branding-overview" 
                 className="w-full py-20 px-8 md:px-2 lg:px-12 relative" 
                 style={{
-                    backgroundImage: "url('/assets/bg/UG-BACKGROUND-WEB.jpg')",
+                    backgroundImage: `url(${r2Url}/background/UG-BACKGROUND-WEB.jpg)`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center center'
                 }}
             >
-                <div className="absolute inset-0 bg-white/85 z-0"></div>
                 <div className="w-full flex justify-center mt-4 relative z-10" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
                     <div className="max-w-4xl text-center">
                         <h2 className="text-4xl md:text-5xl font-bold mb-6 text-[#CE8131] font-['Playfair_Display']" data-aos="fade-down" data-aos-duration="1200" data-aos-delay="400">
                             BRAND OVERVIEW
                         </h2>
-                        <p className="text-lg md:text-xl text-gray-800 leading-relaxed font-medium" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="600">
+                        <p className="text-lg md:text-xl text-white leading-relaxed font-medium" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="600">
                             We are a leading brand in the industry, known for our quality products and exceptional customer service.
                         </p>
                     </div>
@@ -166,30 +165,50 @@ export default function Index({ sliders, clients, posts }) {
             </section>
 
             {/* --- 4. BAGIAN CLIENTS --- */}
-            <section className="py-20 bg-white">
+            <section className="py-20" style={{
+                    backgroundImage: `url('${r2Url}/background/BACKGROUND-OUR-CLIENT.jpg')`,
+                    backgroundRepeat: 'no-repeat',
+                    backgroundSize: 'cover',
+                }}>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="text-center mb-16" data-aos="fade-up" data-aos-duration="800">
-                        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 font-['Playfair_Display']">Our Trusted Partners</h2>
-                        <div className="w-24 h-1 bg-[#CE8131] mx-auto mt-4 rounded-full"></div>
+                    <div data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+                        <h2 className="text-4xl font-bold text-center text-[#CE8131] font-['Playfair_Display']">
+                            OUR CLIENT
+                        </h2>
+                        <p className="text-lg text-gray-600 text-center mt-4 max-w-2xl mx-auto">
+                            Trusted by leading organizations and institutions across various industries, we are proud to serve our valued clients with excellence and dedication.
+                        </p>
                     </div>
                     
-                    <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12" data-aos="zoom-in" data-aos-duration="1000" data-aos-delay="200">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-10 gap-4 sm:gap-6 lg:gap-8 mt-12">
+                        
                         {clients && clients.length > 0 ? (
                             clients.map((client) => (
-                                <div 
-                                    key={client.id} 
-                                    className="w-32 h-32 md:w-40 md:h-40 flex items-center justify-center p-6 bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-lg transition-all grayscale hover:grayscale-0 cursor-pointer"
+                                <div
+                                    key={client.id}
+                                    className="bg-white p-2 sm:p-4 rounded-lg shadow-md flex items-center justify-center"
+                                    data-aos="fade-right"
+                                    data-aos-duration="800"
+                                    data-aos-delay="400"
                                     title={client.name}
                                 >
                                     {client.logo_url ? (
-                                        <img src={client.logo_url} alt={client.name} className="max-w-full max-h-full object-contain" />
+                                        <img
+                                            src={client.logo_url}
+                                            alt={client.name}
+                                            className="w-full h-auto object-contain max-h-16 sm:max-h-20"
+                                        />
                                     ) : (
-                                        <span className="text-sm font-medium text-gray-400 text-center">{client.name}</span>
+                                        <span className="text-sm font-medium text-gray-400 text-center">
+                                            {client.name}
+                                        </span>
                                     )}
                                 </div>
                             ))
                         ) : (
-                            <p className="text-center text-gray-500 w-full">Belum ada data client.</p>
+                            <p className="text-center text-gray-500 col-span-full">
+                                Belum ada data client.
+                            </p>
                         )}
                     </div>
                 </div>

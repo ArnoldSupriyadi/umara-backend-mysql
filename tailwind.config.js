@@ -15,7 +15,13 @@ export default {
         'bg-gradient-to-r', 
         'from-brand-burgundy', 
         'to-brand-darkBurgundy', 
-        'bg-brand-burgundy'
+        'bg-brand-burgundy',
+        'bg-gradient-to-r',
+        'from-brand-burgundy',
+        'to-brand-darkBurgundy',
+        'bg-brand-burgundy',
+        'bg-palette2-a',  // tambahkan ini
+        'text-palette2-e',
     ],
 
     theme: {
@@ -70,6 +76,7 @@ export default {
                     darkBurgundy: '#3D0F14',
                 },
             },
+            
 
             // Bawa backgroundImage untuk burgundy gradient
             backgroundImage: {

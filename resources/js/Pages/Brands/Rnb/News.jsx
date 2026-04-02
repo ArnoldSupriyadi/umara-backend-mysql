@@ -57,7 +57,7 @@ const News = ({ brand, posts }) => {
                         <div className="text-center mb-16" data-aos="fade-up">
                             {/* Menggunakan bg-buttom-RNB untuk aksen teks agar senada dengan Index */}
                             <h2 
-                                className="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-cover" 
+                                className="text-4xl md:text-5xl font-bold mb-4 text-palette2-e" 
                                 style={{ backgroundImage: "url('/assets/rnb/bg-buttom-RNB.jpg')" }}
                             >
                                 Latest News

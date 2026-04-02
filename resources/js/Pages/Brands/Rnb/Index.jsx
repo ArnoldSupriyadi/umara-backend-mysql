@@ -125,14 +125,13 @@ const Index = ({ brand, posts }) => {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {restaurants.map((resto, index) => (
                              <div key={index} className="bg-amber-50 border-2 border-[#d7b35c] p-8 rounded-lg hover:shadow-lg transition-shadow flex flex-col h-full" data-aos="fade-up" data-aos-delay={200 * index + 1}>
-                                    <div className="w-28 h-28 bg-[#131313] rounded-full flex items-center justify-center mb-6 mx-auto">
+                                    <div className="w-28 h-28 bg-palette2-a rounded-full flex items-center justify-center mb-6 mx-auto">
                                         <img src={resto.logo} alt={resto.name} className="w-20 h-20 max-w-full object-contain" />
                                     </div>
                                     <h3 className="text-lg font-bold text-[#131313] mb-4 text-center uppercase tracking-wide">{resto.name.replace(' ', '\n').split('\n').map((line, i) => <React.Fragment key={i}>{line}<br/></React.Fragment>)}</h3>
                                     <p className="text-gray-600 text-center"><a href={resto.mapUrl} target="_blank" rel="noreferrer" className="hover:text-amber-600 transition">{resto.desc}</a></p>
                                 <Link className="text-center mt-auto pt-4">
-                                        <Link href={`${basePath}/outlets/${resto.slug}`} className="inline-block text-white font-semibold py-2 px-4 rounded-lg bg-gradient-to-r from-
-                                [#d7b35c] via-[#bb9040] to-[#9c6d29] bg-black">Learn More</Link>
+                                        <Link href={`${basePath}/outlets/${resto.slug}`} className="inline-block text-white font-semibold py-2 px-4 rounded-lg bg-gradient-to-r from-[#d7b35c] via-[#bb9040] to-[#9c6d29]">Learn More</Link>
                                     </Link>
                             </div>
                         ))}
@@ -186,67 +185,74 @@ const Index = ({ brand, posts }) => {
                     </div>
                 </div>
             </section>
-
-            {/* --- 4. NEWS SECTION --- */}
+            
             {/* --- 4. NEWS SECTION (DATA DINAMIS) --- */}
             <section id="news" className="py-20 bg-white">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-16" data-aos="fade-up">
                         <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Latest News</h2>
-                        <p className="text-xl text-gray-600 max-w-2xl mx-auto">Updates and stories from Rasa Nusantara Baru</p>
+                        <div className="w-16 h-1 bg-palette2-c mx-auto mb-4 rounded-full"></div>
+                        <p className="text-lg text-gray-600 max-w-2xl mx-auto">Updates and stories from Rasa Nusantara Baru</p>
                     </div>
 
                     {!hasPosts ? (
-                        <div className="text-center py-20 text-gray-500 bg-gray-50 rounded-2xl border border-gray-100">
+                        <div className="text-center py-20 text-gray-400 bg-gray-50 rounded-xl border border-dashed border-gray-200">
+                            <svg className="w-12 h-12 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                            </svg>
                             Belum ada berita yang dipublikasikan saat ini.
                         </div>
                     ) : (
-                        <div className="flex flex-col gap-8">
-                            
-                            {/* Featured Article (Berita Pertama) */}
+                        <div className="space-y-10">
+
+                            {/* Featured Article */}
                             {featuredPost && (
-                                <Link href={`/posts/${featuredPost.slug}`} className="group block bg-white rounded-2xl shadow-md border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300">
-                                    <div className="md:flex h-full">
-                                        <div className="md:w-1/2 relative overflow-hidden bg-gray-200 min-h-[250px]">
+                                <Link href={`/posts/${featuredPost.slug}`} className="group block rounded-xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-lg transition-shadow duration-300" data-aos="fade-up">
+                                    <div className="md:flex">
+                                        <div className="md:w-1/2 relative overflow-hidden bg-gray-100 min-h-[280px]">
                                             {featuredPost.image_url ? (
                                                 <img src={featuredPost.image_url} alt={featuredPost.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                                             ) : (
-                                                <div className="absolute inset-0 flex items-center justify-center text-gray-400">No Image</div>
+                                                <div className="absolute inset-0 flex items-center justify-center text-gray-300">
+                                                    <svg className="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                                                </div>
                                             )}
                                         </div>
-                                        <div className="md:w-1/2 p-8 lg:p-10 flex flex-col justify-center">
-                                            <div className="text-sm text-gray-500 mb-3">{featuredPost.created_at}</div>
-                                            <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-amber-600 transition-colors line-clamp-2">{featuredPost.title}</h3>
-                                            <p className="text-gray-600 mb-6 line-clamp-3">{featuredPost.excerpt}</p>
-                                            <div className="inline-flex items-center text-amber-600 font-semibold mt-auto">
+                                        <div className="md:w-1/2 p-8 lg:p-10 flex flex-col justify-center bg-white">
+                                            <span className="text-sm text-palette2-c font-medium mb-2">{featuredPost.created_at}</span>
+                                            <h3 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-palette2-a transition-colors line-clamp-2">{featuredPost.title}</h3>
+                                            <p className="text-gray-600 mb-6 line-clamp-3 leading-relaxed">{featuredPost.excerpt}</p>
+                                            <span className="inline-flex items-center text-palette2-a font-semibold mt-auto">
                                                 Read More
-                                                <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
-                                            </div>
+                                                <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
+                                            </span>
                                         </div>
                                     </div>
                                 </Link>
                             )}
 
-                            {/* Sisa Berita Grid */}
+                            {/* Remaining Posts Grid */}
                             {remainingPosts.length > 0 && (
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                                    {remainingPosts.map((post) => (
-                                        <Link key={post.id} href={`/posts/${post.slug}`} className="group flex flex-col bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                                            <div className="relative h-56 w-full overflow-hidden bg-gray-200">
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                    {remainingPosts.map((post, index) => (
+                                        <Link key={post.id} href={`/posts/${post.slug}`} className="group flex flex-col rounded-xl overflow-hidden border border-gray-100 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-white" data-aos="fade-up" data-aos-delay={index * 100}>
+                                            <div className="relative h-52 overflow-hidden bg-gray-100">
                                                 {post.image_url ? (
                                                     <img src={post.image_url} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                                                 ) : (
-                                                    <div className="w-full h-full flex items-center justify-center text-gray-400">No Image</div>
+                                                    <div className="w-full h-full flex items-center justify-center text-gray-300">
+                                                        <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                                                    </div>
                                                 )}
                                             </div>
-                                            <div className="p-6 flex flex-col flex-grow">
-                                                <div className="text-sm text-gray-500 mb-3">{post.created_at}</div>
-                                                <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-amber-600 transition-colors line-clamp-2">{post.title}</h3>
-                                                <p className="text-gray-600 mb-4 flex-grow line-clamp-3">{post.excerpt}</p>
-                                                <div className="mt-auto inline-flex items-center text-amber-600 font-semibold">
+                                            <div className="p-5 flex flex-col flex-grow">
+                                                <span className="text-sm text-palette2-c font-medium mb-2">{post.created_at}</span>
+                                                <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-palette2-a transition-colors line-clamp-2">{post.title}</h3>
+                                                <p className="text-gray-600 text-sm mb-4 flex-grow line-clamp-3 leading-relaxed">{post.excerpt}</p>
+                                                <span className="mt-auto inline-flex items-center text-palette2-a font-semibold text-sm">
                                                     Read More
-                                                    <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
-                                                </div>
+                                                    <svg className="w-4 h-4 ml-1.5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
+                                                </span>
                                             </div>
                                         </Link>
                                     ))}

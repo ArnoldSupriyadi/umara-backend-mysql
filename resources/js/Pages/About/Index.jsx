@@ -152,20 +152,17 @@ export default function About() {
                     backgroundAttachment: 'fixed' // Efek parallax ringan
                 }}
             >
-                {/* Overlay transparan agar teks terbaca jelas */}
-                <div className="absolute inset-0 bg-white/90 backdrop-blur-sm"></div>
-
                 <div className="container mx-auto px-6 lg:px-8 max-w-7xl relative z-10">
                     <div className="text-center mb-16">
                         <h2 className="text-4xl lg:text-5xl font-bold text-[#CE8131] mb-6 font-['Playfair_Display']" data-aos="fade-up">
                             Organization Structure
                         </h2>
-                        <p className="text-xl text-gray-700 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="200">
+                        <p className="text-xl text-white max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="200">
                             Our comprehensive organizational framework that drives success across all business units
                         </p>
                     </div>
                     
-                    <div className="flex justify-center bg-white p-8 rounded-3xl shadow-2xl border border-gray-100" data-aos="zoom-in" data-aos-delay="400">
+                    <div className="flex justify-center p-8 rounded-3x" data-aos="zoom-in" data-aos-delay="400">
                         <img 
                             src={`${r2Url}/about-ug/Organization-Structure-2.png`} 
                             alt="Organization Structure Diagram" 

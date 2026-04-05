@@ -2,29 +2,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Head } from '@inertiajs/react';
 import LumpangEmasBintaroLayout from '@/Layouts/Brands/LumpangEmasBintaroLayout';
 
-export default function LumpangEmasBintaro() {
+export default function LumpangEmasBintaro({ menus = [], promos = [], heroImages = [] }) {
     // --- STATE & REF UNTUK CAROUSEL & MODAL ---
     const [modal, setModal] = useState({ isOpen: false, src: '', title: '' });
     const [heroSlide, setHeroSlide] = useState(0);
     const menuScrollRef = useRef(null);
-
-    // Array Gambar Hero
-    const heroImages = [
-        "main-dining.jpeg",
-        "main-dining2.jpeg",
-        "outdoor-1.jpeg",
-        "tampak-depan-outlet.jpeg"
-    ];
-
-    // Array Menu Makanan (Menggantikan script panjang di HTML asli)
-    const menuFiles = [
-        "NASI_BOX_1.jpg", "NASI_BOX_2.jpg", "Menu LE BA -10_page_1.jpg", "Menu LE BA -11_page_1.jpg",
-        "Menu LE BA -12_page_1.jpg", "Menu LE BA -13_page_1.jpg", "Menu LE BA -14_page_1.jpg", "Menu LE BA -15_page_1.jpg",
-        "Menu LE BA -16_page_1.jpg", "Menu LE BA -17_page_1.jpg", "Menu LE BA -18_page_1.jpg", "Menu LE BA -19_page_1.jpg",
-        "Menu LE BA -20_page_1.jpg", "Menu LE BA -21_page_1.jpg", "Menu LE BA -22_page_1.jpg", "Menu LE BA -23_page_1.jpg",
-        "Menu LE BA -2_page_1.jpg", "Menu LE BA -3_page_1.jpg", "Menu LE BA -4_page_1.jpg", "Menu LE BA -5_page_1.jpg",
-        "Menu LE BA -6_page_1.jpg", "Menu LE BA -7_page_1.jpg", "Menu LE BA -8_page_1.jpg", "Menu LE BA -9_page_1.jpg"
-    ];
 
     // Format nama file menjadi judul
     const formatTitle = (name) => name.replace(/_/g, ' ').replace(/-/g, ' ').replace(/\.[^/.]+$/, '');
@@ -114,14 +96,15 @@ export default function LumpangEmasBintaro() {
                             <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-4 md:p-8">
                                 <div className="relative overflow-hidden rounded-2xl shadow-2xl">
                                     <div className="relative w-full h-64 md:h-96">
-                                        {heroImages.map((img, idx) => (
-                                            <img 
-                                                key={idx}
-                                                src={`/assets/lumpang-emas-bintaro/${img}`} 
-                                                alt={`Interior ${idx + 1}`} 
-                                                className={`absolute inset-0 w-full h-full object-cover transition-all duration-1000 ease-in-out ${heroSlide === idx ? 'opacity-100 scale-100' : 'opacity-0 scale-110'}`} 
-                                            />
-                                        ))}
+                                        {heroImages.map((src, idx) => (
+                                                <img 
+                                                    key={idx}
+                                                    src={src} 
+                                                    alt={`Interior ${idx + 1}`} 
+                                                    className={`absolute inset-0 w-full h-full object-cover transition-all duration-1000 ease-in-out 
+                                                    ${heroSlide === idx ? 'opacity-100 scale-100' : 'opacity-0 scale-110'}`} 
+                                                />
+                                            ))}
                                     </div>
                                     
                                     <button onClick={handleHeroPrev} className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all duration-300 backdrop-blur-sm z-20">
@@ -165,14 +148,15 @@ export default function LumpangEmasBintaro() {
                     <div className="relative w-full" data-aos="fade-up">
                         {/* Carousel Scroll Container */}
                         <div id="menuCarousel" ref={menuScrollRef} className="relative overflow-x-auto flex gap-4 lg:gap-6 w-full p-4 lg:p-8 bg-[#1a0f0a]/5 backdrop-blur-md border border-[#c8a53e]/20 rounded-3xl shadow-lg">
-                            {menuFiles.map((file, idx) => (
-                                <div key={idx} className="group relative w-[220px] sm:w-[240px] lg:w-[280px] shrink-0 cursor-pointer" onClick={() => openModal(`/assets/lumpang-emas-bintaro/MENU-BINTARO-AVENUE/${file}`, formatTitle(file))}>
-                                    <div className="relative aspect-[3/4] rounded-2xl overflow-hidden bg-black/10 border border-[#c8a53e]/30 shadow-md">
-                                        <img src={`/assets/lumpang-emas-bintaro/MENU-BINTARO-AVENUE/${file}`} alt={formatTitle(file)} loading="lazy" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+                                {menus.map((menu) => (
+                                    <div key={menu.id} className="group relative w-[220px] sm:w-[240px] lg:w-[280px] shrink-0 cursor-pointer" 
+                                         onClick={() => openModal(menu.image_url, menu.title)}>
+                                        <div className="relative aspect-[3/4] rounded-2xl overflow-hidden bg-black/10 border border-[#c8a53e]/30 shadow-md">
+                                            <img src={menu.image_url} alt={menu.title} loading="lazy" className="w-full h-full object-cover group-hover:scale-110                               transition-transform duration-700" />
+                                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100                                transition-opacity duration-300 pointer-events-none"></div>
+                                        </div>
                                     </div>
-                                </div>
-                            ))}
+                                ))}
                         </div>
                         
                         {/* Controls */}
@@ -204,7 +188,7 @@ export default function LumpangEmasBintaro() {
                         {/* Room 1 */}
                         <div className="group rounded-xl overflow-hidden bg-[#1a0f0a] border border-[#C9A53D]/20 hover:border-[#C9A53D]/60 transition-all" data-aos="fade-up">
                             <div className="h-64 lg:h-80 relative overflow-hidden">
-                                <img src="/assets/lumpang-emas-bintaro/main-dining.jpeg" alt="Main Dining" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                                <img src={`${r2Url}/rnb-assets/slider-ba/main-dining.jpeg`} alt="Main Dining" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                                 <div className="absolute inset-0 bg-gradient-to-t from-[#1a0f0a] to-transparent opacity-90"></div>
                                 <div className="absolute bottom-4 left-6 right-6">
                                     <h3 className="text-2xl font-serif font-bold text-white group-hover:text-[#C9A53D] transition-colors">Main Dining</h3>
@@ -223,7 +207,7 @@ export default function LumpangEmasBintaro() {
                         {/* Room 2 */}
                         <div className="group rounded-xl overflow-hidden bg-[#1a0f0a] border border-[#C9A53D]/20 hover:border-[#C9A53D]/60 transition-all" data-aos="fade-up" data-aos-delay="200">
                             <div className="h-64 lg:h-80 relative overflow-hidden">
-                                <img src="/assets/lumpang-emas-bintaro/main-dining2.jpeg" alt="Private Room" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                                <img src={`${r2Url}/rnb-assets/slider-ba/main-dining2.jpeg`} alt="Private Room" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                                 <div className="absolute inset-0 bg-gradient-to-t from-[#1a0f0a] to-transparent opacity-90"></div>
                                 <div className="absolute bottom-4 left-6 right-6">
                                     <h3 className="text-2xl font-serif font-bold text-white group-hover:text-[#C9A53D] transition-colors">Private Room</h3>
@@ -242,7 +226,7 @@ export default function LumpangEmasBintaro() {
                         {/* Room 3 */}
                         <div className="group rounded-xl overflow-hidden bg-[#1a0f0a] border border-[#C9A53D]/20 hover:border-[#C9A53D]/60 transition-all" data-aos="fade-up" data-aos-delay="400">
                             <div className="h-64 lg:h-80 relative overflow-hidden">
-                                <img src="/assets/lumpang-emas-bintaro/outdoor-1.jpeg" alt="Outdoor Terrace" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                                <img src={`${r2Url}/rnb-assets/slider-ba/outdoor-1.jpeg`} alt="Outdoor Terrace" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                                 <div className="absolute inset-0 bg-gradient-to-t from-[#1a0f0a] to-transparent opacity-90"></div>
                                 <div className="absolute bottom-4 left-6 right-6">
                                     <h3 className="text-2xl font-serif font-bold text-white group-hover:text-[#C9A53D] transition-colors">Outdoor Terrace</h3>

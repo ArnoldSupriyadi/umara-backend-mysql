@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\BusinessUnit;
 use App\Models\Post;
+use App\Models\Promo;
+use App\Models\Menu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
@@ -50,16 +52,44 @@ class RnbController extends Controller
 
     public function lumpangEmasBintaro()
     {
-        return Inertia::render('Brands/Rnb/LumpangEmasBintaro');
+        // 1. Ambil menu khusus lokasi Bintaro Avenue
+        $menus = \App\Models\Menu::where('location', 'menu-bintaro-avenue')
+            ->latest()
+            ->get()
+            ->map(fn($menu) => [
+                'id'        => $menu->id,
+                'title'     => $menu->title,
+                'image_url' => $menu->image_url,
+            ]);
+
+        // 2. Ambil promo aktif dari RNB
+        $promos = \App\Models\Promo::where('status', 'active')
+            ->whereHas('businessUnit', fn($q) => $q->where('slug', 'rasa-nusantara-baru'))
+            ->latest()
+            ->get()
+            ->map(fn($promo) => [
+                'id'        => $promo->id,
+                'title'     => $promo->title,
+                'image_url' => $promo->image_url,
+            ]);
+
+        $r2 = 'https://assets.bridgeflow.my.id/rnb-assets/slider-ba';
+        $heroImages = [
+            "{$r2}/main-dining.jpeg",
+            "{$r2}/main-dining2.jpeg",
+            "{$r2}/outdoor-1.jpeg",
+            "{$r2}/tampak-depan-outlet.jpeg",
+        ];
+
+        return Inertia::render('Brands/Rnb/LumpangEmasBintaro', [
+            'menus'  => $menus,
+            'promos' => $promos,
+            'heroImages' => $heroImages,
+        ]);
     }
 
     public function umaraHouse()
     {
         return Inertia::render('Brands/Rnb/UmaraHouse');
-    }
-
-    public function rasaUmara()
-    {
-        return Inertia::render('Brands/Rnb/RasaUmara');
     }
 }

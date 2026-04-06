@@ -305,92 +305,207 @@ export default function LumpangEmasSignature() {
             </section>
 
             {/* --- VIP ROOMS SECTION --- */}
-            <section id="rooms" className="py-24 bg-cover relative" style={{ backgroundImage: `url(${r2Url}/rnb-assets/BG-SIGNATURE-VIP.jpg)` }}>
-                <div className="absolute inset-0 bg-black/60"></div>
-                <div className="container mx-auto px-4 relative z-10">
-                    <div className="text-center mb-16" data-aos="fade-up">
-                        <span className="text-[#C9A53D] font-medium tracking-widest uppercase text-sm border-b-2 border-[#C9A53D] pb-2">Exclusive Dining</span>
-                        <h2 className="text-4xl md:text-6xl font-serif font-bold text-white mt-6">Our VIP Rooms</h2>
-                    </div>
+            {/* --- VIP ROOMS SECTION --- */}
+<section id="rooms" className="py-16 lg:py-24 relative overflow-hidden bg-cover bg-center" style={{ backgroundImage: `url(${r2Url}/rnb-assets/BG-SIGNATURE-VIP.jpg)` }}>
+    <div className="absolute inset-0 bg-black/60"></div>
+    <div className="container mx-auto px-4 relative z-10">
+        <div className="text-center mb-16 lg:mb-24" data-aos="fade-up">
+            <div className="inline-block border-b-2 border-[#C9A53D] pb-2 mb-4">
+                <span className="text-[#C9A53D] font-medium tracking-widest uppercase text-sm">Exclusive Dining</span>
+            </div>
+            <h2 className="text-3xl md:text-5xl lg:text-6xl font-serif font-bold text-white mb-6" data-aos="fade-down" data-aos-duration="1200" data-aos-delay="200">
+                Our VIP Rooms
+            </h2>
+            <p className="text-base md:text-xl text-gray-300 max-w-3xl mx-auto px-4 font-light leading-relaxed" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
+                Experience privacy and luxury in our carefully designed dining spaces, each offering a unique ambiance for your special occasions.
+            </p>
+        </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {/* Room 1 */}
-                        <div className="group rounded-xl overflow-hidden bg-[#1a0f0a] border border-[#C9A53D]/20 hover:border-[#C9A53D]/60 transition-all" data-aos="fade-up">
-                            <div className="h-80 relative overflow-hidden">
-                                <img src="/assets/lumpang-emas-prapanca/MAINDINING1STFLOOR/Pro-Capture One 00448.jpg" alt="Main Dining" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                                <div className="absolute inset-0 bg-gradient-to-t from-[#1a0f0a] to-transparent opacity-90"></div>
-                                <div className="absolute bottom-4 left-6 right-6">
-                                    <h3 className="text-2xl font-serif font-bold text-white group-hover:text-[#C9A53D] transition-colors">Main Dining 1st Floor</h3>
-                                </div>
-                            </div>
-                            <div className="p-6">
-                                <p className="text-gray-400 text-sm mb-6 h-12">Central dining area with capacity up to 40 guests. Features projector screen and spacious ambiance.</p>
-                                <div className="flex justify-between border-t border-white/10 pt-4 mb-6">
-                                    <div>
-                                        <p className="text-xs text-[#C9A53D] uppercase tracking-wider">Capacity</p>
-                                        <p className="text-white font-semibold">40 Guests</p>
-                                    </div>
-                                    <div className="text-right">
-                                        <p className="text-xs text-[#C9A53D] uppercase tracking-wider">Starting From</p>
-                                        <p className="text-xl text-white font-bold">12M<span className="text-xs text-gray-400">++</span></p>
-                                    </div>
-                                </div>
-                                <a href="https://wa.me/6281222227496" className="block w-full text-center border border-[#C9A53D] text-[#C9A53D] py-3 rounded-lg hover:bg-[#C9A53D] hover:text-black transition-colors uppercase text-sm font-semibold tracking-wider">Book Now</a>
-                            </div>
-                        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
 
-                        {/* Room 2 */}
-                        <div className="group rounded-xl overflow-hidden bg-[#1a0f0a] border border-[#C9A53D]/20 hover:border-[#C9A53D]/60 transition-all" data-aos="fade-up" data-aos-delay="200">
-                            <div className="h-80 relative overflow-hidden">
-                                <img src="/assets/lumpang-emas-prapanca/SUMATRA/OE4A0001.jpg" alt="Sumatra" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                                <div className="absolute inset-0 bg-gradient-to-t from-[#1a0f0a] to-transparent opacity-90"></div>
-                                <div className="absolute bottom-4 left-6 right-6">
-                                    <h3 className="text-2xl font-serif font-bold text-white group-hover:text-[#C9A53D] transition-colors">Sumatra</h3>
-                                </div>
-                            </div>
-                            <div className="p-6">
-                                <p className="text-gray-400 text-sm mb-6 h-12">Intimate setting ideal for romantic dinners or small private gatherings.</p>
-                                <div className="flex justify-between border-t border-white/10 pt-4 mb-6">
-                                    <div>
-                                        <p className="text-xs text-[#C9A53D] uppercase tracking-wider">Capacity</p>
-                                        <p className="text-white font-semibold">8-10 Guests</p>
-                                    </div>
-                                    <div className="text-right">
-                                        <p className="text-xs text-[#C9A53D] uppercase tracking-wider">Starting From</p>
-                                        <p className="text-xl text-white font-bold">3M<span className="text-xs text-gray-400">++</span></p>
-                                    </div>
-                                </div>
-                                <a href="https://wa.me/6281222227496" className="block w-full text-center border border-[#C9A53D] text-[#C9A53D] py-3 rounded-lg hover:bg-[#C9A53D] hover:text-black transition-colors uppercase text-sm font-semibold tracking-wider">Book Now</a>
-                            </div>
-                        </div>
-
-                        {/* Room 3 */}
-                        <div className="group rounded-xl overflow-hidden bg-[#1a0f0a] border border-[#C9A53D]/20 hover:border-[#C9A53D]/60 transition-all" data-aos="fade-up" data-aos-delay="400">
-                            <div className="h-80 relative overflow-hidden">
-                                <img src="/assets/lumpang-emas-prapanca/UMARAAJA/Pro-Capture One 00183.jpg" alt="Umaraja" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                                <div className="absolute inset-0 bg-gradient-to-t from-[#1a0f0a] to-transparent opacity-90"></div>
-                                <div className="absolute bottom-4 left-6 right-6">
-                                    <h3 className="text-2xl font-serif font-bold text-white group-hover:text-[#C9A53D] transition-colors">Umaraja</h3>
-                                </div>
-                            </div>
-                            <div className="p-6">
-                                <p className="text-gray-400 text-sm mb-6 h-12">Premium ambiance with warm lighting and a private bar for medium groups.</p>
-                                <div className="flex justify-between border-t border-white/10 pt-4 mb-6">
-                                    <div>
-                                        <p className="text-xs text-[#C9A53D] uppercase tracking-wider">Capacity</p>
-                                        <p className="text-white font-semibold">15-20 Guests</p>
-                                    </div>
-                                    <div className="text-right">
-                                        <p className="text-xs text-[#C9A53D] uppercase tracking-wider">Starting From</p>
-                                        <p className="text-xl text-white font-bold">10M<span className="text-xs text-gray-400">++</span></p>
-                                    </div>
-                                </div>
-                                <a href="https://wa.me/6281222227496" className="block w-full text-center border border-[#C9A53D] text-[#C9A53D] py-3 rounded-lg hover:bg-[#C9A53D] hover:text-black transition-colors uppercase text-sm font-semibold tracking-wider">Book Now</a>
-                            </div>
-                        </div>
+            {/* Room 1 - Main Dining 1st Floor */}
+            <div className="group relative rounded-xl overflow-hidden shadow-2xl bg-[#1a0f0a] border border-[#C9A53D]/20 hover:border-[#C9A53D]/60 transition-all duration-500" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+                <div className="h-80 relative overflow-hidden">
+                    <img src="/assets/lumpang-emas-prapanca/MAINDINING1STFLOOR/Pro-Capture One 00448.jpg" alt="Main Dining 1st Floor" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#1a0f0a] via-transparent to-transparent opacity-90"></div>
+                    <div className="absolute bottom-4 left-6 right-6">
+                        <h3 className="text-2xl font-serif font-bold text-white mb-2 group-hover:text-[#C9A53D] transition-colors">Main Dining 1st Floor</h3>
+                        <div className="w-12 h-0.5 bg-[#C9A53D] group-hover:w-full transition-all duration-500"></div>
                     </div>
                 </div>
-            </section>
+                <div className="p-6 pt-2">
+                    <p className="text-gray-400 text-sm mb-6 leading-relaxed min-h-[60px]">
+                        Central dining area with capacity up to 40 guests. Features projector screen and spacious ambiance.
+                    </p>
+                    <div className="flex items-end justify-between border-t border-white/10 pt-4 mb-6">
+                        <div>
+                            <p className="text-xs text-[#C9A53D] uppercase tracking-wider mb-1">Capacity</p>
+                            <p className="text-white font-semibold">40 Guests</p>
+                        </div>
+                        <div className="text-right">
+                            <p className="text-xs text-[#C9A53D] uppercase tracking-wider mb-1">Starting From</p>
+                            <p className="text-xl text-white font-bold">12.000.000<span className="text-xs text-gray-400 font-normal">++</span></p>
+                        </div>
+                    </div>
+                    <a href="https://wa.me/6281222227496" className="block w-full text-center bg-transparent border border-[#C9A53D] text-[#C9A53D] py-3 rounded-lg font-medium hover:bg-[#C9A53D] hover:text-[#1a0f0a] transition-all duration-300 uppercase text-sm tracking-wider">
+                        Book Now
+                    </a>
+                </div>
+            </div>
+
+            {/* Room 2 - Sumatra */}
+            <div className="group relative rounded-xl overflow-hidden shadow-2xl bg-[#1a0f0a] border border-[#C9A53D]/20 hover:border-[#C9A53D]/60 transition-all duration-500" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300">
+                <div className="h-80 relative overflow-hidden">
+                    <img src="/assets/lumpang-emas-prapanca/SUMATRA/OE4A0001.jpg" alt="Sumatra Room" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#1a0f0a] via-transparent to-transparent opacity-90"></div>
+                    <div className="absolute bottom-4 left-6 right-6">
+                        <h3 className="text-2xl font-serif font-bold text-white mb-2 group-hover:text-[#C9A53D] transition-colors">Sumatra</h3>
+                        <div className="w-12 h-0.5 bg-[#C9A53D] group-hover:w-full transition-all duration-500"></div>
+                    </div>
+                </div>
+                <div className="p-6 pt-2">
+                    <p className="text-gray-400 text-sm mb-6 leading-relaxed min-h-[60px]">
+                        Intimate setting ideal for romantic dinners or small private gatherings.
+                    </p>
+                    <div className="flex items-end justify-between border-t border-white/10 pt-4 mb-6">
+                        <div>
+                            <p className="text-xs text-[#C9A53D] uppercase tracking-wider mb-1">Capacity</p>
+                            <p className="text-white font-semibold">8-10 Guests</p>
+                        </div>
+                        <div className="text-right">
+                            <p className="text-xs text-[#C9A53D] uppercase tracking-wider mb-1">Starting From</p>
+                            <p className="text-xl text-white font-bold">3.000.000<span className="text-xs text-gray-400 font-normal">++</span></p>
+                        </div>
+                    </div>
+                    <a href="https://wa.me/6281222227496" className="block w-full text-center bg-transparent border border-[#C9A53D] text-[#C9A53D] py-3 rounded-lg font-medium hover:bg-[#C9A53D] hover:text-[#1a0f0a] transition-all duration-300 uppercase text-sm tracking-wider">
+                        Book Now
+                    </a>
+                </div>
+            </div>
+
+            {/* Room 3 - Umaraja */}
+            <div className="group relative rounded-xl overflow-hidden shadow-2xl bg-[#1a0f0a] border border-[#C9A53D]/20 hover:border-[#C9A53D]/60 transition-all duration-500" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
+                <div className="h-80 relative overflow-hidden">
+                    <img src="/assets/lumpang-emas-prapanca/UMARAAJA/Pro-Capture One 00183.jpg" alt="Umaraja Room" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#1a0f0a] via-transparent to-transparent opacity-90"></div>
+                    <div className="absolute bottom-4 left-6 right-6">
+                        <h3 className="text-2xl font-serif font-bold text-white mb-2 group-hover:text-[#C9A53D] transition-colors">Umaraja</h3>
+                        <div className="w-12 h-0.5 bg-[#C9A53D] group-hover:w-full transition-all duration-500"></div>
+                    </div>
+                </div>
+                <div className="p-6 pt-2">
+                    <p className="text-gray-400 text-sm mb-6 leading-relaxed min-h-[60px]">
+                        Premium ambiance with warm lighting and a private bar for medium-sized groups.
+                    </p>
+                    <div className="flex items-end justify-between border-t border-white/10 pt-4 mb-6">
+                        <div>
+                            <p className="text-xs text-[#C9A53D] uppercase tracking-wider mb-1">Capacity</p>
+                            <p className="text-white font-semibold">15 - 20 Guests</p>
+                        </div>
+                        <div className="text-right">
+                            <p className="text-xs text-[#C9A53D] uppercase tracking-wider mb-1">Starting From</p>
+                            <p className="text-xl text-white font-bold">10.000.000<span className="text-xs text-gray-400 font-normal">++</span></p>
+                        </div>
+                    </div>
+                    <a href="https://wa.me/6281222227496" className="block w-full text-center bg-transparent border border-[#C9A53D] text-[#C9A53D] py-3 rounded-lg font-medium hover:bg-[#C9A53D] hover:text-[#1a0f0a] transition-all duration-300 uppercase text-sm tracking-wider">
+                        Book Now
+                    </a>
+                </div>
+            </div>
+
+            {/* Room 4 - Main Dining 2nd Floor */}
+            <div className="group relative rounded-xl overflow-hidden shadow-2xl bg-[#1a0f0a] border border-[#C9A53D]/20 hover:border-[#C9A53D]/60 transition-all duration-500" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="500">
+                <div className="h-80 relative overflow-hidden">
+                    <img src="/assets/lumpang-emas-prapanca/MAINDINNING2NDFLOOR/Pro-Capture One 00212.jpg" alt="Main Dining 2nd Floor" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#1a0f0a] via-transparent to-transparent opacity-90"></div>
+                    <div className="absolute bottom-4 left-6 right-6">
+                        <h3 className="text-2xl font-serif font-bold text-white mb-2 group-hover:text-[#C9A53D] transition-colors">Main Dining 2nd Floor</h3>
+                        <div className="w-12 h-0.5 bg-[#C9A53D] group-hover:w-full transition-all duration-500"></div>
+                    </div>
+                </div>
+                <div className="p-6 pt-2">
+                    <p className="text-gray-400 text-sm mb-6 leading-relaxed min-h-[60px]">
+                        Exclusive space for larger gatherings with a cozy and intimate setting.
+                    </p>
+                    <div className="flex items-end justify-between border-t border-white/10 pt-4 mb-6">
+                        <div>
+                            <p className="text-xs text-[#C9A53D] uppercase tracking-wider mb-1">Capacity</p>
+                            <p className="text-white font-semibold">40-50 Guests</p>
+                        </div>
+                        <div className="text-right">
+                            <p className="text-xs text-[#C9A53D] uppercase tracking-wider mb-1">Starting From</p>
+                            <p className="text-xl text-white font-bold">15.000.000<span className="text-xs text-gray-400 font-normal">++</span></p>
+                        </div>
+                    </div>
+                    <a href="https://wa.me/6281222227496" className="block w-full text-center bg-transparent border border-[#C9A53D] text-[#C9A53D] py-3 rounded-lg font-medium hover:bg-[#C9A53D] hover:text-[#1a0f0a] transition-all duration-300 uppercase text-sm tracking-wider">
+                        Book Now
+                    </a>
+                </div>
+            </div>
+
+            {/* Room 5 - Kalimantan */}
+            <div className="group relative rounded-xl overflow-hidden shadow-2xl bg-[#1a0f0a] border border-[#C9A53D]/20 hover:border-[#C9A53D]/60 transition-all duration-500" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="600">
+                <div className="h-80 relative overflow-hidden">
+                    <img src="/assets/lumpang-emas-prapanca/KALIMANTAN/Pro-Capture One 00443.jpg" alt="Kalimantan Room" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#1a0f0a] via-transparent to-transparent opacity-90"></div>
+                    <div className="absolute bottom-4 left-6 right-6">
+                        <h3 className="text-2xl font-serif font-bold text-white mb-2 group-hover:text-[#C9A53D] transition-colors">Kalimantan</h3>
+                        <div className="w-12 h-0.5 bg-[#C9A53D] group-hover:w-full transition-all duration-500"></div>
+                    </div>
+                </div>
+                <div className="p-6 pt-2">
+                    <p className="text-gray-400 text-sm mb-6 leading-relaxed min-h-[60px]">
+                        Features elegant wooden dining chairs and a warm atmosphere for shared moments.
+                    </p>
+                    <div className="flex items-end justify-between border-t border-white/10 pt-4 mb-6">
+                        <div>
+                            <p className="text-xs text-[#C9A53D] uppercase tracking-wider mb-1">Capacity</p>
+                            <p className="text-white font-semibold">25-30 Guests</p>
+                        </div>
+                        <div className="text-right">
+                            <p className="text-xs text-[#C9A53D] uppercase tracking-wider mb-1">Starting From</p>
+                            <p className="text-xl text-white font-bold">9.000.000<span className="text-xs text-gray-400 font-normal">++</span></p>
+                        </div>
+                    </div>
+                    <a href="https://wa.me/6281222227496" className="block w-full text-center bg-transparent border border-[#C9A53D] text-[#C9A53D] py-3 rounded-lg font-medium hover:bg-[#C9A53D] hover:text-[#1a0f0a] transition-all duration-300 uppercase text-sm tracking-wider">
+                        Book Now
+                    </a>
+                </div>
+            </div>
+
+            {/* Room 6 - Bali */}
+            <div className="group relative rounded-xl overflow-hidden shadow-2xl bg-[#1a0f0a] border border-[#C9A53D]/20 hover:border-[#C9A53D]/60 transition-all duration-500" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="700">
+                <div className="h-80 relative overflow-hidden">
+                    <img src="/assets/lumpang-emas-prapanca/BALI/BALI.jpeg" alt="Bali Room" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#1a0f0a] via-transparent to-transparent opacity-90"></div>
+                    <div className="absolute bottom-4 left-6 right-6">
+                        <h3 className="text-2xl font-serif font-bold text-white mb-2 group-hover:text-[#C9A53D] transition-colors">Bali</h3>
+                        <div className="w-12 h-0.5 bg-[#C9A53D] group-hover:w-full transition-all duration-500"></div>
+                    </div>
+                </div>
+                <div className="p-6 pt-2">
+                    <p className="text-gray-400 text-sm mb-6 leading-relaxed min-h-[60px]">
+                        Cozy setting ideal for intimate dinners and private conversations.
+                    </p>
+                    <div className="flex items-end justify-between border-t border-white/10 pt-4 mb-6">
+                        <div>
+                            <p className="text-xs text-[#C9A53D] uppercase tracking-wider mb-1">Capacity</p>
+                            <p className="text-white font-semibold">4-6 Guests</p>
+                        </div>
+                        <div className="text-right">
+                            <p className="text-xs text-[#C9A53D] uppercase tracking-wider mb-1">Starting From</p>
+                            <p className="text-xl text-white font-bold">1.200.000<span className="text-xs text-gray-400 font-normal">++</span></p>
+                        </div>
+                    </div>
+                    <a href="https://wa.me/6281222227496" className="block w-full text-center bg-transparent border border-[#C9A53D] text-[#C9A53D] py-3 rounded-lg font-medium hover:bg-[#C9A53D] hover:text-[#1a0f0a] transition-all duration-300 uppercase text-sm tracking-wider">
+                        Book Now
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
 
             {/* --- CONTACT & RESERVATION SECTION --- */}
             <section id="contact" className="py-20 bg-white">

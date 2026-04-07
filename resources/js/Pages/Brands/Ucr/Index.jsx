@@ -13,7 +13,9 @@ import 'swiper/css/navigation';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
-const Index = ({ brand }) => {
+const Index = ({ brand, heroSlides = [], showcaseSlides = [], experienceImages = [] }) => {
+
+    const r2Url = "https://assets.bridgeflow.my.id";
 
     useEffect(() => {
         AOS.init({ duration: 1000, once: true, offset: 50 });
@@ -21,19 +23,6 @@ const Index = ({ brand }) => {
 
     // Helper variable untuk link agar lebih mudah dibaca
     const basePath = `/${brand?.slug || 'umara-cipta-rasa'}`;
-
-    const heroSlides = [
-        { image: "/assets/ucr/authentic-recipes/Nasi-Umara-Horizontal.jpg", alt: "Premium Ambiance" },
-        { image: "/assets/ucr/UCR-WEB/wedding-slider1.png", alt: "Wedding Ambiance" },
-        { image: "/assets/ucr-wedding-catering/3.jpg", alt: "Meeting Ambiance" }
-    ];
-
-    const showcaseSlides = [
-        { image: "/assets/ucr/showcase-1.jpg", caption: "Slices through the golden crust of a classic Beef Wellington" },
-        { image: "/assets/ucr/showcase-2.jpg", caption: "Corporate meeting service with curated menus." },
-        { image: "/assets/ucr/showcase-3.jpg", caption: "Private dining, tailored by our culinary team." },
-        { image: "/assets/ucr/showcase-4.jpg", caption: "Live cooking stations add an exciting visual element to the dining experience." }
-    ];
 
     return (
         <>
@@ -111,7 +100,7 @@ const Index = ({ brand }) => {
                         <div className="grid-3 mt-12">
                             {/* Wedding */}
                             <div className="card" data-aos="fade-up" data-aos-delay="100">
-                                <div className="card-media"><img src="/assets/ucr-wedding-catering/2.jpg" alt="Wedding" /></div>
+                                <div className="card-media"><img src={experienceImages[0].image} alt={experienceImages[0].alt} /></div>
                                 <div className="card-body">
                                     <h3 className="text-xl font-bold text-gray-900 font-['Playfair_Display']">Wedding</h3>
                                     <p className="text-gray-600 mt-2 mb-4 leading-relaxed">Elegant wedding experiences with bespoke menus and refined service.</p>
@@ -121,7 +110,7 @@ const Index = ({ brand }) => {
 
                             {/* Meeting */}
                             <div className="card" data-aos="fade-up" data-aos-delay="200">
-                                <div className="card-media"><img src="/assets/ucr/UCR-WEB/meeting.jpg" alt="Meeting" /></div>
+                                <div className="card-media"><img src={experienceImages[1].image} alt={experienceImages[1].alt} /></div>
                                 <div className="card-body">
                                     <h3 className="text-xl font-bold text-gray-900 font-['Playfair_Display']">Meeting</h3>
                                     <p className="text-gray-600 mt-2 mb-4 leading-relaxed">Professional meeting experiences with curated menus and seamless coordination.</p>
@@ -131,7 +120,7 @@ const Index = ({ brand }) => {
 
                             {/* Event */}
                             <div className="card" data-aos="fade-up" data-aos-delay="300">
-                                <div className="card-media"><img src="/assets/ucr-coorporate-event/2.jpg" alt="Event" /></div>
+                                <div className="card-media"><img src={experienceImages[2].image} alt={experienceImages[2].alt} /></div>
                                 <div className="card-body">
                                     <h3 className="text-xl font-bold text-gray-900 font-['Playfair_Display']">Event</h3>
                                     <p className="text-gray-600 mt-2 mb-4 leading-relaxed">Exceptional experiences for celebrations, product launches, and executive gatherings.</p>
@@ -141,7 +130,7 @@ const Index = ({ brand }) => {
 
                             {/* Mealbox */}
                             <div className="card" data-aos="fade-up" data-aos-delay="400">
-                                <div className="card-media"><img src="/assets/ucr/UCR-WEB/mealbox experience 725x472-04.webp" alt="Mealbox" /></div>
+                                <div className="card-media"><img src={experienceImages[3].image} alt={experienceImages[3].alt} /></div>
                                 <div className="card-body">
                                     <h3 className="text-xl font-bold text-gray-900 font-['Playfair_Display']">Mealbox</h3>
                                     <p className="text-gray-600 mt-2 mb-4 leading-relaxed">High-quality meal solutions crafted for corporate needs and daily operations.</p>
@@ -151,7 +140,7 @@ const Index = ({ brand }) => {
 
                             {/* Dining */}
                             <div className="card" data-aos="fade-up" data-aos-delay="500">
-                                <div className="card-media"><img src="/assets/ucr-private-event/1.jpg" alt="Dining" /></div>
+                                <div className="card-media"><img src={experienceImages[4].image} alt={experienceImages[4].alt} /></div>
                                 <div className="card-body">
                                     <h3 className="text-xl font-bold text-gray-900 font-['Playfair_Display']">Dining</h3>
                                     <p className="text-gray-600 mt-2 mb-4 leading-relaxed">A curated dining experience, crafted for refined moments.</p>

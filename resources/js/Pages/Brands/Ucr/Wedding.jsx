@@ -8,20 +8,12 @@ import { Navigation, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 
-export default function Wedding({ brand }) {
+export default function Wedding({ brand, highlightImages = [] }) {
     
+    const r2Url = "https://assets.bridgeflow.my.id";
+
     // Data gambar untuk Carousel Highlight Moments
-    const highlightImages = [
-        "/assets/ucr/UCR-WEB/wedding/highlight-moments1.jpg",
-        "/assets/ucr/UCR-WEB/wedding/wedding3.jpg",
-        "/assets/ucr/UCR-WEB/wedding/wedding4.jpg",
-        "/assets/ucr/UCR-WEB/wedding/wedding5.jpg",
-        "/assets/ucr/UCR-WEB/wedding/wedding6.jpg",
-        "/assets/ucr/UCR-WEB/wedding/wedding7.jpg",
-        "/assets/ucr/UCR-WEB/wedding/wedding8.jpeg",
-        "/assets/ucr/UCR-WEB/wedding/wedding9.jpeg",
-        "/assets/ucr/UCR-WEB/wedding/wedding10.jpeg"
-    ];
+    
 
     return (
         <div className="bg-white">
@@ -33,7 +25,7 @@ export default function Wedding({ brand }) {
                     <div className="container-hero-fluid w-full">
                         <div className="hero-media relative w-full h-[60vh] md:h-[80vh] overflow-hidden">
                             <img 
-                                src="/assets/ucr/UCR-WEB/wedding-hero-img.jpg" 
+                                src={`${r2Url}/ucr-assets/wedding-hero-img.jpg`} 
                                 alt="Umara Wedding" 
                                 className="absolute inset-0 w-full h-full object-cover"
                             />

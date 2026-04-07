@@ -9,6 +9,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RnbController;
+use App\Http\Controllers\UcrController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -56,6 +57,11 @@ Route::prefix('rasa-nusantara-baru')->group(function () {
     Route::get('/outlets/lumpang-emas-bintaro', [RnbController::class, 'lumpangEmasBintaro'])->name('rnb.outlets.bintaro');
     Route::get('/outlets/umara-house', [RnbController::class, 'umaraHouse'])->name('rnb.outlets.umarahouse');
     Route::get('/outlets/rasa-umara', [RnbController::class, 'rasaUmara'])->name('rnb.outlets.rasaumara');
+});
+
+Route::prefix('umara-cipta-rasa')->group(function () {
+    Route::get('/', [UcrController::class, 'index'])->name('brands.ucr.index');
+    Route::get('/{page_slug}', [UcrController::class, 'page'])->name('brands.ucr.page');
 });
 
 Route::prefix('{brand_slug}')->group(function () {

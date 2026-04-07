@@ -27,6 +27,9 @@ export default function UmaraHouseLayout({ children }) {
         }
     };
 
+    // Variabel Base URL Cloudflare R2
+    const r2Url = "https://assets.bridgeflow.my.id";
+
     return (
         <div className="umara-house bg-[#131313] min-h-screen text-white tracking-wide font-sans overflow-x-hidden">
             {/* --- LINK EKSTERNAL & CSS KHUSUS --- */}
@@ -65,7 +68,7 @@ export default function UmaraHouseLayout({ children }) {
                     <div className="flex justify-between items-center py-4">
                         <div className="flex items-center space-x-2">
                             <Link href="/rasa-nusantara-baru">
-                                <img src="/assets/vector/logo-rnb.png" alt="PT Nusantara Baru" className="w-20 h-auto" />
+                                <img src={`${r2Url}/logos/logo-rnb.png`} alt="PT Nusantara Baru" className="w-20 h-auto" />
                             </Link>
                         </div>
                         {/* Desktop Menu */}
@@ -110,7 +113,7 @@ export default function UmaraHouseLayout({ children }) {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         <div>
                             <div className="flex items-center space-x-2 mb-4">
-                                <img src="/assets/vector/-_umarahouse putih.png" alt="Umara House" className="h-8 w-auto" />
+                                <img src={`${r2Url}/logos/logo-rnb.png`} alt="Umara House" className="h-8 w-auto" />
                             </div>
                             <p className="text-white">
                                 Experience sophisticated dining in our elegantly designed spaces where contemporary aesthetics meet culinary excellence.

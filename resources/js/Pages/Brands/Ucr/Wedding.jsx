@@ -11,7 +11,7 @@ import 'swiper/css/navigation';
 export default function Wedding({ brand, highlightImages = [] }) {
     
     const r2Url = "https://assets.bridgeflow.my.id";
-
+    console.log(highlightImages)
     // Data gambar untuk Carousel Highlight Moments
     
 
@@ -144,7 +144,7 @@ export default function Wedding({ brand, highlightImages = [] }) {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                             <div className="order-2 md:order-1">
                                 <img 
-                                    src="/assets/ucr-wedding-catering/2.jpg" 
+                                    src={`${r2Url}/ucr-assets/wedding.jpg`} 
                                     alt="Wedding Venues" 
                                     className="w-full h-auto rounded-sm shadow-xl object-cover"
                                 />
@@ -171,7 +171,7 @@ export default function Wedding({ brand, highlightImages = [] }) {
                             </div>
                             <div>
                                 <img 
-                                    src="/assets/ucr/UCR-WEB/wedding/wedding-advisor.png" 
+                                    src={`${r2Url}/ucr-assets/wedding-advisor.png`} 
                                     alt="Wedding Advisor" 
                                     className="w-full h-auto rounded-sm shadow-xl object-cover"
                                 />

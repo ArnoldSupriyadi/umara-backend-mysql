@@ -61,6 +61,7 @@ Route::prefix('rasa-nusantara-baru')->group(function () {
 
 Route::prefix('umara-cipta-rasa')->group(function () {
     Route::get('/', [UcrController::class, 'index'])->name('brands.ucr.index');
+    Route::get('/wedding', [UcrController::class, 'wedding'])->name('brands.ucr.wedding');
     Route::get('/{page_slug}', [UcrController::class, 'page'])->name('brands.ucr.page');
 });
 

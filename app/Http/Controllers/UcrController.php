@@ -9,29 +9,31 @@ use Inertia\Inertia;
 
 class UcrController extends Controller
 {
+    protected string $r2 = 'https://assets.bridgeflow.my.id';
+
     public function index()
     {
     $r2 = 'https://assets.bridgeflow.my.id';
 
     $heroSlides = [
-        ['image' => "{$r2}/ucr-assets/sliders/Nasi-Umara-Horizontal.jpg", 'alt' => 'Premium Ambiance'],
-        ['image' => "{$r2}/ucr-assets/sliders/wedding-slider1.png", 'alt' => 'Wedding Ambiance'],
-        ['image' => "{$r2}/ucr-assets/sliders/3.jpg", 'alt' => 'Meeting Ambiance'],
+        ['image' => "{$this->r2}/ucr-assets/sliders/Nasi-Umara-Horizontal.jpg", 'alt' => 'Premium Ambiance'],
+        ['image' => "{$this->r2}/ucr-assets/sliders/wedding-slider1.png", 'alt' => 'Wedding Ambiance'],
+        ['image' => "{$this->r2}/ucr-assets/sliders/3.jpg", 'alt' => 'Meeting Ambiance'],
     ];
 
     $showcaseSlides = [
-        ['image' => "{$r2}/ucr-assets/showcase-1.jpg", 'caption' => "Slices through the golden crust of a classic Beef Wellington"],
-        ['image' => "{$r2}/ucr-assets/showcase-2.jpg", 'caption' => "Corporate meeting service with curated menus."],
-        ['image' => "{$r2}/ucr-assets/showcase-3.jpg", 'caption' => "Private dining, tailored by our culinary team."],
-        ['image' => "{$r2}/ucr-assets/showcase-4.jpg", 'caption' => "Live cooking stations add an exciting visual element to the dining experience."],
+        ['image' => "{$this->r2}/ucr-assets/showcase-1.jpg", 'caption' => "Slices through the golden crust of a classic Beef Wellington"],
+        ['image' => "{$this->r2}/ucr-assets/showcase-2.jpg", 'caption' => "Corporate meeting service with curated menus."],
+        ['image' => "{$this->r2}/ucr-assets/showcase-3.jpg", 'caption' => "Private dining, tailored by our culinary team."],
+        ['image' => "{$this->r2}/ucr-assets/showcase-4.jpg", 'caption' => "Live cooking stations add an exciting visual element to the dining experience."],
     ];
 
     $experienceImages = [
-        ['image' => "{$r2}/ucr-assets/wedding.jpg", 'alt' => 'Wedding Ambiance'],
-        ['image' => "{$r2}/ucr-assets/meeting.jpg", 'alt' => 'Meeting Ambiance'],
-        ['image' => "{$r2}/ucr-assets/event.jpg", 'alt' => 'Corporate Event Ambiance'],
-        ['image' => "{$r2}/ucr-assets/mealbox.webp", 'alt' => 'Mealbox Experience Ambiance'],
-        ['image' => "{$r2}/ucr-assets/dining.jpg", 'alt' => 'Dining Experience Ambiance'],
+        ['image' => "{$this->r2}/ucr-assets/wedding.jpg", 'alt' => 'Wedding Ambiance'],
+        ['image' => "{$this->r2}/ucr-assets/meeting.jpg", 'alt' => 'Meeting Ambiance'],
+        ['image' => "{$this->r2}/ucr-assets/event.jpg", 'alt' => 'Corporate Event Ambiance'],
+        ['image' => "{$this->r2}/ucr-assets/mealbox.webp", 'alt' => 'Mealbox Experience Ambiance'],
+        ['image' => "{$this->r2}/ucr-assets/dining.jpg", 'alt' => 'Dining Experience Ambiance'],
 
     ];
 
@@ -57,15 +59,15 @@ class UcrController extends Controller
     public function wedding()
     {
         $highlightImages = [
-            ['image' => "/assets/ucr/UCR-WEB/wedding/highlight-moments1.jpg"],
-            ['image' => "/assets/ucr/UCR-WEB/wedding/wedding3.jpg"],
-            ['image' => "/assets/ucr/UCR-WEB/wedding/wedding4.jpg"],   
-            ['image' => "/assets/ucr/UCR-WEB/wedding/wedding5.jpg"],
-            ['image' => "/assets/ucr/UCR-WEB/wedding/wedding6.jpg"],
-            ['image' => "/assets/ucr/UCR-WEB/wedding/wedding7.jpg"],
-            ['image' => "/assets/ucr/UCR-WEB/wedding/wedding8.jpeg"],
-            ['image' => "/assets/ucr/UCR-WEB/wedding/wedding9.jpeg"],
-            ['image' => "/assets/ucr/UCR-WEB/wedding/wedding10.jpeg"]
+            ['image' => "{$this->r2}/ucr-assets/highlight-moments1.jpg"],
+            ['image' => "{$this->r2}/ucr-assets/wedding3.jpg"],
+            ['image' => "{$this->r2}/ucr-assets/wedding4.jpg"],   
+            ['image' => "{$this->r2}/ucr-assets/wedding5.jpg"],
+            ['image' => "{$this->r2}/ucr-assets/wedding6.jpg"],
+            ['image' => "{$this->r2}/ucr-assets/wedding7.jpg"],
+            ['image' => "{$this->r2}/ucr-assets/wedding8.jpeg"],
+            ['image' => "{$this->r2}/ucr-assets/wedding9.jpeg"],
+            ['image' => "{$this->r2}/ucr-assets/wedding10.jpeg"]
         ];
         
         return Inertia::render('Brands/Ucr/Wedding', [

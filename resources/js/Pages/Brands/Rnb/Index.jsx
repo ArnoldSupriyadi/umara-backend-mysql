@@ -53,7 +53,6 @@ const Index = ({ brand, posts }) => {
         { image: `${r2Url}/sliders/3.jpg`, title: "Premium Dining Experience", desc: "Indulge in our carefully crafted menu featuring the finest local ingredients." },
         { image: `${r2Url}/sliders/4.jpeg`, title: "Elegant Atmosphere", desc: "Enjoy your meal in our beautifully decorated restaurant with floral arrangements." },
         { image: `${r2Url}/sliders/5.jpeg`, title: "Elegant Area", desc: "Enjoy your meal in our beautifully decorated restaurant with floral arrangements." },
-        { image: `${r2Url}/sliders/6.jpg`, title: "Food and Drinks", desc: "Savor our diverse menu of delectable foods and refreshing drinks." },
         { image: `${r2Url}/sliders/14.jpg`, title: "Memorable Moments", desc: "Create lasting memories with family and friends in our welcoming environment." }
     ];
 
@@ -80,13 +79,6 @@ const Index = ({ brand, posts }) => {
             mapUrl: "https://maps.app.goo.gl/JAnRuS4TpKTF9RSw6",
             slug: "umara-house"
         },
-        // {
-            // name: "Rasa Umara",
-            // logo: `${r2Url}/logos/rasa-umara-putih.png`,
-            // desc: "Nusantara Prasmanan, Jl. MH. Thamrin Cikarang",
-            // mapUrl: "https://maps.app.goo.gl/xA9sincfvQoAAt348",
-            // slug: "rasa-umara"
-        // }  
     ]
 
     return (

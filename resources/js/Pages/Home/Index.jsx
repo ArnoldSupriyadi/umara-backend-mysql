@@ -86,7 +86,7 @@ export default function Index({ sliders, clients, posts }) {
                 <div className="w-full flex justify-center mt-4 relative z-10" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
                     <div className="max-w-4xl text-center">
                         <h2 className="text-4xl md:text-5xl font-bold mb-6 text-[#CE8131] font-['Playfair_Display']" data-aos="fade-down" data-aos-duration="1200" data-aos-delay="400">
-                            BRAND OVERVIEW 1
+                            BRAND OVERVIEW 
                         </h2>
                         <p className="text-lg md:text-xl text-white leading-relaxed font-medium" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="600">
                             We are a leading brand in the industry, known for our quality products and exceptional customer service.

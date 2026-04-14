@@ -11,21 +11,45 @@ use Inertia\Inertia;
 
 class HomeController extends Controller
 {
+    protected $r2Url = "https://assets.bridgeflow.my.id";
 
     public function index()
     {
-        $sliders = Slider::latest()->get()->map(fn($slider) => [
-            'id'        => $slider->id,
-            'title'     => $slider->title,
-            'image_url' => $slider->image_url,
-            'link'      => $slider->link,
-        ]);
+        // 1. Pastikan R2 URL tidak diakhiri slash (opsional untuk keamanan string)
+        $r2Base = rtrim($this->r2Url, '/');
 
-        $clients = Client::latest()->get()->map(fn($client) => [
-            'id'       => $client->id,
-            'name'     => $client->name,
-            'logo_url' => $client->logo_url,
-        ]);
+        // 2. Mapping Sliders dengan pengecekan URL
+        $sliders = Slider::latest()->get()->map(function ($slider) use ($r2Base) {
+            $imagePath = $slider->image;
+
+            // Jika path sudah berawalan http/https, pakai langsung. Jika belum, gabung dengan r2Base.
+            $finalImageUrl = str_starts_with($imagePath, 'http')
+                ? $imagePath
+                : $r2Base . '/' . ltrim($imagePath, '/');
+
+            return [
+                'id'        => $slider->id,
+                'title'     => $slider->title,
+                'image_url' => $finalImageUrl,
+                'link'      => $slider->link,
+            ];
+        });
+
+        $clients = Client::latest()->get()->map(function ($client) use ($r2Base) {
+            $logoPath = $client->logo;
+
+            // Sama seperti slider, cek apakah logo sudah berupa URL lengkap
+            $finalLogoUrl = str_starts_with($logoPath, 'http')
+                ? $logoPath
+                : $r2Base . '/' . ltrim($logoPath, '/');
+
+            return [
+                'id'       => $client->id,
+                'name'     => $client->name,
+                'logo_url' => $finalLogoUrl,
+            ];
+        });
+
 
         $posts = Post::with('businessUnit')
             ->whereNotNull('published_at')

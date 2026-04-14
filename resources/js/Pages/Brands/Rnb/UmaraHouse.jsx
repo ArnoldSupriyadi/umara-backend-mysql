@@ -2,48 +2,27 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Head } from '@inertiajs/react';
 import UmaraHouseLayout from '@/Layouts/Brands/UmaraHouseLayout';
 
-export default function UmaraHouse() {
+export default function UmaraHouse({ menus = [], promos = [] }) {
     // --- STATE & REF ---
     const [modal, setModal] = useState({ isOpen: false, src: '', title: '' });
     const [promoSlide, setPromoSlide] = useState(0);
     const [isMenuAutoPlaying, setIsMenuAutoPlaying] = useState(true);
     const menuScrollRef = useRef(null);
     let menuIntervalRef = useRef(null);
-
-    // --- DATA ARRAY ---
-    const promoImages = [
-        "holiday-special-drinks-uh.jpeg",
-        "snack-jar.jpeg",
-        "juicy-whole-chicken.jpeg",
-        "salom-en-croute.jpeg"
-    ];
-
-    const menuFiles = [
-        'NASI_BOX_1.jpg', 'NASI_BOX_2.jpg', 'menu UH preview-2_page_1.jpg', 'menu UH preview-3_page_1.jpg',
-        'menu UH preview-4_page_1.jpg', 'menu UH preview-5_page_1.jpg', 'menu UH preview-6_page_1.jpg',
-        'menu UH preview-7_page_1.jpg', 'menu UH preview-8_page_1.jpg', 'menu UH preview-9_page_1.jpg',
-        'menu UH preview-10_page_1.jpg', 'menu UH preview-11_page_1.jpg', 'menu UH preview-12_page_1.jpg',
-        'menu UH preview-13_page_1.jpg', 'menu UH preview-14_page_1.jpg', 'menu UH preview-15_page_1.jpg',
-        'menu UH preview-16_page_1.jpg', 'menu UH preview-17_page_1.jpg', 'menu UH preview-18_page_1.jpg',
-        'menu UH preview-19_page_1.jpg', 'menu UH preview-20_page_1.jpg', 'menu UH preview-21_page_1.jpg',
-        'menu UH preview-22_page_1.jpg', 'menu UH preview-23_page_1.jpg', 'menu UH preview-24_page_1.jpg',
-        'menu UH preview-25_page_1.jpg', 'menu UH preview-27_page_1.jpg', 'menu UH preview-28_page_1.jpg',
-        'menu UH preview-29_page_1.jpg', 'menu UH preview-30_page_1.jpg'
-    ];
-
-    const formatTitle = (name) => name.replace(/_/g, ' ').replace(/-/g, ' ').replace(/\.[^/.]+$/, '');
-
-    // --- LOGIKA PROMO CAROUSEL ---
+   
     useEffect(() => {
-        const promoAutoSlide = setInterval(() => {
-            setPromoSlide((prev) => (prev + 1) % promoImages.length);
+          if (promos.length === 0) return;
+        const autoSlide = setInterval(() => {
+            setPromoSlide((prev) => (prev + 1) % promos.length);
         }, 4000);
-        return () => clearInterval(promoAutoSlide);
-    }, [promoImages.length]);
+        return () => clearInterval(autoSlide);
+    }, [promos.length]);
 
-    const handlePromoNext = () => setPromoSlide((prev) => (prev + 1) % promoImages.length);
-    const handlePromoPrev = () => setPromoSlide((prev) => (prev - 1 + promoImages.length) % promoImages.length);
+    // handlePromoNext & handlePromoPrev
+    const handlePromoNext = () => setPromoSlide((prev) => (prev + 1) % promos.length);
+    const handlePromoPrev = () => setPromoSlide((prev) => (prev - 1 + promos.length) % promos.length);  
 
+    
     // --- LOGIKA MENU CAROUSEL ---
     const scrollMenuNext = () => {
         if (menuScrollRef.current) {
@@ -92,6 +71,10 @@ export default function UmaraHouse() {
         alert('Reservation request sent! We will confirm with you shortly.');
     };
 
+    
+    // Variabel Base URL Cloudflare R2
+    const r2Url = "https://assets.bridgeflow.my.id";
+
     return (
         <>
             <Head title="Umara House - Premium Dining Experience" />
@@ -101,7 +84,7 @@ export default function UmaraHouse() {
                 <div className="asymmetric-grid items-center mb-32" data-aos="fade-up">
                     {/* Left Side */}
                     <div className="space-y-8" data-aos="fade-right" data-aos-delay="200">
-                        <img src="/assets/vector/-_umarahouse putih.png" alt="Umara House" className="w-64 h-auto object-contain mb-4" />
+                        <img src={`${r2Url}/logos/-_umarahouse putih.png`} alt="Umara House" className="w-64 h-auto object-contain mb-4" />
                         <div>
                             <p className="text-xl text-[#d97706] mb-8 leading-relaxed max-w-lg">
                                 Experience sophisticated dining in our elegantly designed spaces. Where contemporary aesthetics meet culinary excellence.
@@ -121,7 +104,7 @@ export default function UmaraHouse() {
                             <div className="relative">
                                 <div className="absolute top-4 -right-4 w-full h-full border border-[#C9A53D]/30 rounded-2xl hidden md:block"></div>
                                 <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-white/5 group">
-                                    <img src="/assets/umara-house/1.jpeg" alt="Umara House Main Dining" className="w-full h-[400px] md:h-[500px] object-cover transition-transform duration-1000 group-hover:scale-105" />
+                                    <img src={`${r2Url}/rnb-assets/1.jpeg`} alt="Umara House Main Dining" className="w-full h-[400px] md:h-[500px] object-cover transition-transform duration-1000 group-hover:scale-105" />
                                     <div className="absolute inset-0 bg-gradient-to-t from-[#131313]/80 via-transparent to-transparent opacity-60"></div>
                                     <div className="absolute top-6 left-6 backdrop-blur-md bg-black/30 border border-white/10 px-4 py-2 rounded-full">
                                         <div className="flex items-center gap-2">
@@ -134,7 +117,7 @@ export default function UmaraHouse() {
                             
                             <div className="absolute -bottom-10 -left-6 md:-left-12 w-2/3 md:w-[280px] z-20" data-aos="fade-up" data-aos-delay="600">
                                 <div className="relative rounded-xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] border-4 border-[#131313]">
-                                    <img src="/assets/umara-house/2.jpeg" alt="Private Experience" className="w-full h-40 md:h-48 object-cover" />
+                                    <img src={`${r2Url}/rnb-assets/2.jpeg`} alt="Private Experience" className="w-full h-40 md:h-48 object-cover" />
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
                                     <div className="absolute bottom-4 left-4 right-4">
                                         <p className="text-[#C9A53D] text-xs font-serif italic mb-1">Exclusive</p>
@@ -163,12 +146,13 @@ export default function UmaraHouse() {
                     <div className="max-w-6xl mx-auto">
                         <div className="p-4 relative overflow-hidden rounded-2xl group">
                             <div className="relative w-full h-[320px] md:h-[500px]">
-                                {promoImages.map((img, idx) => (
+                                {promos.map((promo, idx) => (
                                     <img 
-                                        key={idx}
-                                        src={`/assets/promo/${img}`} 
-                                        alt={`Promo ${idx + 1}`} 
-                                        className={`absolute inset-0 w-full h-full object-contain transition-all duration-700 ease-in-out ${promoSlide === idx ? 'opacity-100 scale-100 z-10' : 'opacity-0 scale-105 z-0'}`}
+                                        key={promo.id}
+                                        src={promo.image_url} 
+                                        alt={promo.title} 
+                                        className={`absolute inset-0 w-full h-full object-contain transition-all duration-700 ease-in-out 
+                                        ${promoSlide === idx ? 'opacity-100 scale-100 z-10' : 'opacity-0 scale-105 z-0'}`}
                                     />
                                 ))}
                             </div>
@@ -187,7 +171,7 @@ export default function UmaraHouse() {
 
                             {/* Indicators */}
                             <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-20">
-                                {promoImages.map((_, idx) => (
+                                {promos.map((_, idx) => (
                                     <button 
                                         key={idx} 
                                         onClick={() => setPromoSlide(idx)}
@@ -223,11 +207,12 @@ export default function UmaraHouse() {
                             onMouseEnter={() => setIsMenuAutoPlaying(false)}
                             onMouseLeave={() => setIsMenuAutoPlaying(true)}
                         >
-                            {menuFiles.map((file, idx) => (
-                                <div key={idx} className="group relative w-64 lg:w-80 shrink-0 cursor-pointer" onClick={() => openModal(`/assets/umara-house/MENU-UMARA-HOUSE/${file}`, formatTitle(file))}>
+                            {menus.map((menu) => (
+                                <div key={menu.id} className="group relative w-64 lg:w-80 shrink-0 cursor-pointer" 
+                                    onClick={() => openModal(menu.image_url, menu.title)}>
                                     <div className="relative aspect-square rounded-2xl overflow-hidden bg-white/10 border border-white/20 shadow-xl group-hover:shadow-2xl transition-all duration-500 group-hover:-translate-y-2">
-                                        <img src={`/assets/umara-house/MENU-UMARA-HOUSE/${file}`} alt={formatTitle(file)} loading="lazy" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+                                        <img src={menu.image_url} alt={menu.title} loading="lazy" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                                     </div>
                                 </div>
                             ))}
@@ -323,7 +308,7 @@ export default function UmaraHouse() {
                         {/* Space 1 */}
                         <div className="group relative rounded-xl overflow-hidden shadow-2xl bg-[#1a0f0a] border border-[#C9A53D]/20 hover:border-[#C9A53D]/60 transition-all duration-500" data-aos="fade-up">
                             <div className="h-80 relative overflow-hidden">
-                                <img src="/assets/umara-house/1.jpeg" alt="Main Dining Area" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
+                                <img src={`${r2Url}/rnb-assets/1.jpeg`} alt="Main Dining Area" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
                                 <div className="absolute inset-0 bg-gradient-to-t from-[#1a0f0a] via-transparent to-transparent opacity-90"></div>
                                 <div className="absolute bottom-4 left-6 right-6">
                                     <h3 className="text-2xl font-serif font-bold text-white mb-2 group-hover:text-[#C9A53D] transition-colors">Main Dining</h3>
@@ -343,7 +328,7 @@ export default function UmaraHouse() {
                         {/* Space 2 */}
                         <div className="group relative rounded-xl overflow-hidden shadow-2xl bg-[#1a0f0a] border border-[#C9A53D]/20 hover:border-[#C9A53D]/60 transition-all duration-500" data-aos="fade-up" data-aos-delay="200">
                             <div className="h-80 relative overflow-hidden">
-                                <img src="/assets/umara-house/2.jpeg" alt="Private Dining Room" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
+                                <img src={`${r2Url}/rnb-assets/3.jpeg`} alt="Private Dining Room" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
                                 <div className="absolute inset-0 bg-gradient-to-t from-[#1a0f0a] via-transparent to-transparent opacity-90"></div>
                                 <div className="absolute bottom-4 left-6 right-6">
                                     <h3 className="text-2xl font-serif font-bold text-white mb-2 group-hover:text-[#C9A53D] transition-colors">Private Dining</h3>
@@ -363,7 +348,7 @@ export default function UmaraHouse() {
                         {/* Space 3 */}
                         <div className="group relative rounded-xl overflow-hidden shadow-2xl bg-[#1a0f0a] border border-[#C9A53D]/20 hover:border-[#C9A53D]/60 transition-all duration-500" data-aos="fade-up" data-aos-delay="400">
                             <div className="h-80 relative overflow-hidden">
-                                <img src="/assets/umara-house/4.jpeg" alt="Garden Terrace" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
+                                <img src={`${r2Url}/rnb-assets/2.jpeg`} alt="Garden Terrace" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
                                 <div className="absolute inset-0 bg-gradient-to-t from-[#1a0f0a] via-transparent to-transparent opacity-90"></div>
                                 <div className="absolute bottom-4 left-6 right-6">
                                     <h3 className="text-2xl font-serif font-bold text-white mb-2 group-hover:text-[#C9A53D] transition-colors">Garden Terrace</h3>

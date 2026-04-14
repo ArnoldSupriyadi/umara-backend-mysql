@@ -47,7 +47,30 @@ class RnbController extends Controller
 
     public function lumpangEmasSignature()
     {
-        return Inertia::render('Brands/Rnb/LumpangEmasSignature');
+        // Menu khusus lokasi Prapanca
+        $menus = Menu::where('location', 'menu-prapanca')
+        ->latest()
+        ->get()
+        ->map(fn($menu) => [
+            'id'        => $menu->id,
+            'title'     => $menu->title,
+            'image_url' => $menu->image_url,
+        ]);
+
+         // Promo aktif dari RNB
+        $promos = Promo::where('status', 'active')
+        ->whereHas('businessUnit', fn($q) => $q->where('slug', 'rasa-nusantara-baru'))
+        ->latest()
+        ->get()
+        ->map(fn($promo) => [
+            'id'        => $promo->id,
+            'title'     => $promo->title,
+            'image_url' => $promo->image_url,
+        ]);
+        return Inertia::render('Brands/Rnb/LumpangEmasSignature', [
+             'menus'  => $menus,
+            'promos' => $promos,
+        ]);
     }
 
     public function lumpangEmasBintaro()
@@ -90,6 +113,28 @@ class RnbController extends Controller
 
     public function umaraHouse()
     {
-        return Inertia::render('Brands/Rnb/UmaraHouse');
+        $menus = Menu::where('location', 'menu-umara-house')
+        ->latest()
+        ->get()
+        ->map(fn($menu) => [
+            'id'        => $menu->id,
+            'title'     => $menu->title,
+            'image_url' => $menu->image_url,
+        ]);
+
+    $promos = Promo::where('status', 'active')
+        ->whereHas('businessUnit', fn($q) => $q->where('slug', 'rasa-nusantara-baru'))
+        ->latest()
+        ->get()
+        ->map(fn($promo) => [
+            'id'        => $promo->id,
+            'title'     => $promo->title,
+            'image_url' => $promo->image_url,
+        ]);
+        
+        return Inertia::render('Brands/Rnb/UmaraHouse', [
+             'menus'  => $menus,
+            'promos' => $promos,
+        ]);
     }
 }

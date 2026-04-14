@@ -81,7 +81,7 @@ export default function LumpangEmasBintaro({ menus = [], promos = [], heroImages
                         <div className="max-w-xl flex flex-col items-center" data-aos="fade-right">
                             <img src={`${r2Url}/logos/logo-lumpang-ba.png`} alt="Lumpang Emas Bintaro" className="w-sm h-auto max-w-full object-contain mb-10" data-aos="zoom-in" data-aos-delay="200" />
                             
-                            <div className="flex flex-col sm:flex-row gap-4 justify-center" data-aos="fade-up" data-aos-delay="400">
+                            <div className="flex flex-col sm:flex-row gap-4 justify-center py-5" data-aos="fade-up" data-aos-delay="400">
                                 <a href="https://wa.me/6281222227496" target="_blank" rel="noreferrer" className="bg-gradient-to-b from-[#efd266] to-[#b9932f] text-[#562E12] px-8 py-4 rounded-full font-semibold hover:opacity-90 transition-colors text-center">
                                     Reserve Table
                                 </a>
@@ -175,7 +175,7 @@ export default function LumpangEmasBintaro({ menus = [], promos = [], heroImages
             </section>
 
             {/* --- ROOMS SECTION --- */}
-            <section id="rooms" className="py-16 lg:py-24 relative overflow-hidden" style={{ backgroundImage: `${r2Url}/rnb-assets/BG-LUMPANG-BINTARO3.jpg`, backgroundSize: 'cover', backgroundPosition: 'center center' }}>
+            <section id="rooms" className="py-16 lg:py-24 relative overflow-hidden" style={{ backgroundImage: `url(${r2Url}/rnb-assets/BG-LUMPANG-BINTARO3.jpg)`, backgroundSize: 'cover', backgroundPosition: 'center center' }}>
                 <div className="absolute inset-0 bg-black/70"></div>
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="text-center mb-16" data-aos="fade-up">

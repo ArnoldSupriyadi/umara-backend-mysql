@@ -32,6 +32,10 @@ class SliderSeeder extends Seeder
             $filename = basename($r2Path);
             $lowerName = strtolower($filename);
 
+            if (!str_ends_with($lowerName, '.webp')) {
+                continue;
+            }
+
             // 2. Logika pencocokan Business Unit (tetap sama)
             $buId = null;
             if (str_contains($lowerName, 'rnb') && isset($units['rasa-nusantara-baru'])) {

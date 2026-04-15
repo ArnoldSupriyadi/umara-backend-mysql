@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Head, Link, useForm } from '@inertiajs/react';
 import LbiLayout from '@/Layouts/Brands/LbiLayout';
 
-// Import Swiper untuk Carousel
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, EffectFade, Pagination } from 'swiper/modules';
 import 'swiper/css';
@@ -13,29 +12,34 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 
 const Index = ({ brand }) => {
+    const r2Url = "https://assets.bridgeflow.my.id";
+
     useEffect(() => {
         AOS.init({ duration: 1000, once: true, offset: 50 });
     }, []);
+
+    const [isPlaying, setIsPlaying] = useState(false);
 
     // --- STATE MANAGEMENT ---
     const [activeYear, setActiveYear] = useState('2018');
     const [activeQmsTab, setActiveQmsTab] = useState('food-safety');
     const [modalData, setModalData] = useState({ isOpen: false, src: '', caption: '' });
+    const certCarouselRef = useRef(null);
 
     // Helper untuk buka/tutup modal sertifikat
     const openModal = (src, caption) => setModalData({ isOpen: true, src, caption });
     const closeModal = () => setModalData({ isOpen: false, src: '', caption: '' });
 
-    // --- SETUP FORM INERTIA (Dengan Sihir JSON) ---
+    // --- SETUP FORM INERTIA ---
     const { data, setData, post, processing, reset, recentlySuccessful } = useForm({
         business_unit_id: brand?.id,
-        name: '',             // Menggunakan 'Contact Person'
+        name: '',
         email: '',
         message: '',
-        subject: 'LBI Manufacturing Inquiry', 
-        company_name: '',     // Masuk ke JSON
-        phone_number: '',     // Masuk ke JSON
-        service_interest: '', // Masuk ke JSON
+        subject: 'LBI Manufacturing Inquiry',
+        company_name: '',
+        phone_number: '',
+        service_interest: '',
     });
 
     const submitContact = (e) => {
@@ -47,24 +51,23 @@ const Index = ({ brand }) => {
 
     // Data Gambar OEM Carousel
     const oemImages = [
-        { src: 'QC-&-RnD-1.jpg', caption: 'QC & RnD' },
-        { src: 'Control-2.jpg', caption: 'Control Area' },
-        { src: 'Area-Lab.jpg', caption: 'Lab Area' },
-        { src: 'Area Sealing 2.jpg', caption: 'Sealing Area' },
-        { src: 'Loading.jpg', caption: 'Loading Area' },
-        { src: 'Production-room.jpg', caption: 'Production Room' }
+        { src: `${r2Url}/lbi-assets/manufacture-services/QC-&-RnD-1.jpg`, caption: 'QC & RnD' },
+        { src: `${r2Url}/lbi-assets/manufacture-services/Control-2.jpg`, caption: 'Control Area' },
+        { src: `${r2Url}/lbi-assets/manufacture-services/Area-Lab.jpg`, caption: 'Lab Area' },
+        { src: `${r2Url}/lbi-assets/manufacture-services/Area Sealing 2.jpg`, caption: 'Sealing Area' },
+        { src: `${r2Url}/lbi-assets/manufacture-services/Loading.jpg`, caption: 'Loading Area' },
+        { src: `${r2Url}/lbi-assets/manufacture-services/Production-room.jpg`, caption: 'Production Room' }
     ];
 
     // Data Gambar Ekspor
     const exportImages = [
-        'eskpor-to-saudi.jpeg', 'eskpor-to-saudi2.jpeg', 'eskpor-to-saudi3.jpeg',
-        'eskpor-to-saudi4.jpeg', 'eskpor-to-saudi5.jpeg', 'eskpor-to-saudi6.jpeg', 'DSCF0739.jpg'
+        `${r2Url}/lbi-assets/ekspor/eskpor-to-saudi.jpeg`, `${r2Url}/lbi-assets/ekspor/eskpor-to-saudi3.jpeg`, `${r2Url}/lbi-assets/ekspor/eskpor-to-saudi4.jpeg`, `${r2Url}/lbi-assets/ekspor/eskpor-to-saudi5.jpeg`, `${r2Url}/lbi-assets/ekspor/eskpor-to-saudi5.jpeg`, `${r2Url}/lbi-assets/ekspor/eskpor-to-saudi6.jpeg`, `${r2Url}/lbi-assets/ekspor/DSCF0739.jpg`
     ];
 
-    // Data Logo Klien (Diperpendek untuk kerapian file, Anda bisa tambah sisanya)
+    // Data Logo Klien
     const clientLogos = [
-        'accha.jpeg', 'Amman.png', 'artotel.png', 'bpkh-limited.png', 'cj-CheilJedang_logo.png',
-        'dapur-solo.png', 'fore-coffee.jpg', 'HANGRY!.jpg', 'imip.png', 'Ranch-Market.png', 'the-harvest.jpeg', 'bibigo.png'
+        `${r2Url}/lbi-assets/clients/accha.jpeg`, `${r2Url}/lbi-assets/clients/Amman.png`, `${r2Url}/lbi-assets/clients/artotel.png`, `${r2Url}/lbi-assets/clients/bpkh-limited.png`, `${r2Url}/lbi-assets/clients/cj-CheilJedang_logo.png`,
+        `${r2Url}/lbi-assets/clients/dapur-solo.png`, `${r2Url}/lbi-assets/clients/fore-coffee.jpg`, `${r2Url}/lbi-assets/clients/HANGRY!.jpg`, `${r2Url}/lbi-assets/clients/imip.png`, `${r2Url}/lbi-assets/clients/Ranch-Market.png`, `${r2Url}/lbi-assets/clients/the-harvest.jpeg`, `${r2Url}/lbi-assets/clients/the-harvest.jpeg`, `${r2Url}/lbi-assets/clients/bibigo.png`
     ];
 
     return (
@@ -103,7 +106,7 @@ const Index = ({ brand }) => {
                         </div>
                         <div className="w-full pl-0 lg:pl-8" data-aos="fade-left">
                             <div className="relative overflow-hidden rounded-3xl shadow-2xl">
-                                <img src="/assets/laukkita-bersama/LBI_Manufacture.jpg" alt="Manufacturing Facility" className="w-full h-[400px] lg:h-[600px] object-cover object-center hover:scale-105 transition-transform duration-700" />
+                                <img src={`${r2Url}/lbi-assets/LBI_Manufacture.jpg`} alt="Manufacturing Facility" className="w-full h-[400px] lg:h-[600px] object-cover object-center hover:scale-105 transition-transform duration-700" />
                             </div>
                         </div>
                     </div>
@@ -121,7 +124,7 @@ const Index = ({ brand }) => {
                             <p className="text-lg text-gray-700 mb-8 leading-relaxed">
                                 Our services encompass the entire production lifecycle, utilizing state-of-the-art facilities and cutting-edge technology from conception to completion.
                             </p>
-                            
+
                             <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 items-center">
                                 {['HALAL', 'BPOM', 'HACCP', 'ISO 14001', 'ISO 22000'].map((cert, i) => (
                                     <div key={i} className="text-center" data-aos="flip-up" data-aos-delay={i * 100}>
@@ -132,31 +135,53 @@ const Index = ({ brand }) => {
                                 ))}
                             </div>
                         </div>
-                        <div className="relative cursor-pointer rounded-2xl overflow-hidden shadow-lg group" data-aos="fade-left">
-                            <img src="/assets/laukkita-bersama/Thumbnail-Video-LBI.jpg" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Video Preview" />
-                            <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/10 transition-colors">
-                                <div className="w-20 h-20 bg-white/90 rounded-full flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform">
-                                    <svg className="w-10 h-10 text-red-600 ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+                        <div className="relative rounded-2xl overflow-hidden shadow-lg group" data-aos="fade-left">
+                            {isPlaying ? (
+                                <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
+                                    <iframe
+                                        className="absolute inset-0 w-full h-full rounded-2xl"
+                                        src="https://www.youtube.com/embed/pcyKffW7IyM?autoplay=1"
+                                        title="Video LBI"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        allowFullScreen
+                                    />
+                                    <button
+                                        onClick={() => setIsPlaying(false)}
+                                        className="absolute top-3 right-3 z-10 w-10 h-10 bg-black/60 hover:bg-black/80 text-white rounded-full flex items-center justify-center transition-colors backdrop-blur-sm"
+                                        title="Tutup video"
+                                    >
+                                        <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                        </svg>
+                                    </button>
                                 </div>
-                            </div>
+                            ) : (
+                                <div className="cursor-pointer" onClick={() => setIsPlaying(true)}>
+                                    <img src={`${r2Url}/lbi-assets/Thumbnail-Video-LBI.jpg`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Video Preview" />
+                                    <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/10 transition-colors">
+                                        <div className="w-20 h-20 bg-white/90 rounded-full flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform">
+                                            <svg className="w-10 h-10 text-red-600 ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
             </section>
 
             {/* --- 3. MILESTONE SECTION --- */}
-            <section className="py-20" style={{ backgroundImage: "url('/assets/laukkita-bersama/BG-LBI-1.jpg')", backgroundPosition: 'center', backgroundSize: 'cover' }}>
+            <section className="py-20" style={{ backgroundImage: `url('${r2Url}/background/lbi-bg/BG-LBI-1.jpg')`, backgroundPosition: 'center', backgroundSize: 'cover' }}>
                 <div className="container mx-auto px-4 lg:px-8">
                     <div className="bg-[#F7F3EF] p-8 lg:p-12 rounded-2xl shadow-lg border border-[#debe9d]">
                         <div className="grid lg:grid-cols-2 gap-12 items-start">
-                            
+
                             <div data-aos="fade-right">
                                 <h3 className="text-3xl font-bold text-[#8B1C3D] mb-8">Our Milestone</h3>
-                                
-                                {/* Tab Buttons */}
+
                                 <div className="flex flex-wrap gap-2 mb-8 p-2 bg-white rounded-2xl overflow-x-auto shadow-sm">
                                     {['2018', '2019', '2023', '2024', '2025'].map(year => (
-                                        <button 
+                                        <button
                                             key={year}
                                             onClick={() => setActiveYear(year)}
                                             className={`relative px-4 py-2 rounded-xl font-semibold text-sm transition-all duration-300 whitespace-nowrap ${activeYear === year ? 'bg-[#8B1C3D] text-white shadow-lg' : 'bg-transparent text-gray-600 hover:bg-[#8B1C3D]/10 hover:text-[#8B1C3D]'}`}
@@ -167,7 +192,6 @@ const Index = ({ brand }) => {
                                     ))}
                                 </div>
 
-                                {/* Tab Content Area */}
                                 <div className="min-h-[250px] relative">
                                     <div className={`transition-all duration-500 ${activeYear === '2018' ? 'block animate-fade-in' : 'hidden'}`}>
                                         <div className="bg-white p-6 rounded-2xl border border-[#debe9d] shadow-sm">
@@ -193,7 +217,23 @@ const Index = ({ brand }) => {
                                             </ul>
                                         </div>
                                     </div>
-                                    {/* Anda dapat menambahkan tab 2024 dan 2025 dengan pola yang sama */}
+                                    <div className={`transition-all duration-500 ${activeYear === '2024' ? 'block animate-fade-in' : 'hidden'}`}>
+                                        <div className="bg-white p-6 rounded-2xl border border-[#debe9d] shadow-sm mb-4">
+                                            <h4 className="text-xl font-bold text-[#8B1C3D] mb-3">Global Partnership</h4>
+                                            <ul className="space-y-2 text-sm text-gray-700">
+                                                <li className="flex items-center gap-2"><div className="w-2 h-2 bg-[#8B1C3D] rounded-full"></div> Strategic partnership with CJ Foods, expanding our international presence and market capabilities.</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div className={`transition-all duration-500 ${activeYear === '2025' ? 'block animate-fade-in' : 'hidden'}`}>
+                                        <div className="bg-white p-6 rounded-2xl border border-[#debe9d] shadow-sm mb-4">
+                                            <h4 className="text-xl font-bold text-[#8B1C3D] mb-3">Future Expansion</h4>
+                                            <ul className="space-y-2 text-sm text-gray-700">
+                                                <li className="flex items-center gap-2"><div className="w-2 h-2 bg-[#8B1C3D] rounded-full"></div> First Shipment to Jeddah (Arab Saudi) for Umrah.</li>
+                                                <li className="flex items-center gap-2"><div className="w-2 h-2 bg-[#8B1C3D] rounded-full"></div> FSSC 22000 Certification</li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -201,8 +241,8 @@ const Index = ({ brand }) => {
                                 <div className="bg-white p-8 rounded-2xl border border-[#debe9d] shadow-sm">
                                     <h4 className="text-2xl font-bold text-[#8B1C3D] mb-6">Integrated Food Solutions</h4>
                                     <div className="grid grid-cols-2 gap-4 mb-6">
-                                        <img src="/assets/laukkita-bersama/1.jpg" alt="Manufacturing" className="w-full rounded-xl shadow-md hover:scale-105 transition-transform" />
-                                        <img src="/assets/laukkita-bersama/2.jpg" alt="Distribution" className="w-full rounded-xl shadow-md hover:scale-105 transition-transform" />
+                                        <img src={`${r2Url}/lbi-assets/1.jpg`} alt="Manufacturing" className="w-full rounded-xl shadow-md hover:scale-105 transition-transform" />
+                                        <img src={`${r2Url}/lbi-assets/2.jpg`} alt="Distribution" className="w-full rounded-xl shadow-md hover:scale-105 transition-transform" />
                                     </div>
                                     <p className="text-[#8B1C3D] text-sm md:text-base">From manufacturing to retail, catering to distribution - we provide comprehensive food industry solutions under one unified group.</p>
                                 </div>
@@ -214,7 +254,7 @@ const Index = ({ brand }) => {
             </section>
 
             {/* --- 4. PRODUCTS & OEM CAROUSEL --- */}
-            <section id="services" className="py-20" style={{ backgroundImage: "url('/assets/laukkita-bersama/BG-LBI-2.jpg')", backgroundPosition: 'center', backgroundSize: 'cover' }}>
+            <section id="services" className="py-20" style={{ backgroundImage: `url(${r2Url}/background/lbi-bg/BG-LBI-2.jpg)`, backgroundPosition: 'center', backgroundSize: 'cover' }}>
                 <div className="container mx-auto px-4 lg:px-8">
                     <div className="text-center mb-16" data-aos="fade-up">
                         <div className="inline-block bg-[#8B1C3D] text-white px-8 py-2 rounded-full text-sm font-semibold tracking-wider mb-4">PRODUCTS & SERVICES</div>
@@ -238,7 +278,6 @@ const Index = ({ brand }) => {
                             </div>
                         </div>
 
-                        {/* OEM Swiper Carousel */}
                         <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white/10" data-aos="fade-left">
                             <Swiper
                                 modules={[Autoplay, EffectFade, Pagination]}
@@ -250,7 +289,7 @@ const Index = ({ brand }) => {
                             >
                                 {oemImages.map((img, idx) => (
                                     <SwiperSlide key={idx} className="relative">
-                                        <img src={`/assets/laukkita-bersama/pabrik/${img.src}`} alt={img.caption} className="w-full h-full object-cover" />
+                                        <img src={img.src} alt={img.caption} className="w-full h-full object-cover" />
                                         <div className="absolute bottom-4 right-4 z-20 bg-black/70 backdrop-blur text-white px-4 py-2 rounded-lg text-sm font-medium shadow-lg">
                                             {img.caption}
                                         </div>
@@ -262,9 +301,120 @@ const Index = ({ brand }) => {
                 </div>
             </section>
 
-            {/* --- 5. QUALITY MANAGEMENT (QMS TABS) --- */}
-            <section id="quality" className="py-20" style={{ backgroundImage: "url('/assets/laukkita-bersama/BG-LBI-3.jpg')", backgroundSize: 'cover', backgroundPosition: 'center' }}>
+            {/* --- 4B. DEVELOPMENT PROCESS --- */}
+            <section id="developments-process" className="py-20" style={{ backgroundImage: `url('${r2Url}/background/lbi-bg/BG-LBI-1.jpg')`, backgroundPosition: 'center', backgroundSize: 'cover' }}>
                 <div className="container mx-auto px-4 lg:px-8">
+                    <div className="rounded-3xl p-8 lg:p-12" data-aos="fade-up">
+                        <div className="text-center mb-12">
+                            <h3 className="text-3xl lg:text-4xl font-bold mb-4 text-white">DEVELOPMENT PROCESS</h3>
+                            <p className="text-xl text-white/90">Our systematic approach from idea to production</p>
+                        </div>
+
+                        <div className="space-y-10">
+                            <div data-aos="fade-up">
+                                <div className="rounded-3xl p-[3px]">
+                                    <img src={`${r2Url}/lbi-assets/INFOGRAFIS-DEVELOPMENT-PROCESS.jpg`} alt="Laukita Development Process" className="w-full h-auto rounded-2xl" />
+                                </div>
+                            </div>
+
+                            <div data-aos="fade-up">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                    <div className="space-y-8">
+                                        {[
+                                            {
+                                                num: 1, title: 'New Client',
+                                                lines: [
+                                                    'The process begins when a new client comes to LBI with a need or idea for a food product.',
+                                                    'This stage focuses on establishing collaboration, understanding client goals, and aligning expectations.'
+                                                ]
+                                            },
+                                            {
+                                                num: 2, title: 'Product Discussion',
+                                                lines: [
+                                                    'LBI teams and the client meet to discuss product requirements, target market, formulation, packaging, and production feasibility.',
+                                                    'This stage ensures all specifications are documented before moving forward.'
+                                                ]
+                                            },
+                                            {
+                                                num: 3, title: 'Kitchen Trial',
+                                                lines: [
+                                                    'A small-scale kitchen test is conducted by chefs or food technologists.',
+                                                    'The purpose is to create prototype samples based on the client\'s requirements.',
+                                                    'Adjustments are made to match taste, texture, and quality standards.'
+                                                ]
+                                            }
+                                        ].map(step => (
+                                            <div key={step.num} className="flex items-start gap-4">
+                                                <span className="w-10 h-10 rounded-full bg-[#8B1C3D] ring-4 ring-[#8B1C3D]/30 shadow-md flex items-center justify-center text-sm font-bold text-white flex-shrink-0">
+                                                    {step.num}
+                                                </span>
+                                                <div className="flex-1 rounded-xl shadow-sm hover:shadow-md transition-all p-4 bg-[#F7F3EF]">
+                                                    <h4 className="text-lg font-semibold text-[#4C3D19] mb-1">{step.title}</h4>
+                                                    {step.lines.map((line, li) => (
+                                                        <p key={li} className="text-gray-700 text-sm">{line}</p>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    <div className="space-y-8">
+                                        {[
+                                            {
+                                                num: 4, title: 'Panel Test',
+                                                lines: [
+                                                    'A focus group or tasting panel evaluates the trial products.',
+                                                    'Feedback is collected on flavor, appearance, shelf-life, and consumer acceptance.',
+                                                    'Refinements are made before moving to larger-scale testing.'
+                                                ]
+                                            },
+                                            {
+                                                num: 5, title: 'MoU',
+                                                lines: [
+                                                    'Parties formalize collaboration with a Memorandum of Understanding.',
+                                                    'Defines scope, timeline, responsibilities, pricing, QC, and confidentiality.',
+                                                    'Triggers preparation for bulk trials and production planning.'
+                                                ]
+                                            },
+                                            {
+                                                num: 6, title: 'Bulk Trial in Large Scale',
+                                                lines: [
+                                                    'The recipe is tested on production machinery but still at a trial/bulk batch level.',
+                                                    'This validates whether the formulation and process are scalable.',
+                                                    'Helps identify potential production issues before mass production.'
+                                                ]
+                                            },
+                                            {
+                                                num: 7, title: 'Mass Production',
+                                                lines: [
+                                                    'Once the product passes all trials, full-scale manufacturing begins.',
+                                                    'Products are produced in large quantities, ready for packaging, distribution, and sale.'
+                                                ]
+                                            }
+                                        ].map(step => (
+                                            <div key={step.num} className="flex items-start gap-4">
+                                                <span className="w-10 h-10 rounded-full bg-[#8B1C3D] ring-4 ring-[#8B1C3D]/30 shadow-md flex items-center justify-center text-sm font-bold text-white flex-shrink-0">
+                                                    {step.num}
+                                                </span>
+                                                <div className="flex-1 rounded-xl shadow-sm hover:shadow-md transition-all p-4 bg-[#F7F3EF]">
+                                                    <h4 className="text-lg font-semibold text-[#4C3D19] mb-1">{step.title}</h4>
+                                                    {step.lines.map((line, li) => (
+                                                        <p key={li} className="text-gray-700 text-sm">{line}</p>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* --- 5. QUALITY MANAGEMENT (QMS TABS) --- */}
+            <section id="quality" className="py-20" style={{ backgroundImage: `url('${r2Url}/background/lbi-bg/BG-LBI-1.jpg')`, backgroundSize: 'cover', backgroundPosition: 'center', transform: 'scaleY(-1)', }}>
+                <div className="container mx-auto px-4 lg:px-8" style={{ transform: 'scaleY(-1)' }}>
                     <div className="text-center mb-12" data-aos="fade-up">
                         <h2 className="text-4xl font-bold text-white mb-2">QUALITY MANAGEMENT</h2>
                         <p className="text-xl text-white/90">LBI QMS (Quality Management System)</p>
@@ -276,9 +426,10 @@ const Index = ({ brand }) => {
                                 { id: 'food-safety', label: 'Food Safety & HACCP' },
                                 { id: 'internal-audit', label: 'Internal Audit' },
                                 { id: 'supplier-control', label: 'Supplier Control' },
+                                { id: 'document-training', label: 'Document & Training' },
                                 { id: 'certification', label: 'Certification' }
                             ].map(tab => (
-                                <button 
+                                <button
                                     key={tab.id}
                                     onClick={() => setActiveQmsTab(tab.id)}
                                     className={`px-6 py-4 text-sm font-bold whitespace-nowrap transition-colors border-b-2 ${activeQmsTab === tab.id ? 'border-[#8B1C3D] text-[#8B1C3D] bg-white' : 'border-transparent text-gray-500 hover:text-[#8B1C3D] hover:bg-gray-100'}`}
@@ -289,49 +440,193 @@ const Index = ({ brand }) => {
                         </div>
 
                         <div className="p-8">
-                            {/* Konten Food Safety */}
                             {activeQmsTab === 'food-safety' && (
-                                <div className="grid lg:grid-cols-2 gap-8 items-center animate-fade-in">
+                                <div className="grid lg:grid-cols-2 gap-8 items-start animate-fade-in">
                                     <div>
                                         <h3 className="text-2xl font-bold text-[#8B1C3D] mb-6">Food Safety & HACCP System</h3>
-                                        <ul className="space-y-4">
-                                            <li className="flex items-start gap-3">
-                                                <div className="w-2 h-2 bg-[#8B1C3D] rounded-full mt-2"></div>
+                                        <div className="space-y-4">
+                                            <div className="flex items-start gap-3">
+                                                <div className="w-2 h-2 bg-[#8B1C3D] rounded-full mt-2 flex-shrink-0"></div>
                                                 <div>
-                                                    <h4 className="font-bold text-gray-800">CCP Monitoring & Logs</h4>
-                                                    <p className="text-gray-600 text-sm">Cooking, chilling, metal detection, traceability</p>
+                                                    <h4 className="font-bold text-gray-800">CCP Monitoring & Temperature Logs</h4>
+                                                    <p className="text-gray-600 text-sm">Cooking, chilling, metal detection, Product traceability</p>
                                                 </div>
-                                            </li>
-                                        </ul>
+                                            </div>
+                                            <div className="flex items-start gap-3">
+                                                <div className="w-2 h-2 bg-[#8B1C3D] rounded-full mt-2 flex-shrink-0"></div>
+                                                <div>
+                                                    <h4 className="font-bold text-gray-800">Daily GMP & Hygiene Checks</h4>
+                                                    <p className="text-gray-600 text-sm">Comprehensive quality control</p>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div className="grid grid-cols-2 gap-4">
-                                        <img src="/assets/laukkita-bersama/pabrik/QC-&-RnD-2.jpg" alt="QC" className="rounded-xl shadow-md" />
+                                        <img src={`${r2Url}/lbi-assets/food-safety/QC-&-RnD-2.jpg`} alt="Quality Control" className="rounded-xl shadow-md" />
+                                        <img src={`${r2Url}/lbi-assets/food-safety/WhatsApp Image 2025-09-05 at 15.47.27.jpeg`} alt="Food Safety" className="rounded-xl shadow-md" />
                                     </div>
                                 </div>
                             )}
 
-                            {/* Konten Certification dengan Gallery */}
-                            {activeQmsTab === 'certification' && (
-                                <div className="animate-fade-in">
-                                    <h3 className="text-2xl font-bold text-[#8B1C3D] mb-6">Certification & Compliance</h3>
-                                    <div className="flex gap-4 overflow-x-auto pb-4 snap-x">
-                                        {[
-                                            { src: 'HACCP-794604.jpg', label: 'HACCP' },
-                                            { src: 'Halal-Status-LBI-KAN.jpg', label: 'Halal KAN' },
-                                            { src: 'ISO-22000-2018.jpg', label: 'ISO 22000' }
-                                        ].map((cert, i) => (
-                                            <div 
-                                                key={i} 
-                                                onClick={() => openModal(`/assets/laukkita-bersama/certified/${cert.src}`, cert.label)}
-                                                className="cursor-pointer group flex-none w-64 h-48 rounded-xl overflow-hidden border border-[#debe9d] shadow-sm snap-center"
-                                            >
-                                                <img src={`/assets/laukkita-bersama/certified/${cert.src}`} alt={cert.label} className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
+                            {activeQmsTab === 'internal-audit' && (
+                                <div className="grid lg:grid-cols-2 gap-8 items-start animate-fade-in">
+                                    <div>
+                                        <h3 className="text-2xl font-bold text-[#8B1C3D] mb-6">Internal Audit & Verification</h3>
+                                        <div className="space-y-4">
+                                            <div className="flex items-start gap-3">
+                                                <div className="w-2 h-2 bg-[#8B1C3D] rounded-full mt-2 flex-shrink-0"></div>
+                                                <div>
+                                                    <h4 className="font-bold text-gray-800">Periodic Factory Audits</h4>
+                                                    <p className="text-gray-600 text-sm">QA, production, sanitation</p>
+                                                </div>
                                             </div>
-                                        ))}
+                                            <div className="flex items-start gap-3">
+                                                <div className="w-2 h-2 bg-[#8B1C3D] rounded-full mt-2 flex-shrink-0"></div>
+                                                <div>
+                                                    <h4 className="font-bold text-gray-800">Mock Recall & Traceability</h4>
+                                                    <p className="text-gray-600 text-sm">Validation processes</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <img src={`${r2Url}/lbi-assets/internal-audit/WhatsApp Image 2025-09-05 at 15.48.41.jpeg`} alt="Internal Audit" className="rounded-xl shadow-md" />
+                                        <img src={`${r2Url}/lbi-assets/internal-audit/QC-&-RnD-3-Landscape.jpg`} alt="Verification" className="rounded-xl shadow-md" />
                                     </div>
                                 </div>
                             )}
-                            {/* Anda dapat melengkapi tab lainnya di sini sesuai struktur data */}
+
+                            {activeQmsTab === 'supplier-control' && (
+                                <div className="grid lg:grid-cols-2 gap-8 items-start animate-fade-in">
+                                    <div>
+                                        <h3 className="text-2xl font-bold text-[#8B1C3D] mb-6">Supplier & Raw Material Control</h3>
+                                        <div className="space-y-4">
+                                            <div className="flex items-start gap-3">
+                                                <div className="w-2 h-2 bg-[#8B1C3D] rounded-full mt-2 flex-shrink-0"></div>
+                                                <div>
+                                                    <h4 className="font-bold text-gray-800">Approved Supplier Program</h4>
+                                                    <p className="text-gray-600 text-sm">Certified supplier network</p>
+                                                </div>
+                                            </div>
+                                            <div className="flex items-start gap-3">
+                                                <div className="w-2 h-2 bg-[#8B1C3D] rounded-full mt-2 flex-shrink-0"></div>
+                                                <div>
+                                                    <h4 className="font-bold text-gray-800">Incoming Material Inspection</h4>
+                                                    <p className="text-gray-600 text-sm">Visual, temperature, document based on spec</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <img src={`${r2Url}/lbi-assets/supplier-control/pabrik.jpg`} alt="Supplier Control" className="rounded-xl shadow-md" />
+                                        <img src={`${r2Url}/lbi-assets/supplier-control/Preapare-Room-2.jpg`} alt="Material Control" className="rounded-xl shadow-md" />
+                                    </div>
+                                </div>
+                            )}
+
+                            {activeQmsTab === 'document-training' && (
+                                <div className="grid lg:grid-cols-2 gap-8 items-start animate-fade-in">
+                                    <div>
+                                        <h3 className="text-2xl font-bold text-[#8B1C3D] mb-6">Document & Training Management</h3>
+                                        <div className="space-y-4">
+                                            <div className="flex items-start gap-3">
+                                                <div className="w-2 h-2 bg-[#8B1C3D] rounded-full mt-2 flex-shrink-0"></div>
+                                                <div>
+                                                    <h4 className="font-bold text-gray-800">QMS Documents</h4>
+                                                    <p className="text-gray-600 text-sm">Controlled with review cycle</p>
+                                                </div>
+                                            </div>
+                                            <div className="flex items-start gap-3">
+                                                <div className="w-2 h-2 bg-[#8B1C3D] rounded-full mt-2 flex-shrink-0"></div>
+                                                <div>
+                                                    <h4 className="font-bold text-gray-800">Routine Staff Training</h4>
+                                                    <p className="text-gray-600 text-sm">Food safety and SOPs</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <img src={`${r2Url}/lbi-assets/document-training/QMS.jpg`} alt="Document Management" className="rounded-xl shadow-md" />
+                                        <img src={`${r2Url}/lbi-assets/document-training/training.jpeg`} alt="Training" className="rounded-xl shadow-md" />
+                                    </div>
+                                </div>
+                            )}
+
+                            {activeQmsTab === 'certification' && (
+                                <div className="animate-fade-in">
+                                    <div className="grid lg:grid-cols-2 gap-8 items-start">
+                                        <div>
+                                            <h3 className="text-2xl font-bold text-[#8B1C3D] mb-6">Certification & Compliance</h3>
+                                            <div className="space-y-4">
+                                                <div className="flex items-start gap-3">
+                                                    <div className="w-2 h-2 bg-[#8B1C3D] rounded-full mt-2 flex-shrink-0"></div>
+                                                    <div>
+                                                        <h4 className="font-bold text-gray-800">BPOM Halal Certified</h4>
+                                                        <p className="text-gray-600 text-sm">Indonesian food safety standards</p>
+                                                    </div>
+                                                </div>
+                                                <div className="flex items-start gap-3">
+                                                    <div className="w-2 h-2 bg-[#8B1C3D] rounded-full mt-2 flex-shrink-0"></div>
+                                                    <div>
+                                                        <h4 className="font-bold text-gray-800">HACCP Implemented</h4>
+                                                        <p className="text-gray-600 text-sm">Hazard analysis critical control points</p>
+                                                    </div>
+                                                </div>
+                                                <div className="flex items-start gap-3">
+                                                    <div className="w-2 h-2 bg-[#8B1C3D] rounded-full mt-2 flex-shrink-0"></div>
+                                                    <div>
+                                                        <h4 className="font-bold text-gray-800">FSSC 22000</h4>
+                                                        <p className="text-gray-600 text-sm">In progress, targeted certification: 2025</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="relative">
+                                            <div ref={certCarouselRef} className="flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth py-2 -mx-4 px-4">
+                                                {[
+                                                    { src: 'HACCP-794604.jpg', label: 'HACCP Certificate' },
+                                                    { src: 'Halal-Status-LBI-KAN.jpg', label: 'Halal Status Certificate' },
+                                                    { src: 'ISO-14001-2015.jpg', label: 'ISO 14001:2015 Certificate' },
+                                                    { src: 'ISO-22000-2018.jpg', label: 'ISO 22000:2018 Certificate' },
+                                                    { src: 'ISO-45001-2018.jpg', label: 'ISO 45001:2018 Certificate' },
+                                                    { src: 'IZIN-PENERAPAN-PMR-PT-LBI.jpg', label: 'Izin Penerapan PMR PT LBI' },
+                                                    { src: 'NKV.png', label: 'NKV Certificate' },
+                                                    { src: 'Serrtifikat Halal - LBI.jpg', label: 'Halal Certificate' },
+                                                    { src: 'Sertifikat-CPPOB-Pangan-Olahan.jpg', label: 'CPPOB Pangan Olahan Certificate' },
+                                                    { src: 'Sertifikat-FSSC-22000.jpg', label: 'FSSC 22000 Certificate' },
+                                                ].map((cert, i) => (
+                                                    <div
+                                                        key={i}
+                                                        onClick={() => openModal(`${r2Url}/lbi-assets/certified/${cert.src}`, cert.label)}
+                                                        className="cursor-pointer group flex-none w-4/5 sm:w-3/4 md:w-2/3 lg:w-1/2 h-44 sm:h-48 md:h-56 lg:h-64 rounded-xl overflow-hidden border border-[#debe9d] bg-[#F7F3EF] shadow-md snap-center"
+                                                    >
+                                                        <img src={`${r2Url}/lbi-assets/certified/${cert.src}`} alt={cert.label} className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300" loading="lazy" />
+                                                    </div>
+                                                ))}
+                                            </div>
+
+                                            <button
+                                                type="button"
+                                                aria-label="Previous"
+                                                onClick={() => certCarouselRef.current?.scrollBy({ left: -400, behavior: 'smooth' })}
+                                                className="hidden md:flex absolute left-2 top-1/2 -translate-y-1/2 items-center justify-center w-10 h-10 rounded-full bg-white/80 hover:bg-white border border-[#debe9d] shadow"
+                                            >
+                                                <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-[#8B1C3D]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" /></svg>
+                                            </button>
+
+                                            <button
+                                                type="button"
+                                                aria-label="Next"
+                                                onClick={() => certCarouselRef.current?.scrollBy({ left: 400, behavior: 'smooth' })}
+                                                className="hidden md:flex absolute right-2 top-1/2 -translate-y-1/2 items-center justify-center w-10 h-10 rounded-full bg-white/80 hover:bg-white border border-[#debe9d] shadow"
+                                            >
+                                                <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-[#8B1C3D]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -346,8 +641,8 @@ const Index = ({ brand }) => {
                     </div>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto">
                         {exportImages.slice(0, 4).map((img, i) => (
-                            <div key={i} onClick={() => openModal(`/assets/laukkita-bersama/ekspor/${img}`, 'Export Shipment')} className="cursor-pointer overflow-hidden rounded-xl shadow-sm border border-gray-200 group">
-                                <img src={`/assets/laukkita-bersama/ekspor/${img}`} alt="Export" className="w-full h-40 object-cover group-hover:scale-110 transition-transform duration-500" />
+                            <div key={i} onClick={() => openModal(img, 'Export Shipment')} className="cursor-pointer overflow-hidden rounded-xl shadow-sm border border-gray-200 group">
+                                <img src={img} alt="Export" className="w-full h-40 object-cover group-hover:scale-110 transition-transform duration-500" />
                             </div>
                         ))}
                     </div>
@@ -363,20 +658,20 @@ const Index = ({ brand }) => {
                     </div>
                     <div className="flex flex-wrap justify-center gap-8 max-w-6xl mx-auto">
                         {clientLogos.map((logo, i) => (
-                            <img key={i} src={`/assets/laukkita-bersama/lbi-clients/${logo}`} alt="Client Logo" className="h-12 md:h-16 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100" />
+                            <img key={i} src={logo} alt="Client Logo" className="h-12 md:h-16 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100" />
                         ))}
                     </div>
                 </div>
             </section>
 
-            {/* --- 8. CONTACT FORM (Dengan JSON Integration) --- */}
+            {/* --- 8. CONTACT FORM --- */}
             <section id="contact" className="py-20 bg-[#8B1C3D]">
                 <div className="container mx-auto px-4 lg:px-8 max-w-6xl">
                     <div className="grid lg:grid-cols-2 gap-16 items-center">
                         <div className="text-white" data-aos="fade-right">
                             <h2 className="text-4xl font-bold mb-6">Ready to Partner with Us?</h2>
                             <p className="text-white/80 mb-10 text-lg">Let's discuss how our food manufacturing and white label services can help scale your business globally.</p>
-                            
+
                             <div className="space-y-6">
                                 <div className="flex items-center gap-4">
                                     <div className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center backdrop-blur-sm">
@@ -395,7 +690,7 @@ const Index = ({ brand }) => {
 
                         <div className="bg-white p-8 rounded-2xl shadow-2xl" data-aos="fade-left">
                             <h3 className="text-2xl font-bold text-gray-800 mb-6">Get a Quote</h3>
-                            
+
                             {recentlySuccessful && (
                                 <div className="mb-6 p-4 bg-green-50 border border-green-200 text-green-700 rounded-lg text-sm font-medium">
                                     Your inquiry has been sent successfully. Our team will contact you shortly!
@@ -449,7 +744,6 @@ const Index = ({ brand }) => {
     );
 };
 
-// Pasang Layout LBI
 Index.layout = page => <LbiLayout children={page} brand={page.props.brand} />;
 
 export default Index;

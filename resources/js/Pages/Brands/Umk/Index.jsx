@@ -18,6 +18,8 @@ const Index = ({ brand }) => {
         AOS.init({ duration: 1000, once: true, offset: 50 });
     }, []);
 
+    const r2Url = "https://assets.bridgeflow.my.id";
+
     // --- SETUP FORM INERTIA (Dengan Sihir JSON) ---
     const { data, setData, post, processing, reset, recentlySuccessful } = useForm({
         business_unit_id: brand?.id,
@@ -52,7 +54,7 @@ const Index = ({ brand }) => {
             <Head title={`Catering Solutions - ${brand?.name || 'Umara Mitra Kulina'}`} />
 
             {/* --- 1. HERO SECTION --- */}
-            <section id="home" className="py-32 relative overflow-hidden" style={{ backgroundImage: "url('/assets/umara-mitra-kulina/BG-WEB-UMK-PAGE.jpg')", backgroundSize: 'cover', backgroundPosition: 'center' }}>
+            <section id="home" className="py-32 relative overflow-hidden" style={{ backgroundImage: `url('${r2Url}/background/umk-bg/BG-WEB-UMK-PAGE.jpg')`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
                 <div className="absolute inset-0 bg-black/40"></div> {/* Dark overlay tambahan agar teks mudah dibaca */}
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -71,7 +73,7 @@ const Index = ({ brand }) => {
                                 ].map((feature, idx) => (
                                     <div key={idx} className="flex items-center space-x-3">
                                         <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0">
-                                            <img src="/assets/umara-mitra-kulina/Ceklis-UMK.png" alt="Check" className="w-8 h-auto" />
+                                            <img src={`${r2Url}/umk-assets/Ceklis-UMK.png`} alt="Check" className="w-8 h-auto" />
                                         </div>
                                         <span className="text-white font-medium">{feature}</span>
                                     </div>
@@ -97,7 +99,7 @@ const Index = ({ brand }) => {
                         
                         <div className="lg:col-span-1 relative" data-aos="fade-left">
                             <div className="relative overflow-hidden rounded-2xl shadow-2xl transform hover:scale-105 transition-transform duration-300">
-                                <img src="/assets/umara-mitra-kulina/Gedung-umk-2.jpeg" alt="Professional Kitchen" className="w-full h-[360px] sm:h-[450px] md:h-[540px] lg:h-[630px] xl:h-[720px] object-cover" />
+                                <img src={`${r2Url}/umk-assets/Gedung-umk-2.jpeg`} alt="Professional Kitchen" className="w-full h-[360px] sm:h-[450px] md:h-[540px] lg:h-[630px] xl:h-[720px] object-cover" />
                             </div>
                         </div>
                     </div>
@@ -105,7 +107,7 @@ const Index = ({ brand }) => {
             </section>
 
             {/* --- 2. INDUSTRY SERVICES SECTION --- */}
-            <section id="services" className="py-20" style={{ backgroundImage: "url('/assets/umara-mitra-kulina/BG-UMK.jpg')", backgroundSize: 'cover', backgroundPosition: 'center' }}>
+            <section id="services" className="py-20" style={{ backgroundImage: `url('${r2Url}/background/umk-bg/BG-UMK.jpg')`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
                 <div className="container mx-auto px-4">
                     <div className="text-center mb-16" data-aos="fade-up">
                         <h2 className="text-4xl font-bold text-white lg:text-[#67281F] mb-4 drop-shadow-md lg:drop-shadow-none">Industry-Specific Solutions</h2>

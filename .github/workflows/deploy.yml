@@ -2,35 +2,30 @@ name: Deploy Umara CMS
 
 on:
   push:
-    branches: [ "main" ] # Akan jalan otomatis setiap Anda push ke branch main
+    branches: [ "main" ]
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted  # ← Runner di VPS
 
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.3'
+      - name: Install & Build Frontend
+        run: |
+          npm ci
+          npm run build
 
-      - name: Install Dependencies
-        run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+      - name: Install PHP Dependencies
+        run: composer install --no-dev --optimize-autoloader
 
-      - name: Deploy to VPS via SSH
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            cd /var/www/cms-compro-umara
-            git pull origin main
-            composer install --no-dev --optimize-autoloader
-            php artisan migrate --force
-            php artisan config:cache
-            php artisan route:cache
-            php artisan view:cache
+      - name: Deploy Laravel
+        run: |
+          cp -r . /var/www/cms-compro-umara/
+          cd /var/www/cms-compro-umara
+          php artisan migrate --force
+          php artisan config:cache
+          php artisan route:cache
+          php artisan view:cache
+          php artisan storage:link

@@ -413,7 +413,7 @@ const Index = ({ brand }) => {
             </section>
 
             {/* --- 5. QUALITY MANAGEMENT (QMS TABS) --- */}
-            <section id="quality" className="py-20" style={{ backgroundImage: `url('${r2Url}/background/lbi-bg/BG-LBI-1.jpg')`, backgroundSize: 'cover', backgroundPosition: 'center', }}>
+            <section id="quality" className="py-20" style={{ backgroundImage: `url('${r2Url}/background/lbi-bg/BG-LBI-1-reverse.jpg)`, backgroundSize: 'cover', backgroundPosition: 'center', }}>
                 <div className="container mx-auto px-4 lg:px-8">
                     <div className="text-center mb-12" data-aos="fade-up">
                         <h2 className="text-4xl font-bold text-white mb-2">QUALITY MANAGEMENT</h2>

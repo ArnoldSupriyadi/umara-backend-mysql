@@ -9,23 +9,25 @@ jobs:
     runs-on: self-hosted
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
+      - name: Pull Latest Code
+        run: |
+          cd /var/www/cms-compro-umara
+          git pull origin main
 
       - name: Install & Build Frontend
         run: |
+          cd /var/www/cms-compro-umara
           npm ci
           npm run build
 
       - name: Install PHP Dependencies
-        run: composer install --no-dev --optimize-autoloader
+        run: |
+          cd /var/www/cms-compro-umara
+          composer install --no-dev --optimize-autoloader
 
       - name: Deploy Laravel
         run: |
-          cp -r public/build /var/www/cms-compro-umara/public/
           cd /var/www/cms-compro-umara
-          git pull origin main
-          composer install --no-dev --optimize-autoloader
           php artisan migrate --force
           php artisan config:cache
           php artisan route:cache

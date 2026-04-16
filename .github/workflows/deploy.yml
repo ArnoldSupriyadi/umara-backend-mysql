@@ -19,6 +19,7 @@ jobs:
           cd /var/www/cms-compro-umara
           npm ci
           npm run build
+          rm -f public/hot  # ← Tambah ini!
 
       - name: Install PHP Dependencies
         run: |

@@ -8,6 +8,13 @@
 # Ignore Node dependencies
 node_modules/
 
+# Ignore vendor PHP
+/vendor
+
+# Ignore build assets
+/public/build
+/public/hot
+
 # Ignore binary assets (images)
 *.png
 *.jpg

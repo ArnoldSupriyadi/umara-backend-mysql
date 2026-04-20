@@ -4,12 +4,13 @@ import UcrLayout from '@/Layouts/Brands/UcrLayout';
 
 export default function Mealbox({ brand }) {
     
+    const r2Url = "https://assets.bridgeflow.my.id";
     // Data List Menu Mealbox
     const mealboxMenus = [
         {
             title: "Hidangan Nusantara",
             price: "40,000 IDR",
-            image: "/assets/nasi-box/menu nasi box preview-3.pdf.jpg",
+            image: `${r2Url}/ucr-assets/mealbox/menu nasi box preview-3.pdf.jpg`,
             packages: [
                 {
                     name: "Hidangan Set-A",
@@ -28,7 +29,7 @@ export default function Mealbox({ brand }) {
         {
             title: "Hantaran Nusantara",
             price: "50,000 IDR",
-            image: "/assets/nasi-box/menu nasi box preview-4.pdf.jpg",
+            image: `${r2Url}/ucr-assets/mealbox/menu nasi box preview-4.pdf.jpg`,
             packages: [
                 {
                     name: "Hantaran Set-A & Set-B",
@@ -51,7 +52,7 @@ export default function Mealbox({ brand }) {
         {
             title: "Nasi Umara",
             price: "65,000 IDR",
-            image: "/assets/nasi-box/batch_nasi umara.jpg",
+            image: `${r2Url}/ucr-assets/mealbox/batch_nasi umara.jpg`,
             packages: [
                 {
                     name: "Premium Box",
@@ -71,7 +72,7 @@ export default function Mealbox({ brand }) {
                     <div className="container-hero-fluid w-full">
                         <div className="hero-media relative w-full h-[50vh] md:h-[70vh] overflow-hidden">
                             <img 
-                                src="/assets/ucr/UCR-WEB/Mealbox Hero 1920x550.jpg" 
+                                src={`${r2Url}/ucr-assets/mealbox/Mealbox Hero 1920x550.jpg`} 
                                 alt="Umara Mealbox" 
                                 className="absolute inset-0 w-full h-full object-cover"
                             />

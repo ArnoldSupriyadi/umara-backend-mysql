@@ -10,14 +10,15 @@ import 'swiper/css/navigation';
 
 export default function Event({ brand }) {
     
+    const r2Url = "https://assets.bridgeflow.my.id";
     // Data gambar untuk Event Gallery Carousel
     const eventImages = [
-        { src: "/assets/ucr/UCR-WEB/event/EVENT3.jpg", alt: "Private Event" },
-        { src: "/assets/ucr-coorporate-event/3.jpg", alt: "Corporate Event" },
-        { src: "/assets/ucr/UCR-WEB/event/EVENT.jpg", alt: "Gymnastic Olympics" },
-        { src: "/assets/ucr/UCR-WEB/event/EVENT2.jpg", alt: "Private Event" },
-        { src: "/assets/ucr/UCR-WEB/event/EVENT4.jpg", alt: "Private Event" },
-        { src: "/assets/ucr/UCR-WEB/event/EVENT5.jpg", alt: "Private Event" }
+        { src: `${r2Url}/ucr-assets/event/EVENT3.jpg`, alt: "Private Event" },
+        { src: `${r2Url}/ucr-assets/event/3.jpg`, alt: "Corporate Event" },
+        { src: `${r2Url}/ucr-assets/event/EVENT.jpg`, alt: "Gymnastic Olympics" },
+        { src: `${r2Url}/ucr-assets/event/EVENT2.jpg`, alt: "Private Event" },
+        { src: `${r2Url}/ucr-assets/event/EVENT4.jpg`, alt: "Private Event" },
+        { src: `${r2Url}/ucr-assets/event/EVENT5.jpg`, alt: "Private Event" }
     ];
 
     return (
@@ -29,8 +30,8 @@ export default function Event({ brand }) {
                 <section id="hero" className="hero-card">
                     <div className="container-hero-fluid w-full">
                         <div className="hero-media relative w-full h-[50vh] md:h-[70vh] overflow-hidden">
-                            <img 
-                                src="/assets/ucr/UCR-WEB/event-hero-img.jpeg" 
+                                <img 
+                                src={`${r2Url}/ucr-assets/event/event-hero-img.jpeg`} 
                                 alt="Umara Events" 
                                 className="absolute inset-0 w-full h-full object-cover"
                             />

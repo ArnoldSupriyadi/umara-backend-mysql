@@ -9,14 +9,15 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 
 export default function Mining({ brand }) {
+    const r2Url = "https://assets.bridgeflow.my.id";
     
     // Data gambar untuk Mining Gallery Carousel
     const miningImages = [
-        { src: "/assets/ucr-mining-event/6.jpg", alt: "Mining Operation 1" },
-        { src: "/assets/ucr-mining-event/8.jpg", alt: "Mining Operation 2" },
-        { src: "/assets/ucr-mining-event/3.jpg", alt: "Mining Operation 3" },
-        { src: "/assets/ucr-mining-event/4.jpg", alt: "Mining Operation 4" },
-        { src: "/assets/ucr-mining-event/5.jpg", alt: "Mining Operation 5" }
+        { src: `${r2Url}/ucr-assets/mining/6.jpg`, alt: "Mining Operation 1" },
+        { src: `${r2Url}/ucr-assets/mining/8.jpg`, alt: "Mining Operation 2" },
+        { src: `${r2Url}/ucr-assets/mining/3.jpg`, alt: "Mining Operation 3" },
+        { src: `${r2Url}/ucr-assets/mining/4.jpg`, alt: "Mining Operation 4" },
+        { src: `${r2Url}/ucr-assets/mining/5.jpg`, alt: "Mining Operation 5" }
     ];
 
     return (
@@ -29,7 +30,7 @@ export default function Mining({ brand }) {
                     <div className="container-hero-fluid w-full">
                         <div className="hero-media relative w-full h-[50vh] md:h-[70vh] overflow-hidden">
                             <img 
-                                src="/assets/ucr-mining-event/minig-cover.jpg" 
+                                src={`${r2Url}/ucr-assets/minig-cover.jpg`} 
                                 alt="Mining Catering" 
                                 className="absolute inset-0 w-full h-full object-cover"
                             />
@@ -47,7 +48,7 @@ export default function Mining({ brand }) {
                             </p>
                             
                             {/* Regional Operations Hub Information */}
-                            <div className="mt-12 max-w-lg mx-auto relative">
+                            <div className="mt-12 max-w-lg mx-auto relative hidden">
                                 <div className="absolute inset-0 flex items-center" aria-hidden="true">
                                     <div className="w-full border-t border-[#E1D5A6]"></div>
                                 </div>
@@ -58,7 +59,7 @@ export default function Mining({ brand }) {
                                 </div>
                             </div>
 
-                            <div className="mt-8 text-center bg-[#FCFBF7] p-6 rounded-sm border border-[#E1D5A6]/30 inline-block">
+                            <div className="mt-8 text-center bg-[#FCFBF7] p-6 rounded-sm border border-[#E1D5A6]/30 inline-block hidden">
                                 <h3 className="text-2xl font-playfair font-bold text-gray-900 mb-2">Komplek WIKA</h3>
                                 <p className="text-gray-700 font-medium tracking-wide">Jl. BR1 No. 19, Balikpapan</p>
                                 <p className="text-gray-500 font-light">Kalimantan Timur, Indonesia</p>

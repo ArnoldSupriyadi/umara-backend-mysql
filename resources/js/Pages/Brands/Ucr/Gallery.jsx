@@ -4,23 +4,25 @@ import UcrLayout from '@/Layouts/Brands/UcrLayout';
 
 export default function Gallery({ brand }) {
     
+    const r2Url = "https://assets.bridgeflow.my.id";
+
     // Data gambar untuk Masonry Gallery
     const signatureDishes = [
-        { src: "/assets/ucr/signature-dish/Canape.JPG", alt: "Canape" },
-        { src: "/assets/ucr/signature-dish/Cheese wheel pasta.jpg", alt: "Cheese wheel pasta" },
-        { src: "/assets/ucr/signature-dish/Chicken Teriyaki Rice Bowl.jpg", alt: "Chicken Teriyaki Rice Bowl" },
-        { src: "/assets/ucr/signature-dish/Creps de Suzet.jpg", alt: "Creps de Suzet" },
-        { src: "/assets/ucr/signature-dish/Empal Gentong.jpg", alt: "Empal Gentong" },
-        { src: "/assets/ucr/signature-dish/Es Oyen.jpg", alt: "Es Oyen" },
-        { src: "/assets/ucr/signature-dish/Nasi Liwet Keprabon.jpg", alt: "Nasi Liwet Keprabon" },
-        { src: "/assets/ucr/signature-dish/Nasi Umara.jpg", alt: "Nasi Umara" },
-        { src: "/assets/ucr/signature-dish/Osakayaki.jpg", alt: "Osakayaki" },
-        { src: "/assets/ucr/signature-dish/Pandan Telaga Aren.jpg", alt: "Pandan Telaga Aren" },
-        { src: "/assets/ucr/signature-dish/Roasted Duck Noodle.jpg", alt: "Roasted Duck Noodle" },
-        { src: "/assets/ucr/signature-dish/Salmon Mayoyaki.jpg", alt: "Salmon Mayoyaki" },
-        { src: "/assets/ucr/signature-dish/Zuppa Soup.jpg", alt: "Zuppa Soup" },
-        { src: "/assets/ucr/signature-dish/Es-pisang-ijo.png", alt: "Es Pisang Ijo" },
-        { src: "/assets/ucr/signature-dish/Mix Bbq.png", alt: "Mix Bbq" }
+        { src: `${r2Url}/ucr-assets/gallery/Canape.JPG`, alt: "Canape" },
+        { src: `${r2Url}/ucr-assets/gallery/Cheese wheel pasta.jpg`, alt: "Cheese wheel pasta" },
+        { src: `${r2Url}/ucr-assets/gallery/Chicken Teriyaki Rice Bowl.jpg`, alt: "Chicken Teriyaki Rice Bowl" },
+        { src: `${r2Url}/ucr-assets/gallery/Creps de Suzet.jpg`, alt: "Creps de Suzet" },
+        { src: `${r2Url}/ucr-assets/gallery/Empal Gentong.jpg`, alt: "Empal Gentong" },
+        { src: `${r2Url}/ucr-assets/gallery/Es Oyen.jpg`, alt: "Es Oyen" },
+        { src: `${r2Url}/ucr-assets/gallery/Nasi Liwet Keprabon.jpg`, alt: "Nasi Liwet Keprabon" },
+        { src: `${r2Url}/ucr-assets/gallery/Nasi Umara.jpg`, alt: "Nasi Umara" },
+        { src: `${r2Url}/ucr-assets/gallery/Osakayaki.jpg`, alt: "Osakayaki" },
+        { src: `${r2Url}/ucr-assets/gallery/Pandan Telaga Aren.jpg`, alt: "Pandan Telaga Aren" },
+        { src: `${r2Url}/ucr-assets/gallery/Roasted Duck Noodle.jpg`, alt: "Roasted Duck Noodle" },
+        { src: `${r2Url}/ucr-assets/gallery/Salmon Mayoyaki.jpg`, alt: "Salmon Mayoyaki" },
+        { src: `${r2Url}/ucr-assets/gallery/Zuppa Soup.jpg`, alt: "Zuppa Soup" },
+        { src: `${r2Url}/ucr-assets/gallery/Es-pisang-ijo.png`, alt: "Es Pisang Ijo" },
+        { src: `${r2Url}/ucr-assets/gallery/Mix Bbq.png`, alt: "Mix Bbq" }
     ];
 
     return (

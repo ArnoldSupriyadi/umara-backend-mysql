@@ -41,12 +41,12 @@ const Index = ({ brand }) => {
 
     // Data Gambar Carousel Services
     const serviceImages = [
-        "/assets/umara-mitra-kulina/1.jpg",
-        "/assets/umara-mitra-kulina/2.jpg",
-        "/assets/umara-mitra-kulina/UMK9.jpg",
-        "/assets/umara-mitra-kulina/4.jpg",
-        "/assets/umara-mitra-kulina/5.jpg",
-        "/assets/umara-mitra-kulina/kantin.png"
+        `${r2Url}/umk-assets/sliders/1.jpg`,
+        `${r2Url}/umk-assets/sliders/2.jpg`,
+        `${r2Url}/umk-assets/sliders/UMK9.jpg`,
+        `${r2Url}/umk-assets/sliders/4.jpg`,
+        `${r2Url}/umk-assets/sliders/5.jpg`,
+        `${r2Url}/umk-assets/sliders/kantin.png`
     ];
 
     return (
@@ -183,13 +183,13 @@ const Index = ({ brand }) => {
             </section>
 
             {/* --- 3. OUR KITCHEN SECTION --- */}
-            <section id="kitchen" className="py-20" style={{ backgroundImage: "url('/assets/umara-mitra-kulina/BG-STATEOFTHEART-UMK.jpg')", backgroundSize: 'cover', backgroundPosition: 'center' }}>
+            <section id="kitchen" className="py-20" style={{ backgroundImage: `url(${r2Url}/background/umk-bg/BG-STATEOFTHEART-UMK.jpg)`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
                 <div className="container mx-auto px-4">
                     <div className="text-center mb-20" data-aos="fade-up">
                         <h2 className="text-5xl font-bold text-gray-900 mb-6 leading-tight">
-                            <span className="text-[#67281F] bg-white/80 px-4 py-1 rounded-lg">Culinary Facilities</span>
+                            <span className="text-[#67281F] px-4 py-1 rounded-lg">Culinary Facilities</span>
                         </h2>
-                        <p className="text-lg text-gray-800 bg-white/70 p-4 rounded-xl max-w-2xl mx-auto leading-relaxed">
+                        <p className="text-lg text-gray-800 p-4 rounded-xl max-w-2xl mx-auto leading-relaxed">
                             Experience excellence through our modern kitchen facilities equipped with advanced technology, ensuring the highest standards of food safety and quality.
                         </p>
                     </div>
@@ -197,7 +197,7 @@ const Index = ({ brand }) => {
                     <div className="max-w-7xl mx-auto">
                         <div className="relative mb-20" data-aos="fade-up">
                             <div className="relative overflow-hidden rounded-3xl shadow-2xl">
-                                <img src="/assets/umara-mitra-kulina/Team-umk.jpg" alt="Kitchen Operations" className="w-full h-auto object-cover" />
+                                <img src={`${r2Url}/umk-assets/Team-umk.jpg`} alt="Kitchen Operations" className="w-full h-auto object-cover" />
                                 
                                 <div className="absolute bottom-8 left-8 right-8">
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -230,14 +230,14 @@ const Index = ({ brand }) => {
 
                         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                             {[
-                                { img: "Food-Process.jpg", title: "Food Preparation", desc: "Fresh ingredients prepared with precision" },
-                                { img: "UMK3.jpg", title: "Quality Control", desc: "Rigorous testing ensures standards" },
-                                { img: "Food-preparation.jpg", title: "Packaging Process", desc: "Safe packaging & timely delivery" },
-                                { img: "LOADING-UMK.jpg", title: "Loading Delivery", desc: "Carefully loaded & delivered on time" }
+                                { img: `${r2Url}/umk-assets/Food-Process.jpg`, title: "Food Preparation", desc: "Fresh ingredients prepared with precision" },
+                                { img: `${r2Url}/umk-assets/UMK3.jpg`, title: "Quality Control", desc: "Rigorous testing ensures standards" },
+                                { img: `${r2Url}/umk-assets/Food-preparation.jpg`, title: "Packaging Process", desc: "Safe packaging & timely delivery" },
+                                { img: `${r2Url}/umk-assets/LOADING-UMK.jpg`, title: "Loading Delivery", desc: "Carefully loaded & delivered on time" }
                             ].map((item, idx) => (
                                 <div key={idx} className="group" data-aos="fade-up" data-aos-delay={idx * 200}>
                                     <div className="relative overflow-hidden rounded-2xl shadow-lg group-hover:shadow-2xl transition-all duration-500">
-                                        <img src={`/assets/umara-mitra-kulina/${item.img}`} alt={item.title} className="w-full h-72 object-cover group-hover:scale-105 transition-transform duration-700" />
+                                        <img src={`${item.img}`} alt={item.title} className="w-full h-72 object-cover group-hover:scale-105 transition-transform duration-700" />
                                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
                                         <div className="absolute bottom-6 left-6 right-6">
                                             <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
@@ -265,7 +265,7 @@ const Index = ({ brand }) => {
                             "Monokem-Surya.png", "Motherson.png", "PT-ASAMA-INDONESIA-MANUFACTURING.png", "PT-Mitrametal-Perkasa.png", "shin-etsu.png"
                         ].map((logo, idx) => (
                             <div key={idx} className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex items-center justify-center hover:shadow-md transition-shadow" data-aos="fade-up" data-aos-delay={(idx % 5) * 100}>
-                                <img src={`/assets/umara-mitra-kulina/clients/${logo}`} alt={`Client ${idx}`} className="max-h-16 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300" />
+                                <img src={`${r2Url}/umk-assets/clients/${logo}`} alt={`Client ${idx}`} className="max-h-16 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300" />
                             </div>
                         ))}
                     </div>
@@ -273,7 +273,7 @@ const Index = ({ brand }) => {
             </section>
 
             {/* --- 5. CONTACT SECTION --- */}
-            <section id="contact" className="py-20" style={{ backgroundImage: "url('/assets/umara-mitra-kulina/BG-GETITTOUCH-UMK.jpg')", backgroundSize: 'cover', backgroundPosition: 'center' }}>
+            <section id="contact" className="py-20" style={{ backgroundImage: `url(${r2Url}/background/umk-bg/BG-GETITTOUCH-UMK.jpg)`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
                 <div className="container mx-auto px-4">
                     <div className="text-center mb-16" data-aos="fade-up">
                         <h2 className="text-4xl text-white font-bold mb-4">Get In Touch</h2>

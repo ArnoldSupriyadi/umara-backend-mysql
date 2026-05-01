@@ -19,7 +19,7 @@ class HomeController extends Controller
         $r2Base = rtrim($this->r2Url, '/');
 
         // 2. Mapping Sliders dengan pengecekan URL
-        $sliders = Slider::latest()->get()->map(function ($slider) use ($r2Base) {
+        $sliders = Slider::orderBy('sort_order')->get()->map(function ($slider) use ($r2Base) {
             $imagePath = $slider->image;
 
             // Jika path sudah berawalan http/https, pakai langsung. Jika belum, gabung dengan r2Base.
@@ -28,10 +28,11 @@ class HomeController extends Controller
                 : $r2Base . '/' . ltrim($imagePath, '/');
 
             return [
-                'id'        => $slider->id,
-                'title'     => $slider->title,
-                'image_url' => $finalImageUrl,
-                'link'      => $slider->link,
+                'id'            => $slider->id,
+                'headline'      => $slider->headline,
+                'subheadline'   => $slider->subheadline,
+                'text_position' => $slider->text_position ?? 'left',
+                'image_url'     => $finalImageUrl,
             ];
         });
 

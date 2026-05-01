@@ -1,3 +1,81 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* =========================================
+   HERO SLIDER - Swiper Custom Styles
+   ========================================= */
+
+/* Pastikan section slider & swiper container punya tinggi yang sama */
+.hero-slider-section {
+    position: relative;
+    width: 100%;
+    /* Aspect ratio 16:6 ~= tinggi 37.5% dari lebar */
+    aspect-ratio: 16 / 6;
+    min-height: 320px;
+    max-height: 680px;
+    background: #000;
+    overflow: hidden;
+}
+
+.hero-slider-section .swiper,
+.hero-slider-section .swiper-wrapper,
+.hero-slider-section .swiper-slide {
+    height: 100% !important;
+    width: 100% !important;
+}
+
+/* Tombol navigasi panah kiri/kanan */
+.hero-slider-section .swiper-button-prev,
+.hero-slider-section .swiper-button-next {
+    width: 36px !important;
+    height: 36px !important;
+    background: rgba(255, 255, 255, 0.20);
+    backdrop-filter: blur(6px);
+    border-radius: 50% !important;
+    color: #fff !important;
+    transition: background 0.2s;
+    /* Paksa flex agar arrow benar-benar di tengah lingkaran */
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    /* Reset margin bawaan Swiper */
+    margin-top: -18px !important;
+}
+
+.hero-slider-section .swiper-button-prev:hover,
+.hero-slider-section .swiper-button-next:hover {
+    background: rgba(255, 255, 255, 0.40);
+}
+
+/* Arrow icon — kecilkan dan pusatkan (::after untuk Swiper lama) */
+.hero-slider-section .swiper-button-prev::after,
+.hero-slider-section .swiper-button-next::after {
+    font-size: 11px !important;
+    font-weight: 900 !important;
+    line-height: 1 !important;
+    width: 88% !important;
+    height: 65% !important;
+}
+
+/* Arrow SVG — untuk Swiper v9+ yang pakai SVG */
+.hero-slider-section .swiper-button-prev svg,
+.hero-slider-section .swiper-button-next svg {
+    width: 88% !important;
+    height: 65% !important;
+}
+
+/* Pagination bullets */
+.hero-slider-section .swiper-pagination-bullet {
+    width: 8px;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.5);
+    opacity: 1;
+    transition: all 0.3s;
+}
+
+.hero-slider-section .swiper-pagination-bullet-active {
+    background: #fff;
+    width: 24px;
+    border-radius: 4px;
+}

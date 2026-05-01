@@ -53,8 +53,12 @@ class PostForm
                             ->directory('posts')
                             ->visibility('public')
                             ->image()
+                            ->imagePreviewHeight('120')
                             ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
-                            ->required()
+                            ->nullable()
+                            ->dehydrated(fn($state) => filled($state))
+                            ->required(fn($record) => $record === null)
+                            ->helperText(fn($record) => $record ? 'Biarkan kosong jika tidak ingin mengganti gambar utama.' : null)
                             ->columnSpanFull()
                             ->saveUploadedFileUsing(function (TemporaryUploadedFile $file) {
                                 return ImageService::convertAndUpload($file, 'posts', quality: 85, maxWidth: 1200);
@@ -67,9 +71,13 @@ class PostForm
                             ->directory('posts/gallery')
                             ->visibility('public')
                             ->image()
+                            ->imagePreviewHeight('120')
                             ->multiple()
                             ->reorderable()
                             ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                            ->nullable()
+                            ->dehydrated(fn($state) => filled($state))
+                            ->helperText(fn($record) => $record ? 'Biarkan kosong jika tidak ingin mengubah galeri.' : null)
                             ->columnSpanFull()
                             ->saveUploadedFileUsing(function (TemporaryUploadedFile $file) {
                                 return ImageService::convertAndUpload($file, 'posts/gallery', quality: 80, maxWidth: 1200);

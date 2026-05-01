@@ -44,8 +44,12 @@ class MenuForm
                             ->visibility('public')
                             ->image()
                             ->imageEditor()
+                            ->imagePreviewHeight('120')
                             ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
-                            ->required()
+                            ->nullable()
+                            ->dehydrated(fn($state) => filled($state))
+                            ->required(fn($record) => $record === null)
+                            ->helperText(fn($record) => $record ? 'Biarkan kosong jika tidak ingin mengganti gambar.' : null)
                             ->saveUploadedFileUsing(function (TemporaryUploadedFile $file) {
                                 return ImageService::convertAndUpload($file, 'menus', quality: 85, maxWidth: 1200);
                             }),

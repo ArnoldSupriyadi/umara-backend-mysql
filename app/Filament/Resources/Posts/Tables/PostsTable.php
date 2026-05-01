@@ -24,23 +24,12 @@ class PostsTable
                         if (! $record->main_image) {
                             return null;
                         }
+                        // Jika sudah full URL, langsung pakai
                         if (str_starts_with($record->main_image, 'http')) {
                             return $record->main_image;
                         }
-                        // Check if file exists in public/ (for seeded/local images)
-                        // IMPORTANT: asset() points to public/, but we need to check existence first.
-                        // Newly uploaded files via Filament are in storage/app/public/posts, 
-                        // which is symlinked to public/storage/posts.
-                        // So a path like "posts/image.jpg" means public/storage/posts/image.jpg.
-
-                        // 1. Check direct public path (seeded images like images/post/...)
-                        if (file_exists(public_path(ltrim($record->main_image, '/')))) {
-                            return asset($record->main_image);
-                        }
-
-                        // 2. Check storage path (uploaded via Filament)
-                        // If the path is "posts/my-image.jpg", asset('storage/' . $path) generates /storage/posts/my-image.jpg
-                        return asset('storage/' . $record->main_image);
+                        // Path R2 (posts/uuid.webp) → generate public R2 URL
+                        return \Illuminate\Support\Facades\Storage::disk('r2')->url($record->main_image);
                     }),
                 TextColumn::make('title')->searchable()->limit(50),
                 TextColumn::make('businessUnit.name') // Mengambil nama dari relasi

@@ -3,11 +3,27 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Storage;
 
 class Menu extends Model
 {
+    use LogsActivity;
+
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logFillable()
+            ->logOnlyDirty()
+            ->useLogName('Menu')
+            ->setDescriptionForEvent(function(string $eventName) {
+                $label = $this->title ?? $this->getKey();
+                return "[Menu] {$label} was {$eventName}";
+            });
+    }
     protected $fillable = [
         'business_unit_id',
         'title',

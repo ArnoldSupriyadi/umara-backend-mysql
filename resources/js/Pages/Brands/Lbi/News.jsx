@@ -4,29 +4,8 @@ import LbiLayout from '@/Layouts/Brands/LbiLayout'; // Pastikan Anda menyesuaika
 
 const News = ({ brand, posts }) => {
 
-    // Helper untuk base path URL LBI
-    const basePath = `/${brand?.slug || 'laukita-bersama'}`;
-
-    // --- FALLBACK DATA ---
-    // Jika props 'posts' dari database masih kosong, kita pakai data dummy ini
-    const displayPosts = posts && posts.length > 0 ? posts : [
-        {
-            id: 1,
-            title: 'Laukita Bersama Indonesia Showcases Food Manufacturing at SIAL InterFood 2025',
-            excerpt: 'LBI participated in SIAL InterFood 2025, one of Indonesia’s leading food and beverage exhibitions. This participation serves as an important step for LBI to introduce its advanced frozen and retort food',
-            image: '/assets/news/sial-interfood/1.jpg',
-            published_at: '12 November 2025',
-            slug: 'sial-interfood-2025'
-        },
-        {
-            id: 2,
-            title: 'Expanding Horizons: Laukita Bersama Indonesia Exports Ready-to-Cook Meals to Saudi Arabia',
-            excerpt: 'PT Laukita Bersama Indonesia has officially expanded its operations to Saudi Arabia, shipping high-quality ready-to-cook meals to serve the Middle Eastern market and Indonesian pilgrims.',
-            image: '/assets/laukkita-bersama/ekspor/eskpor-to-saudi.jpeg',
-            published_at: '6 Maret 2025',
-            slug: 'ekspor-to-jeddah'
-        }
-    ];
+    // posts is a Laravel paginator object: { data: [...], links: [...], ... }
+    const displayPosts = posts?.data ?? [];
 
     return (
         <div className="bg-white min-h-screen">
@@ -60,7 +39,7 @@ const News = ({ brand, posts }) => {
                                     {/* Image */}
                                     <div className="relative overflow-hidden">
                                         <img 
-                                            src={post.image} 
+                                            src={post.image_url} 
                                             alt={post.title} 
                                             className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
                                             loading="lazy"
@@ -84,7 +63,7 @@ const News = ({ brand, posts }) => {
                                         
                                         {/* Read More Link (Menggunakan Inertia Link) */}
                                         <Link 
-                                            href={`${basePath}/news/${post.slug}`} 
+                                            href={`/posts/${post.slug}`} 
                                             className="inline-flex items-center text-[#8B1C3D] hover:text-[#6f162e] font-bold mt-auto tracking-wide group/link"
                                         >
                                             Read More

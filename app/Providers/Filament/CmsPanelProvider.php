@@ -7,12 +7,15 @@ use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\NavigationItem;
 use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
+use Filament\Support\Icons\Heroicon;
+use App\Filament\Widgets\ActivityLogWidget;
+use App\Filament\Widgets\StatsOverviewWidget;
 use Filament\Widgets\AccountWidget;
-use Filament\Widgets\FilamentInfoWidget;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -29,6 +32,9 @@ class CmsPanelProvider extends PanelProvider
             ->id('cms')
             ->path('cms')
             ->brandName('CMS UMARA GROUP')
+            ->brandLogo('https://assets.bridgeflow.my.id/logos/umara-group.png')
+            ->brandLogoHeight('80px')
+            ->favicon('https://assets.bridgeflow.my.id/logos/umara-group.png')
             ->login()
             ->colors([
                 'primary' => Color::Amber,
@@ -41,7 +47,8 @@ class CmsPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([
                 AccountWidget::class,
-                FilamentInfoWidget::class,
+                StatsOverviewWidget::class,
+                ActivityLogWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -53,6 +60,13 @@ class CmsPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
+            ])
+            ->navigationItems([
+                NavigationItem::make('Lihat Website')
+                    ->url('/', shouldOpenInNewTab: true)
+                    ->icon(Heroicon::ArrowTopRightOnSquare)
+                    ->group('Website')
+                    ->sort(1),
             ])
             ->plugins([
                 FilamentShieldPlugin::make(),

@@ -40,9 +40,23 @@ Route::get('/careers/{slug}/apply', [CareerController::class, 'applyForm'])->nam
 // 👇 Route untuk MENYIMPAN data form (WAJIB POST)
 Route::post('/careers/apply', [CareerController::class, 'apply'])->name('careers.apply');
 
-// Posts
+// Posts — global listing & detail
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 Route::get('/posts/{slug}', [PostController::class, 'show'])->name('posts.show');
+
+// Brand-filtered news pages (must be before the wildcard {brand_slug} group)
+Route::get('/rasa-nusantara-baru/news', [PostController::class, 'brandNews'])
+    ->name('posts.brand.rnb');
+Route::get('/umara-cipta-rasa/news', [PostController::class, 'brandNews'])
+    ->name('posts.brand.ucr');
+Route::get('/umara-mitra-kulina/news', [PostController::class, 'brandNews'])
+    ->name('posts.brand.umk');
+Route::get('/laukita-bersama-indonesia/news', [PostController::class, 'brandNews'])
+    ->name('posts.brand.lbi');
+Route::get('/laukita-niaga-indonesia/news', [PostController::class, 'brandNews'])
+    ->name('posts.brand.lni');
+Route::get('/umara-nikmat-boga/news', [PostController::class, 'brandNews'])
+    ->name('posts.brand.unb');
 
 // About
 Route::get('/about', [AboutController::class, 'index'])->name('about.index');

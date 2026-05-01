@@ -7,38 +7,8 @@ const News = ({ brand, posts }) => {
     // --- FALLBACK DATA ---
     // Jika props 'posts' dari database masih kosong/belum ada, kita pakai data dummy ini
     // agar layout tetap terlihat rapi saat proses development.
-    const displayPosts = posts && posts.length > 0 ? posts : [
-        {
-            id: 1,
-            title: 'Quality Milestone: Shelf-Life and Freshness',
-            excerpt: 'Technology-backed freshness ensures long shelf-life while preserving authentic flavors for every meal served.',
-            image: '/assets/news/kiddies-day-out/lni-aeon3.jpg',
-            published_at: '30 October 2025',
-            category: null,
-            slug: 'quality-milestone-shelf-life'
-        },
-        {
-            id: 2,
-            title: 'Fueling the Drive: Laukita Niaga Indonesia Serves Exclusive Dining at IIMS 2026',
-            excerpt: 'Laukita Niaga Indonesia was honored to be the chosen food supply partner for Bank Danamon, ensuring their distinguished guests enjoyed a culinary experience.',
-            image: '/assets/news/iims2026/lni-iims.jpeg',
-            published_at: '15 November 2025',
-            category: 'Expansion',
-            slug: 'fueling-the-drive-iims-2026'
-        },
-        {
-            id: 3,
-            title: 'New Menu Launch: Signature Indonesian Flavors',
-            excerpt: 'Introducing authentic Indonesian dishes crafted for convenience without compromising on the traditional taste.',
-            image: '/assets/lauk-kita-niaga/product/Cumi-Asin-Pedas-Jontor.jpg',
-            published_at: '9 November 2025',
-            category: 'Product',
-            slug: 'new-menu-launch'
-        }
-    ];
-
-    // Helper untuk base path URL LNI (Untuk routing Link internal)
-    const basePath = `/${brand?.slug || 'lauk-kita-niaga'}`;
+    // posts is a Laravel paginator object: { data: [...], links: [...], ... }
+    const displayPosts = posts?.data ?? [];
 
     return (
         <>
@@ -72,7 +42,7 @@ const News = ({ brand, posts }) => {
                                     <div className="relative overflow-hidden h-72 rounded-t-2xl">
                                         <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors z-10"></div>
                                         <img 
-                                            src={post.image} 
+                                            src={post.image_url} 
                                             alt={post.title}
                                             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                                         />
@@ -112,7 +82,7 @@ const News = ({ brand, posts }) => {
                                         
                                         {/* Read More Link */}
                                         <div className="mt-auto pt-6 border-t border-[#E8DCC0]/50 flex items-center justify-between">
-                                            <Link href={`${basePath}/news/${post.slug}`} className="inline-flex items-center text-[#234E33] font-bold tracking-wide uppercase text-sm group/link">
+                                            <Link href={`/posts/${post.slug}`} className="inline-flex items-center text-[#234E33] font-bold tracking-wide uppercase text-sm group/link">
                                                 Read Story
                                                 <svg className="w-4 h-4 ml-2 transition-transform duration-300 group-hover/link:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />

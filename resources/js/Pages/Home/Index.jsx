@@ -31,7 +31,7 @@ export default function Index({ sliders, clients, posts }) {
             <Head title="Home - Umara Group" />
 
             {/* --- 1. BAGIAN HERO SLIDER --- */}
-            <section className="relative w-full h-[70vh] md:h-[85vh] bg-gray-900">
+            <section className="hero-slider-section">
                 {sliders && sliders.length > 0 ? (
                     <Swiper
                         modules={[Autoplay, Pagination, Navigation]}
@@ -43,33 +43,81 @@ export default function Index({ sliders, clients, posts }) {
                         navigation={true}
                         className="w-full h-full"
                     >
-                        {sliders.map((slider) => (
-                            <SwiperSlide key={slider.id}>
-                                <div className="relative w-full h-full flex items-center justify-center">
-                                    <div 
-                                        className="absolute inset-0 bg-cover bg-center z-0"
-                                        style={{ backgroundImage: `url(${slider.image_url})` }}
-                                    ></div>
-                                    <div className="absolute inset-0 bg-black/50 z-10"></div>
-                                    <div className="relative z-20 text-center text-white px-6 max-w-4xl mx-auto mt-12 md:mt-0">
-                                        <span className="uppercase tracking-widest text-sm md:text-base font-semibold text-blue-400 mb-4 block drop-shadow-md">
-                                            Welcome to Umara Group
-                                        </span>
-                                        <h2 className="text-4xl md:text-6xl font-extrabold mb-6 leading-tight drop-shadow-lg font-['Playfair_Display']">
-                                            {slider.title}
-                                        </h2>
-                                        {slider.link && (
-                                            <a href={slider.link} className="mt-4 inline-block px-8 py-3 bg-[#CE8131] hover:bg-[#8D4105] text-white font-bold rounded-full transition shadow-lg">
-                                                Learn More
-                                            </a>
-                                        )}
+                        {sliders.map((slider) => {
+                            // Tentukan class posisi teks berdasarkan text_position
+                            const pos = slider.text_position ?? 'left';
+                            const containerAlign =
+                                pos === 'right'  ? 'items-end'   :
+                                pos === 'center' ? 'items-center' :
+                                                   'items-start';
+                            const textAlign =
+                                pos === 'right'  ? 'text-right'  :
+                                pos === 'center' ? 'text-center' :
+                                                   'text-left';
+                            const paddingPos =
+                                pos === 'right'  ? 'pr-8 md:pr-16 lg:pr-24' :
+                                pos === 'center' ? 'px-6'                   :
+                                                   'pl-8 md:pl-16 lg:pl-24';
+
+                            return (
+                                <SwiperSlide key={slider.id}>
+                                    <div className="relative w-full h-full overflow-hidden">
+                                        {/* Gambar pakai <img> dengan object-contain agar tampil full tanpa crop */}
+                                        <img
+                                            src={slider.image_url}
+                                            alt={slider.headline ?? 'Slider'}
+                                            className="absolute inset-0 w-full h-full object-cover object-center"
+                                        />
+
+                                        {/* Overlay gradient gelap tipis dari kiri/kanan sesuai posisi teks */}
+                                        <div
+                                            className="absolute inset-0 z-10"
+                                            style={{
+                                                background:
+                                                    pos === 'right'
+                                                        ? 'linear-gradient(to left, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.2) 55%, transparent 100%)'
+                                                        : pos === 'center'
+                                                        ? 'rgba(0,0,0,0.35)'
+                                                        : 'linear-gradient(to right, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.2) 55%, transparent 100%)',
+                                            }}
+                                        />
+
+                                        {/* Teks konten */}
+                                        <div className={`absolute inset-0 z-20 flex flex-col justify-center ${containerAlign} ${paddingPos}`}>
+                                            <div className={`max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg ${textAlign}`}>
+                                                {slider.headline && (
+                                                    <h2
+                                                        className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white drop-shadow-lg mb-3 capitalize"
+                                                        style={{
+                                                            fontFamily: "'Merriweather', serif",
+                                                            letterSpacing: '2px',
+                                                            lineHeight: '1.2',
+                                                        }}
+                                                    >
+                                                        {slider.headline}
+                                                    </h2>
+                                                )}
+                                                {slider.subheadline && (
+                                                    <p
+                                                        className="text-sm sm:text-base md:text-lg text-white drop-shadow-md capitalize"
+                                                        style={{
+                                                            fontFamily: "'Merriweather', serif",
+                                                            letterSpacing: '2px',
+                                                            lineHeight: '32px',
+                                                        }}
+                                                    >
+                                                        {slider.subheadline}
+                                                    </p>
+                                                )}
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </SwiperSlide>
-                        ))}
+                                </SwiperSlide>
+                            );
+                        })}
                     </Swiper>
                 ) : (
-                    <div className="w-full h-full flex items-center justify-center">
+                    <div className="w-full h-full flex items-center justify-center bg-gray-900">
                         <h2 className="text-white text-2xl font-['Playfair_Display']">Belum ada slider yang aktif.</h2>
                     </div>
                 )}

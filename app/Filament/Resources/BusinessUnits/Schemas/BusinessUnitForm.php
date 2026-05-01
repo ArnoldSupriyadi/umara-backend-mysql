@@ -36,9 +36,13 @@ class BusinessUnitForm
                     ->directory('logos')
                     ->visibility('public')
                     ->image()
+                    ->imagePreviewHeight('120')
                     ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                    ->nullable()
+                    ->dehydrated(fn($state) => filled($state))
+                    ->required(fn($record) => $record === null)
+                    ->helperText(fn($record) => $record ? 'Biarkan kosong jika tidak ingin mengganti logo.' : null)
                     ->saveUploadedFileUsing(function (TemporaryUploadedFile $file) {
-                        // Logo: quality tinggi, ukuran kecil karena ini logo perusahaan
                         return ImageService::convertAndUpload($file, 'logos', quality: 90, maxWidth: 400);
                     }),
             ]);

@@ -154,18 +154,28 @@ export default function Index({ posts }) {
                                 {/* Pagination Bawaan Laravel Inertia */}
                                 {posts.links && posts.links.length > 3 && (
                                     <div className="flex justify-center gap-2 mt-12 flex-wrap">
-                                        {posts.links.map((link, index) => (
-                                            <Link
-                                                key={index}
-                                                href={link.url}
-                                                className={`px-4 py-2 border rounded-full text-sm font-semibold transition-all duration-300 ${
-                                                    link.active 
-                                                        ? 'bg-gradient-to-r from-[#CE8736] to-[#8C3F0E] text-white border-transparent shadow-md' 
-                                                        : 'bg-white text-gray-700 hover:bg-gray-50 hover:text-[#CE8736] border-gray-200'
-                                                } ${!link.url ? 'opacity-50 cursor-not-allowed pointer-events-none' : ''}`}
-                                                dangerouslySetInnerHTML={{ __html: link.label }}
-                                            />
-                                        ))}
+                                        {posts.links.map((link, index) => {
+                                            const cls = `px-4 py-2 border rounded-full text-sm font-semibold transition-all duration-300 ${
+                                                link.active
+                                                    ? 'bg-gradient-to-r from-[#CE8736] to-[#8C3F0E] text-white border-transparent shadow-md'
+                                                    : 'bg-white text-gray-700 hover:bg-gray-50 hover:text-[#CE8736] border-gray-200'
+                                            } ${!link.url ? 'opacity-50 cursor-not-allowed pointer-events-none' : ''}`;
+
+                                            return link.url ? (
+                                                <Link
+                                                    key={index}
+                                                    href={link.url}
+                                                    className={cls}
+                                                    dangerouslySetInnerHTML={{ __html: link.label }}
+                                                />
+                                            ) : (
+                                                <span
+                                                    key={index}
+                                                    className={cls}
+                                                    dangerouslySetInnerHTML={{ __html: link.label }}
+                                                />
+                                            );
+                                        })}
                                     </div>
                                 )}
                             </>

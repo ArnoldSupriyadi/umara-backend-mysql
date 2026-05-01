@@ -14,36 +14,8 @@ const News = ({ brand, posts }) => {
     }, []);
 
     // Helper untuk base path URL RNB
-    const basePath = `/${brand?.slug || 'rasa-nusantara-baru'}`;
-
-    // --- DUMMY DATA ---
-    // Akan otomatis diganti jika props 'posts' dari database tersedia
-    const displayPosts = posts && posts.length > 0 ? posts : [
-        {
-            id: 1,
-            title: "Rasa Umara x Wardah: Jelajahi Bazar Fashion & Beauty Experience",
-            excerpt: "Rasa Umara collaborates with Wardah Beauty to present a special event titled “Explore the Rasa Umara Fashion Bazaar”—a celebration of fashion, beauty, and culinary excellence.",
-            published_at: "26 Juni 2025",
-            image: "/assets/news/wardah/1.png",
-            slug: "rasa-umara-x-wardah-bazar"
-        },
-        {
-            id: 2,
-            title: "Lumpang Emas Bintaro Hosts the Vibrant 8th Anniversary Celebration of HayoMoto",
-            excerpt: "Lumpang Emas Bintaro is honored to be part of the vibrant celebration of HayoMoto’s 8th Anniversary.",
-            published_at: "8 November 2025",
-            image: "/assets/news/hayomoto/1.jpeg",
-            slug: "hayomoto-8th-anniversary"
-        },
-        {
-            id: 3,
-            title: "A Magical Christmas: Santa Surprises Guests at Umara House & Lumpang Emas",
-            excerpt: "Christmas is a season of giving, sharing, and creating beautiful memories with loved ones. To celebrate this joyous occasion, Umara brought a special touch of magic to its beloved dining establishments.",
-            published_at: "25 Desember 2025",
-            image: "/assets/news/santa-umara/IMG_7935.jpg",
-            slug: "santa-surprises-guests"
-        }
-    ];
+    // posts is a Laravel paginator object: { data: [...], links: [...], ... }
+    const displayPosts = posts?.data ?? [];
 
     return (
         <div className="bg-gray-100 min-h-screen pt-24 pb-12">
@@ -80,7 +52,7 @@ const News = ({ brand, posts }) => {
                                     {/* Thumbnail */}
                                     <div className="relative overflow-hidden h-64">
                                         <img 
-                                            src={post.image} 
+                                            src={post.image_url} 
                                             alt={post.title} 
                                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                                         />
@@ -98,7 +70,7 @@ const News = ({ brand, posts }) => {
                                         </div>
                                         
                                         <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-amber-600 transition-colors leading-snug">
-                                            <Link href={`${basePath}/news/${post.slug}`}>
+                                            <Link href={`/posts/${post.slug}`}>
                                                 {post.title}
                                             </Link>
                                         </h3>
@@ -110,7 +82,7 @@ const News = ({ brand, posts }) => {
                                         {/* Read More Link */}
                                         <div className="mt-auto pt-6 border-t border-gray-100">
                                             <Link 
-                                                href={`${basePath}/news/${post.slug}`} 
+                                                href={`/posts/${post.slug}`} 
                                                 className="inline-flex items-center text-amber-600 hover:text-amber-800 font-bold uppercase tracking-wide text-sm transition-colors group/link"
                                             >
                                                 Read Story

@@ -43,14 +43,26 @@ class SliderForm
                             ->visibility('public')
                             ->image()
                             ->imageEditor()
+                            ->imagePreviewHeight('120')
                             ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                             ->nullable()
                             ->dehydrated(fn($state) => filled($state))
                             ->required(fn($record) => $record === null || blank($record->image))
-                            // Auto-convert ke WebP sebelum disimpan ke R2
+                            ->helperText(fn($record) => $record ? 'Biarkan kosong jika tidak ingin mengganti gambar slider.' : null)
                             ->saveUploadedFileUsing(function (TemporaryUploadedFile $file) {
                                 return ImageService::convertAndUpload($file, 'sliders');
                             }),
+
+                        Select::make('text_position')
+                            ->label('Posisi Teks')
+                            ->options([
+                                'left'   => '⬅️ Kiri',
+                                'center' => '↔️ Tengah',
+                                'right'  => '➡️ Kanan',
+                            ])
+                            ->default('left')
+                            ->required()
+                            ->helperText('Tentukan posisi teks headline & subheadline pada slider.'),
 
                         Select::make('sort_order')
                             ->label('Posisi Urutan')

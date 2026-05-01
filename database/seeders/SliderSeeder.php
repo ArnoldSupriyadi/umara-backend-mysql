@@ -5,8 +5,6 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 class SliderSeeder extends Seeder
 {
@@ -15,75 +13,102 @@ class SliderSeeder extends Seeder
         // Kosongkan tabel slider sebelum seeding
         DB::table('sliders')->truncate();
 
-        // 1. Ambil daftar file langsung dari folder 'sliders' di R2
-        // Ini akan mengembalikan array path seperti ["sliders/ug-slider1.jpg", ...]
-        $files = Storage::disk('r2')->files('sliders');
+        // Ambil semua business unit slug → id
+        $units = DB::table('business_units')
+            ->select('id', 'slug')
+            ->get()
+            ->pluck('id', 'slug');
 
-        if (empty($files)) {
-            $this->command->warn('Tidak ada file ditemukan di folder "sliders" pada disk R2.');
-            return;
-        }
+        // Definisi slider secara eksplisit
+        // image: path di R2 (tanpa base URL)
+        $sliders = [
+            [
+                'slug'          => 'umara-cipta-rasa',
+                'image'         => 'sliders/ucr-slider1.webp',
+                'headline'      => 'Building Dreams',
+                'subheadline'   => 'Creating Futures',
+                'text_position' => 'left',
+                'sort_order'    => 1,
+            ],
+            [
+                'slug'          => 'rasa-nusantara-baru',
+                'image'         => 'sliders/rnb-slider1.webp',
+                'headline'      => 'Contemporary Architecture',
+                'subheadline'   => 'Innovative designs that blend functionality with aesthetic excellence',
+                'text_position' => 'left',
+                'sort_order'    => 1,
+            ],
+            [
+                'slug'          => 'rasa-nusantara-baru',
+                'image'         => 'sliders/rnb-slider2.webp',
+                'headline'      => 'Golden Dining in Bintaro',
+                'subheadline'   => "Premium restaurant experience in the heart of South Jakarta's most sought-after area",
+                'text_position' => 'right',
+                'sort_order'    => 2,
+            ],
+            [
+                'slug'          => 'rasa-nusantara-baru',
+                'image'         => 'sliders/rnb-slider3.webp',
+                'headline'      => 'Signature Series',
+                'subheadline'   => 'Exclusive luxury developments that define premium living standards',
+                'text_position' => 'right',
+                'sort_order'    => 3,
+            ],
+            [
+                'slug'          => 'laukita-bersama-indonesia',
+                'image'         => 'sliders/lbi-slider2.webp',
+                'headline'      => 'Advanced Manufacturing',
+                'subheadline'   => 'Cutting-edge equipment and technology for superior food processing solutions',
+                'text_position' => 'left',
+                'sort_order'    => 1,
+            ],
+            [
+                'slug'          => 'laukita-niaga-indonesia',
+                'image'         => 'sliders/lni-slider1.webp',
+                'headline'      => 'Advanced Manufacturing',
+                'subheadline'   => 'Cutting-edge equipment and technology for superior food processing solutions',
+                'text_position' => 'right',
+                'sort_order'    => 1,
+            ],
+            [
+                'slug'          => 'umara-mitra-kulina',
+                'image'         => 'sliders/umk-slider1.webp',
+                'headline'      => 'Catering Industry',
+                'subheadline'   => 'High-capacity catering production built on strict food safety protocols',
+                'text_position' => 'left',
+                'sort_order'    => 1,
+            ],
+        ];
 
-        $units = DB::table('business_units')->select('id', 'slug')->get()->pluck('id', 'slug');
-        $orderByUnit = [];
         $count = 0;
 
-        foreach ($files as $r2Path) {
-            $filename = basename($r2Path);
-            $lowerName = strtolower($filename);
-
-            if (!str_ends_with($lowerName, '.webp')) {
-                continue;
-            }
-
-            // 2. Logika pencocokan Business Unit (tetap sama)
-            $buId = null;
-            if (str_contains($lowerName, 'rnb') && isset($units['rasa-nusantara-baru'])) {
-                $buId = $units['rasa-nusantara-baru'];
-            } elseif (str_contains($lowerName, 'ucr') && isset($units['umara-cipta-rasa'])) {
-                $buId = $units['umara-cipta-rasa'];
-            } elseif (str_contains($lowerName, 'ug') && isset($units['umara-nikmat-boga'])) {
-                $buId = $units['umara-nikmat-boga'];
-            } elseif (str_contains($lowerName, 'lbi') && isset($units['laukita-bersama-indonesia'])) {
-                $buId = $units['laukita-bersama-indonesia'];
-            } elseif (str_contains($lowerName, 'lni') && isset($units['laukita-niaga-indonesia'])) {
-                $buId = $units['laukita-niaga-indonesia'];
-            } elseif (str_contains($lowerName, 'umk') && isset($units['umara-mitra-kulina'])) {
-                $buId = $units['umara-mitra-kulina'];
-            }
+        foreach ($sliders as $data) {
+            $buId = $units[$data['slug']] ?? null;
 
             if (!$buId) {
-                $this->command->warn("Tidak bisa cocokkan unit untuk file R2: {$filename}. Skip.");
+                $this->command->warn("  ⚠ Business unit '{$data['slug']}' tidak ditemukan di database. Skip.");
                 continue;
             }
 
-            $orderByUnit[$buId] = $orderByUnit[$buId] ?? 1;
-            $sortOrder = $orderByUnit[$buId];
-
-            // 3. Generate Headline dari nama file
-            $headline = Str::of(pathinfo($filename, PATHINFO_FILENAME))
-                ->replace(['-', '_'], ' ')
-                ->replaceMatches('/\s+/', ' ')
-                ->title()
-                ->toString();
-
-            // 4. Masukkan ke database
             DB::table('sliders')->updateOrInsert(
-                ['business_unit_id' => $buId, 'image' => $r2Path],
                 [
-                    'headline'    => $headline,
-                    'subheadline' => 'Slider dari R2',
-                    'sort_order'  => $sortOrder,
-                    'created_at'  => Carbon::now(),
-                    'updated_at'  => Carbon::now(),
+                    'business_unit_id' => $buId,
+                    'image'            => $data['image'],
+                ],
+                [
+                    'headline'      => $data['headline'],
+                    'subheadline'   => $data['subheadline'],
+                    'text_position' => $data['text_position'],
+                    'sort_order'    => $data['sort_order'],
+                    'created_at'    => Carbon::now(),
+                    'updated_at'    => Carbon::now(),
                 ]
             );
 
-            $this->command->info("  ✓ Terdaftar: {$filename} (Path: {$r2Path})");
-            $orderByUnit[$buId]++;
+            $this->command->info("  ✓ Slider: {$data['image']} | {$data['headline']} [{$data['text_position']}]");
             $count++;
         }
 
-        $this->command->info("Selesai! {$count} data slider dari R2 telah didaftarkan ke database.");
+        $this->command->info("\nSelesai! {$count} slider berhasil di-seed.");
     }
 }

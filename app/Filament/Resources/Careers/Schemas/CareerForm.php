@@ -60,9 +60,11 @@ class CareerForm
                         ->directory('careers')
                         ->visibility('public')
                         ->image()
+                        ->imagePreviewHeight('120')
                         ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                         ->nullable()
-                        // Auto-convert ke WebP sebelum disimpan ke R2
+                        ->dehydrated(fn($state) => filled($state))
+                        ->helperText(fn($record) => $record ? 'Biarkan kosong jika tidak ingin mengganti banner.' : null)
                         ->saveUploadedFileUsing(function (TemporaryUploadedFile $file) {
                             return ImageService::convertAndUpload($file, 'careers');
                         }),

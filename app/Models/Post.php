@@ -3,11 +3,27 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Storage;
 
 class Post extends Model
 {
+    use LogsActivity;
+
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logFillable()
+            ->logOnlyDirty()
+            ->useLogName('Post')
+            ->setDescriptionForEvent(function(string $eventName) {
+                $label = $this->title ?? $this->getKey();
+                return "[Post] {$label} was {$eventName}";
+            });
+    }
     protected $fillable = ['business_unit_id', 'title', 'slug', 'content', 'main_image', 'gallery_images', 'published_at'];
 
     protected $casts = [

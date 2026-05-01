@@ -9,7 +9,6 @@ use Filament\Actions\EditAction;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Support\Facades\Storage;
 
 class BusinessUnitsTable
 {
@@ -17,15 +16,15 @@ class BusinessUnitsTable
     {
         return $table
             ->columns([
-                ImageColumn::make('logo-path')
+                // Gunakan getStateUsing agar URL R2 (full https://) langsung dipakai,
+                // bukan diproses ulang oleh disk 'public' yang akan merusak URL-nya.
+                ImageColumn::make('logo')
                     ->label('Logo')
-                    ->disk('public')
-                    // Mengarahkan klik ke URL asli gambar
-                    ->url(fn($record) => $record->{'logo-path'} ? asset('storage/' . $record->{'logo-path'}) : null)
-                    // Membuka di tab baru (efek lightbox sederhana bawaan browser)
-                    ->openUrlInNewTab()
-                    // Memberikan tanda pointer agar admin tahu ini bisa diklik
+                    ->getStateUsing(fn($record) => $record->{'logo-path'})
+                    ->height(48)
+                    ->width(120)
                     ->extraImgAttributes([
+                        'style' => 'object-fit: contain;',
                         'class' => 'cursor-pointer hover:opacity-80 transition',
                     ])
                     ->grow(false),

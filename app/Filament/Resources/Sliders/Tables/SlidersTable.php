@@ -30,7 +30,8 @@ class SlidersTable
                         if (str_starts_with($record->image, '/')) {
                             return asset($record->image);
                         }
-                        return asset('storage/' . $record->image);
+                        // Gunakan accessor dari model yang sudah benar
+                        return $record->image_url;
                     }),
                 TextColumn::make('headline')
                     ->label('Headline')

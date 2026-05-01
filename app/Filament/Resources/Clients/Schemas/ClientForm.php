@@ -39,10 +39,13 @@ class ClientForm
                             ->visibility('public')
                             ->image()
                             ->imageEditor()
+                            ->imagePreviewHeight('120')
                             ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
-                            ->required()
+                            ->nullable()
+                            ->dehydrated(fn($state) => filled($state))
+                            ->required(fn($record) => $record === null)
+                            ->helperText(fn($record) => $record ? 'Biarkan kosong jika tidak ingin mengganti logo.' : null)
                             ->saveUploadedFileUsing(function (TemporaryUploadedFile $file) {
-                                // Logo client: quality lebih tinggi, ukuran lebih kecil
                                 return ImageService::convertAndUpload($file, 'clients', quality: 90, maxWidth: 400);
                             }),
                     ])

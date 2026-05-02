@@ -12,7 +12,8 @@ jobs:
       - name: Pull Latest Code
         run: |
           cd /var/www/cms-compro-umara
-          git pull origin main
+          git fetch origin main
+          git reset --hard origin/main
 
       - name: Install & Build Frontend
         run: |

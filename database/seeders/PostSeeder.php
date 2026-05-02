@@ -230,7 +230,7 @@ class PostSeeder extends Seeder
             [
                 'company'        => 'Umara Mitra Kulina',
                 'title'          => 'Fueling Sustainable Growth: Umara Mitra Kulina Partners with HRD Cikarang',
-                'published_at'   => Carbon::create(2026, 3, 5),
+                'published_at'   => Carbon::create(2026, 1, 24),
                 'main_image'     => 'posts/Komunitas HRD Cikarang1.jpeg',
                 'gallery_images' => [
                     'posts/Komunitas HRD Cikarang2.jpeg',
@@ -245,7 +245,7 @@ class PostSeeder extends Seeder
             [
                 'company'        => 'Umara Cipta Rasa',
                 'title'          => 'Chosen for Excellence: Umara Catering Serves VVIPs at FIFA World Cup 2026 Event',
-                'published_at'   => Carbon::create(2026, 1, 24),
+                'published_at'   => Carbon::create(2026, 1, 22),
                 'main_image'     => 'posts/fifa-world-cup1.jpg',
                 'gallery_images' => [
                     'posts/fifa-world-cup2.jpg',
@@ -260,7 +260,7 @@ class PostSeeder extends Seeder
             [
                 'company'        => 'Umara Cipta Rasa',
                 'title'          => 'Fueling Innovation: Umara Catering Serves 1,000+ Guests at the Geely EX2 Grand Launch',
-                'published_at'   => Carbon::create(2026, 1, 22),
+                'published_at'   => Carbon::create(2026, 1, 16),
                 'main_image'     => $this->img('public/assets/news/geely-ex2/geely1.jpg'),
                 'gallery_images' => [
                     $this->img('public/assets/news/geely-ex2/geely2.jpg'),
@@ -290,7 +290,7 @@ class PostSeeder extends Seeder
             [
                 'company'        => 'Umara Cipta Rasa',
                 'title'          => 'Wellness Meets Culinary: A Morning of Yoga and Connection at Lumpang Emas Signature',
-                'published_at'   => Carbon::create(2026, 1, 16),
+                'published_at'   => Carbon::create(2026, 1, 4),
                 'main_image'     => $this->img('public/assets/news/yoga-at-prapanca/IMG_7978.jpg'),
                 'gallery_images' => [
                     $this->img('public/assets/news/yoga-at-prapanca/IMG_7984.jpg'),
@@ -320,7 +320,7 @@ class PostSeeder extends Seeder
             [
                 'company'        => 'Umara Mitra Kulina',
                 'title'          => 'The Vibrant Atmosphere of Chemco Funday 2025 at KIM Karawang Factory Grounds',
-                'published_at'   => Carbon::create(2025, 12, 25),
+                'published_at'   => Carbon::create(2025, 12, 14),
                 'main_image'     => $this->img('public/assets/umara-mitra-kulina/news/chemco-funday-2025.jpeg'),
                 'gallery_images' => [
                     $this->img('public/assets/umara-mitra-kulina/news/chemco-funday-2025-2.jpeg'),
@@ -335,7 +335,7 @@ class PostSeeder extends Seeder
             [
                 'company'        => 'Umara Group',
                 'title'          => 'Aligning Vision, Driving Growth: Umara Group National Working Meeting (Rakernas) 2025',
-                'published_at'   => Carbon::create(2025, 12, 14),
+                'published_at'   => Carbon::create(2025, 11, 24),
                 'main_image'     => $this->img('public/assets/news/raker/S5A5746.jpg'),
                 'gallery_images' => [
                     $this->img('public/assets/news/raker/S5A5667.jpg'),
@@ -412,7 +412,7 @@ class PostSeeder extends Seeder
             [
                 'company'        => 'Rasa Nusantara Baru',
                 'title'          => 'Lumpang Emas Bintaro Hosts the Vibrant 8th Anniversary Celebration of HayoMoto',
-                'published_at'   => Carbon::create(2025, 11, 9),
+                'published_at'   => Carbon::create(2025, 11, 8),
                 'main_image'     => $this->img('public/assets/news/hayomoto/1.jpeg'),
                 'gallery_images' => [
                     $this->img('public/assets/news/hayomoto/2.jpeg'),
@@ -429,7 +429,7 @@ class PostSeeder extends Seeder
             [
                 'company'        => 'Umara Group',
                 'title'          => 'Groundbreaking Our New Restaurant Officially Opens',
-                'published_at'   => Carbon::create(2025, 11, 8),
+                'published_at'   => Carbon::create(2025, 10, 30),
                 'main_image'     => $this->img('public/assets/news/groundbreaking/img2.jpeg'),
                 'gallery_images' => [
                     $this->img('public/assets/news/groundbreaking/img1.jpeg'),
@@ -447,7 +447,7 @@ class PostSeeder extends Seeder
             [
                 'company'        => 'Laukita Niaga Indonesia',
                 'title'          => 'Laukita Brings Authentic Flavor to Kiddies Day Out at AEON Mall Tanjung Barat',
-                'published_at'   => Carbon::create(2025, 10, 30),
+                'published_at'   => Carbon::create(2025, 10, 28),
                 'main_image'     => $this->img('public/assets/news/kiddies-day-out/laukita-aeon.png'),
                 'gallery_images' => [
                     $this->img('public/assets/news/kiddies-day-out/laukita-aeon2.png'),
@@ -461,7 +461,7 @@ class PostSeeder extends Seeder
             [
                 'company'        => 'Umara Cipta Rasa',
                 'title'          => 'Crafting Dream Weddings: Umara Catering Showcases Excellence at Wedding Market Fair 2025',
-                'published_at'   => Carbon::create(2025, 10, 28),
+                'published_at'   => Carbon::create(2025, 10, 24),
                 'main_image'     => $this->img('public/assets/news/wedding-market-fair/wedding-market1.jpeg'),
                 'gallery_images' => [
                     $this->img('public/assets/news/wedding-market-fair/wedding-market2.jpeg'),
@@ -476,7 +476,7 @@ class PostSeeder extends Seeder
             [
                 'company'        => 'Umara Cipta Rasa',
                 'title'          => 'Fueling Excellence: Umara Catering at the Gymnastics World Championships',
-                'published_at'   => Carbon::create(2025, 10, 24),
+                'published_at'   => Carbon::create(2025, 10, 19),
                 'main_image'     => $this->img('public/assets/news/gymnastic-olympics/IMG_1564.jpg'),
                 'gallery_images' => [
                     $this->img('public/assets/news/gymnastic-olympics/IMG_1569.jpg'),
@@ -491,7 +491,7 @@ class PostSeeder extends Seeder
             [
                 'company'        => 'Rasa Nusantara Baru',
                 'title'          => 'Rasa Umara x Wardah: Jelajahi Bazar Fashion & Beauty Experience',
-                'published_at'   => Carbon::create(2025, 10, 19),
+                'published_at'   => Carbon::create(2025, 6, 26),
                 'main_image'     => $this->img('public/assets/news/wardah/1.png'),
                 'gallery_images' => [
                     $this->img('public/assets/news/wardah/2.png'),
@@ -506,7 +506,7 @@ class PostSeeder extends Seeder
             [
                 'company'        => 'Laukita Bersama Indonesia',
                 'title'          => 'Expanding Horizons: Laukita Bersama Indonesia Exports Ready-to-Cook Meals to Saudi Arabia',
-                'published_at'   => Carbon::create(2025, 6, 26),
+                'published_at'   => Carbon::create(2025, 3, 6),
                 'main_image'     => $this->img('public/assets/laukkita-bersama/ekspor/eskpor-to-saudi.jpeg'),
                 'gallery_images' => [
                     $this->img('public/assets/laukkita-bersama/ekspor/eskpor-to-saudi3.jpeg'),
@@ -520,7 +520,7 @@ class PostSeeder extends Seeder
             [
                 'company'        => 'Umara Cipta Rasa',
                 'title'          => 'Harmonizing Flavors on the Global Stage: Umara Catering at the Music20 Summit',
-                'published_at'   => Carbon::create(2025, 3, 6),
+                'published_at'   => Carbon::create(2022, 10, 30),
                 'main_image'     => $this->img('public/assets/ucr-goverment/DSC00160.jpg'),
                 'gallery_images' => [
                     $this->img('public/assets/ucr-goverment/DSC00182.jpg'),

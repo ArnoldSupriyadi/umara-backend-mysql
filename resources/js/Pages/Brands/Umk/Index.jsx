@@ -259,13 +259,34 @@ const Index = ({ brand }) => {
                         <p className="text-gray-600">Trusted by leading companies across industries</p>
                     </div>
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-                        {/* Contoh beberapa logo client, sisanya bisa Anda tambahkan sesuai HTML asli */}
                         {[
-                            "Alva-1536x667.png", "Bintang_Toedjoe.png", "Daikin.png", "Hoyu_logo.png", "Mahle.png",
-                            "Monokem-Surya.png", "Motherson.png", "PT-ASAMA-INDONESIA-MANUFACTURING.png", "PT-Mitrametal-Perkasa.png", "shin-etsu.png"
-                        ].map((logo, idx) => (
+                            { name: 'Alva',                             file: 'Alva-1536x667.png' },
+                            { name: 'Bintang Toedjoe',                  file: 'Bintang_Toedjoe.png' },
+                            { name: 'Catelar',                          file: 'Catelar.png' },
+                            { name: 'Daikin',                           file: 'Daikin.png' },
+                            { name: 'Hoyu',                             file: 'Hoyu_logo.png' },
+                            { name: 'PT Prima Makmur',                  file: 'Logo-PM.png' },
+                            { name: 'Mahle',                            file: 'Mahle.png' },
+                            { name: 'Monokem Surya',                    file: 'Monokem-Surya.png' },
+                            { name: 'Motherson',                        file: 'Motherson.png' },
+                            { name: 'Oozx',                             file: 'Oozx.png' },
+                            { name: 'PT Asama Indonesia Manufacturing', file: 'PT-ASAMA-INDONESIA-MANUFACTURING.png' },
+                            { name: 'PT Honda Prospect Motor',          file: 'PT-Honda-Prospect-Motor.png' },
+                            { name: 'PT Mitrametal Perkasa',            file: 'PT-Mitrametal-Perkasa.png' },
+                            { name: 'PT Wahyu Kartumasindo',            file: 'PT-Wahyu-Kartumasindo.webp' },
+                            { name: 'SIS',                              file: 'SIS.png' },
+                            { name: 'Syntronic',                        file: 'Syntronic.png' },
+                            { name: 'Takasago',                         file: 'Takasago_company_logo.png' },
+                            { name: 'Chemco',                           file: 'chemco.png' },
+                            { name: 'Wahyu Abadi',                      file: 'logo-wahyu-abadi.png' },
+                            { name: 'Mossi',                            file: 'mossi-logo.png' },
+                            { name: 'PT Ao Yama',                       file: 'pt-ao-yama.png' },
+                            { name: 'PT Elastomix',                     file: 'pt-elastomix.png' },
+                            { name: 'Shin Etsu',                        file: 'shin-etsu.png' },
+                            { name: 'TJ Forge',                         file: 'tjforge.png' },
+                        ].map((client, idx) => (
                             <div key={idx} className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex items-center justify-center hover:shadow-md transition-shadow" data-aos="fade-up" data-aos-delay={(idx % 5) * 100}>
-                                <img src={`${r2Url}/umk-assets/clients/${logo}`} alt={`Client ${idx}`} className="max-h-16 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300" />
+                                <img src={`${r2Url}/umk-assets/clients/${client.file}`} alt={client.name} className="max-h-16 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300" />
                             </div>
                         ))}
                     </div>

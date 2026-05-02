@@ -24,7 +24,7 @@ class CareerController extends Controller
                 'slug'        => $career->slug,
                 'unit_name'   => $career->businessUnit->name ?? 'Umara Group',
                 'description' => Str::limit(strip_tags($career->description), 120),
-                'image_url'   => $career->image_url,
+                'image_url'   => $career->image_url ?? $career->businessUnit?->logo,
             ]);
 
         return Inertia::render('Careers/Index', [
@@ -46,7 +46,7 @@ class CareerController extends Controller
                 'job_title'   => $career->job_title,
                 'unit_name'   => $career->businessUnit->name ?? 'Umara Group',
                 'description' => $career->description,
-                'image_url'   => $career->image_url,
+                'image_url'   => $career->image_url ?? $career->businessUnit?->logo,
             ],
         ]);
     }

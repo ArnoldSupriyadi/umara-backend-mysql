@@ -53,7 +53,7 @@ export default function Show({ career }) {
                     )}
                     <div className="p-8 md:p-12">
                         <div className="mb-6 border-b border-gray-100 pb-6">
-                            <span className="bg-blue-100 text-blue-800 text-sm font-bold px-3 py-1 rounded-full mb-4 inline-block">
+                            <span className="text-white text-sm font-bold px-3 py-1 rounded-full mb-4 inline-block" style={{ backgroundColor: '#CE8131' }}>
                                 {career.unit_name}
                             </span>
                             <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900">
@@ -72,7 +72,12 @@ export default function Show({ career }) {
                             </div>
 
                             <a href={`/careers/${career.slug}/apply`}
-                                className="w-full sm:w-auto px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition text-center"> Lamar Sekarang
+                                className="w-full sm:w-auto px-8 py-3 text-white font-bold rounded-lg transition text-center"
+                                style={{ backgroundColor: '#56B6C6' }}
+                                onMouseEnter={e => e.target.style.opacity = '0.85'}
+                                onMouseLeave={e => e.target.style.opacity = '1'}
+                            >
+                                Lamar Sekarang
                             </a>
                         </div>
                     </div>

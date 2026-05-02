@@ -11,6 +11,111 @@ import 'swiper/css/pagination';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
+// --- REUSABLE COMPONENTS ---
+
+const BusinessUnitCard = ({ image, alt, icon, title, description, learnMoreHref }) => (
+    <div className="h-full flex flex-col rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group border border-[#debe9d]">
+        <div className="relative overflow-hidden">
+            <img
+                src={image}
+                alt={alt}
+                className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300 p-5"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#8B1C3D]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        </div>
+        <div className="p-8 bg-[#F7F3EF] flex-1 flex flex-col">
+            <div className="flex items-center gap-3 mb-4">
+                <div className="w-12 h-12 bg-[#8B1C3D]/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                    {icon}
+                </div>
+                <h3 className="text-2xl font-bold text-[#8B1C3D]">{title}</h3>
+            </div>
+            <p className="text-[#8B1C3D] mb-6 leading-relaxed flex-1">{description}</p>
+            {learnMoreHref && (
+                <div className="mt-auto">
+                    <a
+                        href={learnMoreHref}
+                        className="inline-flex items-center gap-2 text-[#8B1C3D] font-semibold tracking-wider hover:underline underline-offset-4 transition-all"
+                    >
+                        Learn More
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </a>
+                </div>
+            )}
+        </div>
+    </div>
+);
+
+const LBI_CATALOG_URL = '/laukita-bersama-indonesia/catalog';
+
+const BUSINESS_UNITS = [
+    {
+        image: 'https://assets.bridgeflow.my.id/lbi-assets/korasa-meals.jpg',
+        alt: 'Retort B2B & Export Manufacturing',
+        title: 'Retort B2B & Export Manufacturing',
+        description: 'Comprehensive B2B frozen and retort packaged Work-In-Progress & ready to eat finished goods for F&B customers including hotels, restaurants, and cafes.',
+        learnMoreHref: LBI_CATALOG_URL,
+        icon: (
+            <svg className="w-6 h-6 text-[#8B1C3D]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                    d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+            </svg>
+        ),
+    },
+    {
+        image: 'https://assets.bridgeflow.my.id/lbi-assets/retort.jpg',
+        alt: 'White Label Manufacturing',
+        title: 'White Label Manufacturing',
+        description: 'Production outsourcing for frozen food products with ready-to-produce capabilities in retort packaging, serving Fast Moving Consumer Goods (FMCG) market.',
+        learnMoreHref: LBI_CATALOG_URL,
+        icon: (
+            <svg className="w-6 h-6 text-[#8B1C3D]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                    d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+            </svg>
+        ),
+    },
+    {
+        image: 'https://assets.bridgeflow.my.id/lbi-assets/PRODUKS.jpg',
+        alt: 'WIP Frozen B2B & Export Manufacturing',
+        title: 'WIP Frozen B2B & Export Manufacturing',
+        description: 'Supporting sister companies within Umara Group to produce Work-In-Progress modular food materials including sauces and dishes for various applications.',
+        learnMoreHref: LBI_CATALOG_URL,
+        icon: (
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 text-[#8B1C3D]">
+                <path strokeLinecap="round" strokeLinejoin="round"
+                    d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125" />
+            </svg>
+        ),
+    },
+];
+
+const BusinessUnitsSection = ({ r2Url }) => (
+    <section id="business-units" className="py-20" style={{ backgroundImage: `url('${r2Url}/background/lbi-bg/BG-LBI-1.jpg')`, backgroundPosition: 'center', backgroundSize: 'cover' }}>
+        <div className="container mx-auto px-4 lg:px-8">
+            <div className="text-center mb-12" data-aos="fade-up">
+                <div className="inline-block bg-[#8B1C3D] text-white px-8 py-2 rounded-full text-sm font-semibold tracking-wider mb-4">
+                    BUSINESS UNITS
+                </div>
+                <h2 className="text-4xl font-bold text-white">Laukita Bersama Indonesia</h2>
+                <p className="text-white/80 mt-3 text-lg max-w-2xl mx-auto">
+                    End-to-end manufacturing solutions tailored for B2B, export, and FMCG markets.
+                </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {BUSINESS_UNITS.map((unit) => (
+                    <div key={unit.title} data-aos="fade-up">
+                        <BusinessUnitCard {...unit} />
+                    </div>
+                ))}
+            </div>
+        </div>
+    </section>
+);
+
 const Index = ({ brand }) => {
     const r2Url = "https://assets.bridgeflow.my.id";
 
@@ -66,8 +171,30 @@ const Index = ({ brand }) => {
 
     // Data Logo Klien
     const clientLogos = [
-        `${r2Url}/lbi-assets/clients/accha.jpeg`, `${r2Url}/lbi-assets/clients/Amman.png`, `${r2Url}/lbi-assets/clients/artotel.png`, `${r2Url}/lbi-assets/clients/bpkh-limited.png`, `${r2Url}/lbi-assets/clients/cj-CheilJedang_logo.png`,
-        `${r2Url}/lbi-assets/clients/dapur-solo.png`, `${r2Url}/lbi-assets/clients/fore-coffee.jpg`, `${r2Url}/lbi-assets/clients/HANGRY!.jpg`, `${r2Url}/lbi-assets/clients/imip.png`, `${r2Url}/lbi-assets/clients/Ranch-Market.png`, `${r2Url}/lbi-assets/clients/the-harvest.jpeg`, `${r2Url}/lbi-assets/clients/the-harvest.jpeg`, `${r2Url}/lbi-assets/clients/bibigo.png`
+        { file: 'Amman.png',                    name: 'Amman' },
+        { file: 'HANGRY!.jpg',                  name: 'HANGRY!' },
+        { file: 'Ibis-hotel.png',               name: 'Ibis Hotel' },
+        { file: 'Korasa.png',                   name: 'Korasa' },
+        { file: 'Pepi-To-Go.png',               name: 'Pepi To Go' },
+        { file: 'Ranch-Market.png',             name: 'Ranch Market' },
+        { file: 'accha.jpeg',                   name: 'Accha' },
+        { file: 'artotel.png',                  name: 'Artotel' },
+        { file: 'bibigo.png',                   name: 'Bibigo' },
+        { file: 'bpkh-limited.png',             name: 'BPKH Limited' },
+        { file: 'cj-CheilJedang_logo.png',      name: 'CJ CheilJedang' },
+        { file: 'dapur-solo.png',               name: 'Dapur Solo' },
+        { file: 'european-slimming-centre.webp',name: 'European Slimming Centre' },
+        { file: 'ezpz-coffee.png',              name: 'EZPZ Coffee' },
+        { file: 'fore-coffee.jpg',              name: 'Fore Coffee' },
+        { file: 'hae.jpg',                      name: 'Hae' },
+        { file: 'honestfood-gourmet.jpeg',      name: 'Honestfood Gourmet' },
+        { file: 'hot-side-story.png',           name: 'Hot Side Story' },
+        { file: 'imip.png',                     name: 'IMIP' },
+        { file: 'laukkita.png',                 name: 'Laukkita' },
+        { file: 'logo-lumpang-ba.png',          name: 'Lumpang BA' },
+        { file: 'logo-ucr-catering.png',        name: 'UCR Catering' },
+        { file: 'moza-meat-shop.png',           name: 'Moza Meat Shop' },
+        { file: 'nasi-kapau-jurangan.jpeg',     name: 'Nasi Kapau Jurangan' },
     ];
 
     return (
@@ -632,6 +759,9 @@ const Index = ({ brand }) => {
                 </div>
             </section>
 
+            {/* --- 5B. BUSINESS UNITS --- */}
+            <BusinessUnitsSection r2Url={r2Url} />
+
             {/* --- 6. EXPORT HIGHLIGHTS --- */}
             <section className="py-20 bg-gray-50 border-y border-gray-200">
                 <div className="container mx-auto px-4 lg:px-8">
@@ -653,12 +783,27 @@ const Index = ({ brand }) => {
             <section className="py-20 bg-white">
                 <div className="container mx-auto px-4 lg:px-8">
                     <div className="text-center mb-12" data-aos="fade-up">
-                        <h2 className="text-3xl font-bold text-gray-900 mb-2">OUR CUSTOMERS</h2>
-                        <p className="text-gray-500">Trusted partners across various industries</p>
+                        <div className="inline-block bg-[#8B1C3D] text-white px-8 py-2 rounded-full text-sm font-semibold tracking-wider mb-4">
+                            OUR CUSTOMERS
+                        </div>
+                        <h2 className="text-3xl font-bold text-gray-900 mb-2">Trusted Partners</h2>
+                        <p className="text-gray-500">Across hotels, restaurants, cafes, and FMCG industries</p>
                     </div>
-                    <div className="flex flex-wrap justify-center gap-8 max-w-6xl mx-auto">
-                        {clientLogos.map((logo, i) => (
-                            <img key={i} src={logo} alt="Client Logo" className="h-12 md:h-16 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100" />
+                    <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-6 max-w-6xl mx-auto items-center">
+                        {clientLogos.map(({ file, name }) => (
+                            <div
+                                key={file}
+                                className="flex items-center justify-center p-3 rounded-xl border border-gray-100 hover:border-[#debe9d] hover:shadow-md transition-all duration-300 group bg-white"
+                                data-aos="fade-up"
+                            >
+                                <img
+                                    src={`${r2Url}/lbi-assets/clients/${file}`}
+                                    alt={name}
+                                    title={name}
+                                    className="h-10 md:h-12 w-auto max-w-full object-contain grayscale group-hover:grayscale-0 opacity-60 group-hover:opacity-100 transition-all duration-300"
+                                    loading="lazy"
+                                />
+                            </div>
                         ))}
                     </div>
                 </div>

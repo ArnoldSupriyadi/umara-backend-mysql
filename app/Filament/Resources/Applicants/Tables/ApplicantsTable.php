@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources\Applicants\Tables;
 
+use App\Exports\ApplicantsExport;
+use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup as ActionsBulkActionGroup;
 use Filament\Actions\DeleteBulkAction as ActionsDeleteBulkAction;
 use Filament\Tables\Actions\BulkActionGroup;
@@ -12,6 +14,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ApplicantsTable
 {
@@ -76,7 +79,26 @@ class ApplicantsTable
                     ->label('Posisi')
                     ->relationship('career', 'job_title'),
             ])
-            ->bulkActions([
+            ->toolbarActions([
+                Action::make('exportExcel')
+                    ->label('Export Excel')
+                    ->icon('heroicon-o-document-arrow-down')
+                    ->color('success')
+                    ->action(fn () => Excel::download(
+                        new ApplicantsExport(),
+                        'pelamar-' . now()->format('Ymd-His') . '.xlsx'
+                    )),
+
+                Action::make('exportCsv')
+                    ->label('Export CSV')
+                    ->icon('heroicon-o-document-arrow-down')
+                    ->color('info')
+                    ->action(fn () => Excel::download(
+                        new ApplicantsExport(),
+                        'pelamar-' . now()->format('Ymd-His') . '.csv',
+                        \Maatwebsite\Excel\Excel::CSV,
+                    )),
+
                 ActionsBulkActionGroup::make([
                     ActionsDeleteBulkAction::make(),
                 ]),

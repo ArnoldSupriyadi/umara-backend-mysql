@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
 class BusinessUnitResource extends JsonResource
 {
@@ -14,12 +15,19 @@ class BusinessUnitResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $logo = $this->logo;
+
+        $logoUrl = match (true) {
+            !$logo                          => null,
+            str_starts_with($logo, 'http') => $logo,
+            default                         => Storage::disk('r2')->url($logo),
+        };
+
         return [
-            'id' => $this->id,
+            'id'   => $this->id,
             'name' => $this->name,
             'slug' => $this->slug,
-            // Logic ini baru benar ditaruh di sini
-            'logo' => $this->logo ? asset('storage/' . $this->logo) : null,
+            'logo' => $logoUrl,
         ];
     }
 }

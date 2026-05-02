@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources\Careers\Tables;
 
+use App\Exports\CareersExport;
+use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
@@ -15,6 +17,7 @@ use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Filters\TrashedFilter;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CareersTable
 {
@@ -22,12 +25,19 @@ class CareersTable
     {
         return $table
             ->columns([
-                // 1. Kolom Image (Sesuai request kamu menggunakan asset helper)
+                // 1. Kolom Image — tampilkan logo perusahaan jika banner career kosong
                 ImageColumn::make('image')
                     ->label('Logo')
                     ->circular()
-                    // FIX: gambar career disimpan di R2, bukan disk 'public'
-                    ->disk('r2'),
+                    ->disk('r2')
+                    ->defaultImageUrl(function ($record) {
+                        $logo = $record->businessUnit?->logo;
+                        if (!$logo) return null;
+                        // logo-path sudah disimpan sebagai full URL di database
+                        return str_starts_with($logo, 'http')
+                            ? $logo
+                            : \Illuminate\Support\Facades\Storage::disk('r2')->url($logo);
+                    }),
                 // 2. Job Title
                 TextColumn::make('job_title')
                     ->label('Posisi')
@@ -99,6 +109,25 @@ class CareersTable
                     ]),
             ])
             ->toolbarActions([
+                Action::make('exportExcel')
+                    ->label('Export Excel')
+                    ->icon('heroicon-o-document-arrow-down')
+                    ->color('success')
+                    ->action(fn () => Excel::download(
+                        new CareersExport(),
+                        'lowongan-' . now()->format('Ymd-His') . '.xlsx'
+                    )),
+
+                Action::make('exportCsv')
+                    ->label('Export CSV')
+                    ->icon('heroicon-o-document-arrow-down')
+                    ->color('info')
+                    ->action(fn () => Excel::download(
+                        new CareersExport(),
+                        'lowongan-' . now()->format('Ymd-His') . '.csv',
+                        \Maatwebsite\Excel\Excel::CSV,
+                    )),
+
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),

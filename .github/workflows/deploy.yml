@@ -9,6 +9,13 @@ jobs:
     runs-on: self-hosted
 
     steps:
+      - name: Fix Permissions Before Pull
+        run: |
+          sudo chown -R devcom:www-data /var/www/cms-compro-umara/storage/
+          sudo chown -R devcom:www-data /var/www/cms-compro-umara/bootstrap/cache/
+          sudo chmod -R 775 /var/www/cms-compro-umara/storage/
+          sudo chmod -R 775 /var/www/cms-compro-umara/bootstrap/cache/
+
       - name: Pull Latest Code
         run: |
           cd /var/www/cms-compro-umara
@@ -20,7 +27,7 @@ jobs:
           cd /var/www/cms-compro-umara
           npm ci
           npm run build
-          rm -f public/hot  # ← Tambah ini!
+          rm -f public/hot
 
       - name: Install PHP Dependencies
         run: |
@@ -35,3 +42,10 @@ jobs:
           php artisan route:cache
           php artisan view:cache
           php artisan storage:link
+
+      - name: Fix Permissions After Deploy
+        run: |
+          sudo chown -R devcom:www-data /var/www/cms-compro-umara/storage/
+          sudo chown -R devcom:www-data /var/www/cms-compro-umara/bootstrap/cache/
+          sudo chmod -R 775 /var/www/cms-compro-umara/storage/
+          sudo chmod -R 775 /var/www/cms-compro-umara/bootstrap/cache/

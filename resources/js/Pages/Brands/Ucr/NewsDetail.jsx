@@ -1,6 +1,7 @@
 import React from 'react';
 import { Head, Link } from '@inertiajs/react';
 import UcrLayout from '@/Layouts/Brands/UcrLayout';
+import GalleryLightbox from '@/Components/GalleryLightbox';
 
 export default function NewsDetail({ brand, post }) {
     return (
@@ -51,20 +52,7 @@ export default function NewsDetail({ brand, post }) {
                             />
 
                             {/* --- GALLERY --- */}
-                            {post.gallery_urls && post.gallery_urls.length > 0 && (
-                                <div className="mt-12 grid grid-cols-2 md:grid-cols-3 gap-4">
-                                    {post.gallery_urls.map((url, idx) => (
-                                        <div key={idx} className="overflow-hidden rounded-xl shadow-md aspect-[4/3]">
-                                            <img
-                                                src={url}
-                                                alt={`Foto ${idx + 1}`}
-                                                loading="lazy"
-                                                className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                                            />
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
+                            <GalleryLightbox images={post.gallery_urls || []} />
 
                             {/* --- BACK --- */}
                             <div className="mt-12 pt-8 border-t border-gray-100">

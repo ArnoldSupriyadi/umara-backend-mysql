@@ -42,11 +42,7 @@ const Index = ({ brand, posts }) => {
     const r2Url = "https://assets.bridgeflow.my.id";
 
     // Logic data post
-    // Memastikan data post tidak kosong
     const hasPosts = posts && posts.data && posts.data.length > 0;
-    // Memisahkan 1 berita pertama (Featured) dan sisa beritanya (Grid)
-    const featuredPost = hasPosts ? posts.data[0] : null;
-    const remainingPosts = hasPosts ? posts.data.slice(1) : [];
 
     // Data Banner RNB
     const heroSlides = [
@@ -179,78 +175,72 @@ const Index = ({ brand, posts }) => {
             </section>
             
             {/* --- 4. NEWS SECTION (DATA DINAMIS) --- */}
-            <section id="news" className="py-20 bg-white">
+            <section id="news" className="py-20 bg-amber-50">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="text-center mb-16" data-aos="fade-up">
+                    {/* Section Header */}
+                    <div className="text-center mb-14" data-aos="fade-up">
+                        <span className="inline-block text-palette2-a font-semibold text-sm uppercase tracking-widest mb-3">News & Updates</span>
                         <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Latest News</h2>
                         <div className="w-16 h-1 bg-palette2-c mx-auto mb-4 rounded-full"></div>
-                        <p className="text-lg text-gray-600 max-w-2xl mx-auto">Updates and stories from Rasa Nusantara Baru</p>
+                        <p className="text-base text-gray-500 max-w-xl mx-auto">Updates and stories from Rasa Nusantara Baru</p>
                     </div>
 
                     {!hasPosts ? (
-                        <div className="text-center py-20 text-gray-400 bg-gray-50 rounded-xl border border-dashed border-gray-200">
-                            <svg className="w-12 h-12 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div className="text-center py-20 text-gray-400 bg-white rounded-2xl border border-dashed border-gray-200 shadow-sm">
+                            <svg className="w-14 h-14 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
                             </svg>
-                            Belum ada berita yang dipublikasikan saat ini.
+                            <p className="text-sm">Belum ada berita yang dipublikasikan saat ini.</p>
                         </div>
                     ) : (
-                        <div className="space-y-10">
-
-                            {/* Featured Article */}
-                            {featuredPost && (
-                                <Link href={`/posts/${featuredPost.slug}`} className="group block rounded-xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-lg transition-shadow duration-300" data-aos="fade-up">
-                                    <div className="md:flex">
-                                        <div className="md:w-1/2 relative overflow-hidden bg-gray-100 min-h-[280px]">
-                                            {featuredPost.image_url ? (
-                                                <img src={featuredPost.image_url} alt={featuredPost.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                                            ) : (
-                                                <div className="absolute inset-0 flex items-center justify-center text-gray-300">
-                                                    <svg className="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                                                </div>
-                                            )}
-                                        </div>
-                                        <div className="md:w-1/2 p-8 lg:p-10 flex flex-col justify-center bg-white">
-                                            <span className="text-sm text-palette2-c font-medium mb-2">{featuredPost.created_at}</span>
-                                            <h3 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-palette2-a transition-colors line-clamp-2">{featuredPost.title}</h3>
-                                            <p className="text-gray-600 mb-6 line-clamp-3 leading-relaxed">{featuredPost.excerpt}</p>
-                                            <span className="inline-flex items-center text-palette2-a font-semibold mt-auto">
-                                                Read More
-                                                <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
-                                            </span>
-                                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-6">
+                            {posts.data.map((post, index) => (
+                                <Link
+                                    key={post.id}
+                                    href={`/posts/${post.slug}`}
+                                    className="group flex flex-col rounded-2xl overflow-hidden border border-amber-100 bg-white hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+                                    data-aos="fade-up"
+                                    data-aos-delay={index * 100}
+                                >
+                                    {/* Gambar Card */}
+                                    <div className="relative w-full overflow-hidden bg-gray-100" style={{ height: '200px' }}>
+                                        {post.image_url ? (
+                                            <img
+                                                src={post.image_url}
+                                                alt={post.title}
+                                                className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                            />
+                                        ) : (
+                                            <div className="absolute inset-0 flex items-center justify-center bg-amber-50 text-gray-300">
+                                                <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                                </svg>
+                                            </div>
+                                        )}
+                                    </div>
+                                    {/* Konten Card */}
+                                    <div className="p-5 flex flex-col flex-grow">
+                                        <span className="inline-flex items-center gap-1.5 text-xs text-palette2-c font-semibold uppercase tracking-wide mb-2">
+                                            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                            </svg>
+                                            {post.created_at}
+                                        </span>
+                                        <h3 className="text-base font-bold text-gray-900 mb-2 group-hover:text-palette2-a transition-colors leading-snug line-clamp-2 flex-grow">
+                                            {post.title}
+                                        </h3>
+                                        <p className="text-gray-500 text-sm leading-relaxed mb-4 line-clamp-2">
+                                            {post.excerpt}
+                                        </p>
+                                        <span className="mt-auto inline-flex items-center gap-1.5 text-palette2-a font-semibold text-sm">
+                                            Read More
+                                            <svg className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+                                            </svg>
+                                        </span>
                                     </div>
                                 </Link>
-                            )}
-
-                            {/* Remaining Posts Grid */}
-                            {remainingPosts.length > 0 && (
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                    {remainingPosts.map((post, index) => (
-                                        <Link key={post.id} href={`/posts/${post.slug}`} className="group flex flex-col rounded-xl overflow-hidden border border-gray-100 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-white" data-aos="fade-up" data-aos-delay={index * 100}>
-                                            <div className="relative h-52 overflow-hidden bg-gray-100">
-                                                {post.image_url ? (
-                                                    <img src={post.image_url} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                                                ) : (
-                                                    <div className="w-full h-full flex items-center justify-center text-gray-300">
-                                                        <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                                                    </div>
-                                                )}
-                                            </div>
-                                            <div className="p-5 flex flex-col flex-grow">
-                                                <span className="text-sm text-palette2-c font-medium mb-2">{post.created_at}</span>
-                                                <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-palette2-a transition-colors line-clamp-2">{post.title}</h3>
-                                                <p className="text-gray-600 text-sm mb-4 flex-grow line-clamp-3 leading-relaxed">{post.excerpt}</p>
-                                                <span className="mt-auto inline-flex items-center text-palette2-a font-semibold text-sm">
-                                                    Read More
-                                                    <svg className="w-4 h-4 ml-1.5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
-                                                </span>
-                                            </div>
-                                        </Link>
-                                    ))}
-                                </div>
-                            )}
-
+                            ))}
                         </div>
                     )}
                 </div>

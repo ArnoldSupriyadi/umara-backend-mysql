@@ -2,13 +2,12 @@ import React from 'react';
 import { Head, Link } from '@inertiajs/react';
 import FrontendLayout from '@/Layouts/FrontendLayout';
 
-export default function Index({ posts }) {
-    // Memastikan data post tidak kosong
-    const hasPosts = posts && posts.data && posts.data.length > 0;
+export default function Index({ latestPost, posts }) {
+    // latestPost selalu fixed (tidak terpengaruh pagination)
+    const featuredPost = latestPost ?? null;
 
-    // Memisahkan 1 berita pertama (Featured) dan sisa beritanya (Grid)
-    const featuredPost = hasPosts ? posts.data[0] : null;
-    const remainingPosts = hasPosts ? posts.data.slice(1) : [];
+    // Grid posts — sudah tidak mengandung latestPost dari controller
+    const remainingPosts = posts && posts.data ? posts.data : [];
 
     const r2Url = "https://assets.bridgeflow.my.id";
 

@@ -19,14 +19,17 @@ class CareerResource extends Resource
 {
     protected static ?string $model = Career::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::Gift;
+    // FIX: icon 'Gift' diganti 'Briefcase' yang lebih relevan untuk Career
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::Briefcase;
 
     protected static ?string $recordTitleAttribute = 'job_title';
 
 
     public static function getNavigationBadge(): ?string
     {
-        return (string) static::getModel()::count();
+        // FIX: hanya hitung lowongan aktif, exclude soft-deleted
+        // Sebelumnya: ::count() menghitung semua termasuk soft-deleted
+        return (string) static::getModel()::where('is_active', true)->count();
     }
 
     public static function getNavigationBadgeColor(): ?string

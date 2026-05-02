@@ -13,9 +13,27 @@ class PostController extends Controller
 {
     public function index()
     {
+        // Latest post — always fixed, not affected by pagination
+        $latestPost = Post::with('businessUnit')
+            ->whereNotNull('published_at')
+            ->latest('published_at')
+            ->first();
+
+        $latestPostData = $latestPost ? [
+            'id'        => $latestPost->id,
+            'title'     => $latestPost->title,
+            'slug'      => $latestPost->slug,
+            'image_url' => $latestPost->main_image_url,
+            'excerpt'   => Str::limit(strip_tags($latestPost->content), 120),
+            'created_at'=> $latestPost->published_at->format('d M Y'),
+            'unit_name' => $latestPost->businessUnit->name ?? 'Umara Group',
+        ] : null;
+
+        // Paginated posts — skip the latest post so it won't appear twice in grid
         $posts = Post::with('businessUnit')
             ->whereNotNull('published_at')
             ->latest('published_at')
+            ->when($latestPost, fn($q) => $q->where('id', '!=', $latestPost->id))
             ->paginate(9)
             ->through(fn($post) => [
                 'id'         => $post->id,
@@ -28,7 +46,8 @@ class PostController extends Controller
             ]);
 
         return Inertia::render('Posts/Index', [
-            'posts' => $posts,
+            'latestPost' => $latestPostData,
+            'posts'      => $posts,
         ]);
     }
 
@@ -65,7 +84,7 @@ class PostController extends Controller
             'laukita-niaga-indonesia'   => 'Brands/Lni/News',
             'rasa-nusantara-baru'       => 'Brands/Rnb/News',
             'umara-cipta-rasa'          => 'Brands/Ucr/News',
-            'umara-nikmat-boga'         => 'Brands/Umk/News',
+            'umara-nikmat-boga'         => 'Brands/Unb/News',
         ];
 
         $page = $pageMap[$brandSlug] ?? 'Posts/Index';
@@ -95,7 +114,7 @@ class PostController extends Controller
             'laukita-niaga-indonesia'   => 'Brands/Lni/NewsDetail',
             'rasa-nusantara-baru'       => 'Brands/Rnb/NewsDetail',
             'umara-cipta-rasa'          => 'Brands/Ucr/NewsDetail',
-            'umara-nikmat-boga'         => 'Brands/Umk/NewsDetail',
+            'umara-nikmat-boga'         => 'Brands/Unb/NewsDetail',
         ];
 
         $page = $pageMap[$brandSlug] ?? 'Posts/Show';

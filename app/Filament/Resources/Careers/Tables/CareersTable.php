@@ -25,8 +25,9 @@ class CareersTable
                 // 1. Kolom Image (Sesuai request kamu menggunakan asset helper)
                 ImageColumn::make('image')
                     ->label('Logo')
-                    ->circular() // Membuat gambar bulat agar rapi
-                    ->disk('public'),
+                    ->circular()
+                    // FIX: gambar career disimpan di R2, bukan disk 'public'
+                    ->disk('r2'),
                 // 2. Job Title
                 TextColumn::make('job_title')
                     ->label('Posisi')

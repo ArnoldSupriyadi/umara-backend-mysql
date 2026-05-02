@@ -15,21 +15,24 @@ class CareerResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
-            'title' => $this->title,
-            'slug' => $this->slug,
-            'company' => $this->businessUnit->name,
-            'company_logo' => $this->businessUnit->logo ? asset('storage/' . $this->businessUnit->logo) : null,
+            'id'   => $this->id,
 
-            // Logika Gambar: Prioritaskan gambar career, kalau kosong pakai logo PT
-            'image' => $this->image
-                ? (filter_var($this->image, FILTER_VALIDATE_URL) ? $this->image : asset('storage/' . $this->image))
-                : ($this->businessUnit->logo ? asset('storage/' . $this->businessUnit->logo) : null),
+            // FIX: field di model adalah 'job_title', bukan 'title'
+            'title' => $this->job_title,
 
-            // Ini HTML Description yang kamu seeder tadi (<ul><li>...)
+            'slug'    => $this->slug,
+            'company' => $this->businessUnit->name ?? 'Umara Group',
+
+            'company_logo' => $this->businessUnit->logo ?? null,
+
+            // FIX: gunakan accessor image_url dari model (sudah handle R2 URL & fallback)
+            // Sebelumnya: logika manual filter_var + asset('storage/...') yang inkonsisten
+            'image' => $this->image_url ?? ($this->businessUnit->logo ?? null),
+
+            // HTML Description
             'content' => $this->description,
 
-            'is_active' => (bool) $this->is_active,
+            'is_active'    => (bool) $this->is_active,
             'published_at' => $this->created_at->format('d F Y'),
         ];
     }

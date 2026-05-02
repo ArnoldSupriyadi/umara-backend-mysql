@@ -1,6 +1,7 @@
 import React from 'react';
 import { Head, Link } from '@inertiajs/react';
 import LbiLayout from '@/Layouts/Brands/LbiLayout';
+import GalleryLightbox from '@/Components/GalleryLightbox';
 
 export default function NewsDetail({ brand, post }) {
     const basePath = `/${brand?.slug || 'laukita-bersama-indonesia'}`;
@@ -54,22 +55,7 @@ export default function NewsDetail({ brand, post }) {
                             />
 
                             {/* --- GALLERY --- */}
-                            {post.gallery_urls && post.gallery_urls.length > 0 && (
-                                <div className="mt-16 grid md:grid-cols-2 gap-8">
-                                    {post.gallery_urls.map((url, idx) => (
-                                        <figure key={idx} className="group cursor-pointer">
-                                            <div className="overflow-hidden rounded-xl shadow-lg mb-4 relative aspect-[4/3]">
-                                                <img
-                                                    src={url}
-                                                    alt={`Foto ${idx + 1}`}
-                                                    loading="lazy"
-                                                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                                                />
-                                            </div>
-                                        </figure>
-                                    ))}
-                                </div>
-                            )}
+                            <GalleryLightbox images={post.gallery_urls || []} />
                         </div>
                     </div>
 

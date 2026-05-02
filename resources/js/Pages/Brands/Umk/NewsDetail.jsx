@@ -1,6 +1,7 @@
 import React from 'react';
 import { Head, Link } from '@inertiajs/react';
 import UmkLayout from '@/Layouts/Brands/UmkLayout';
+import GalleryLightbox from '@/Components/GalleryLightbox';
 
 export default function NewsDetail({ brand, post }) {
     const basePath = `/${brand?.slug || 'umara-mitra-kulina'}`;
@@ -57,20 +58,7 @@ export default function NewsDetail({ brand, post }) {
                         />
 
                         {/* --- GALLERY --- */}
-                        {post.gallery_urls && post.gallery_urls.length > 0 && (
-                            <div className="grid md:grid-cols-2 gap-6 my-12">
-                                {post.gallery_urls.map((url, idx) => (
-                                    <figure key={idx}>
-                                        <img
-                                            src={url}
-                                            alt={`Foto ${idx + 1}`}
-                                            loading="lazy"
-                                            className="w-full h-64 object-cover rounded-sm mb-3 shadow-md"
-                                        />
-                                    </figure>
-                                ))}
-                            </div>
-                        )}
+                        <GalleryLightbox images={post.gallery_urls || []} />
 
                         {/* --- FOOTER --- */}
                         <div className="border-t border-b border-gray-200 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">

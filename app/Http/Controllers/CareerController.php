@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Applicant;
 use App\Models\Career;
+use App\Services\ImageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -78,18 +79,41 @@ class CareerController extends Controller
             'phone'               => 'required|string|max:20',
             'address'             => 'nullable|string',
             'willing_to_relocate' => 'required|in:yes,no',
-            'cv'                  => 'required|file|mimes:pdf,doc,docx|max:2048',
-            'photo'               => 'required|image|max:2048',
+            // ============================================================
+            // Batas ukuran file: max 1MB (1024 KB)
+            // Sebelumnya: max:2048 (2MB)
+            // ============================================================
+            'cv'    => 'required|file|mimes:pdf,doc,docx|max:1024',
+            'photo' => 'required|image|max:1024',
         ]);
 
         $cvFile    = $request->file('cv');
         $photoFile = $request->file('photo');
 
-        $cvFilename    = 'cv_' . now()->format('Ymd_His') . '_' . Str::random(6) . '.' . $cvFile->getClientOriginalExtension();
-        $photoFilename = 'photo_' . now()->format('Ymd_His') . '_' . Str::random(6) . '.' . $photoFile->getClientOriginalExtension();
+        // ============================================================
+        // UPLOAD CV — langsung ke R2 tanpa konversi
+        // ============================================================
+        $cvFilename = 'cv_' . now()->format('Ymd_His') . '_' . Str::random(6) . '.' . $cvFile->getClientOriginalExtension();
+        $cvPath     = Storage::disk('r2')->putFileAs('applicants/cv', $cvFile, $cvFilename);
 
-        $cvPath    = Storage::disk('r2')->putFileAs('applicants/cv', $cvFile, $cvFilename);
-        $photoPath = Storage::disk('r2')->putFileAs('applicants/photo', $photoFile, $photoFilename);
+        // ============================================================
+        // UPLOAD PHOTO — dikonversi ke WebP via ImageService sebelum upload ke R2
+        // Menghemat storage: foto asli (jpg/png) bisa 1MB+ → WebP ~100-300KB
+        //
+        // Jika ingin kembali ke upload langsung tanpa konversi, comment blok
+        // ImageService di bawah dan uncomment blok "PHOTO TANPA KONVERSI":
+        //
+        // --- PHOTO TANPA KONVERSI (uncomment jika ingin kembali) ---
+        // $photoFilename = 'photo_' . now()->format('Ymd_His') . '_' . Str::random(6) . '.' . $photoFile->getClientOriginalExtension();
+        // $photoPath     = Storage::disk('r2')->putFileAs('applicants/photo', $photoFile, $photoFilename);
+        // ------------------------------------------------------------
+        // ============================================================
+        $photoPath = ImageService::convertAndUpload(
+            file: $photoFile,
+            folder: 'applicants/photo',
+            quality: 85,
+            maxWidth: 800
+        );
 
         Applicant::create([
             'career_id'           => $request->career_id,

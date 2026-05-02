@@ -29,7 +29,7 @@ class PostSeeder extends Seeder
 
     public function run(): void
     {
-        $this->command->info('Starting PostSeeder — 18 news from umaragroup.com...');
+        $this->command->info('Starting PostSeeder — 22 news from umaragroup.com...');
 
         // Wipe existing posts first (re-seed from scratch)
         DB::table('posts')->truncate();
@@ -53,8 +53,8 @@ class PostSeeder extends Seeder
                 $this->command->warn("  BU '{$buSlug}' not found — using fallback.");
             }
 
-            // Download & upload main image
-            $mainImagePath = $this->downloadAndUploadToR2($data['main_image'], 'posts/main');
+            // Download & upload main image (skip if already an R2 path, not a full URL)
+            $mainImagePath = $this->resolveImage($data['main_image'], 'posts/main');
             if ($mainImagePath) {
                 $this->command->info("  main_image: {$mainImagePath}");
             } else {
@@ -64,7 +64,7 @@ class PostSeeder extends Seeder
             // Download & upload gallery images
             $galleryPaths = [];
             foreach ($data['gallery_images'] as $galleryUrl) {
-                $path = $this->downloadAndUploadToR2($galleryUrl, 'posts/gallery');
+                $path = $this->resolveImage($galleryUrl, 'posts/gallery');
                 if ($path) {
                     $galleryPaths[] = $path;
                     $this->command->info("  gallery: {$path}");
@@ -87,6 +87,21 @@ class PostSeeder extends Seeder
         }
 
         $this->command->info("Done! Total posts: " . DB::table('posts')->count());
+    }
+
+    /**
+     * Resolve an image source to an R2 path.
+     * - If already an R2 path (does NOT start with http), store as-is.
+     * - If a full URL, download and upload to R2 as WebP.
+     */
+    private function resolveImage(string $src, string $folder): ?string
+    {
+        if (! str_starts_with($src, 'http')) {
+            // Already an R2 path — use it directly
+            $this->command->info("  [R2 direct] {$src}");
+            return $src;
+        }
+        return $this->downloadAndUploadToR2($src, $folder);
     }
 
     /**
@@ -136,16 +151,116 @@ class PostSeeder extends Seeder
         return $this->baseUrl . $clean;
     }
 
+    /**
+     * Upload a local file from public/ directory to Cloudflare R2 as WebP.
+     * Returns the R2 path, or null on failure.
+     */
+    private function localImg(string $relativePath): ?string
+    {
+        try {
+            $fullPath = public_path($relativePath);
+
+            if (! file_exists($fullPath)) {
+                $this->command->warn("  Local file not found: {$fullPath}");
+                return null;
+            }
+
+            $contents = file_get_contents($fullPath);
+            if ($contents === false || strlen($contents) < 1000) {
+                $this->command->warn("  Local file empty/unreadable: {$fullPath}");
+                return null;
+            }
+
+            $image = Image::read($contents);
+
+            if ($image->width() > 1600) {
+                $image->scale(width: 1600);
+            }
+
+            $webpContent = $image->toWebp(quality: 82)->toString();
+            $filename    = Str::uuid() . '.webp';
+            $r2Path      = 'posts/main/' . $filename;
+
+            Storage::disk('r2')->put($r2Path, $webpContent, 'public');
+
+            $this->command->info("  local→R2: {$r2Path}");
+            return $r2Path;
+        } catch (\Throwable $e) {
+            $this->command->warn('  Local image error: ' . $e->getMessage());
+            return null;
+        }
+    }
+
     private function getPostData(): array
     {
         return [
             // ─────────────────────────────────────────────
-            // 1. Geely EX2 (Umara Group → umara-nikmat-boga)
+            // 0. Alva Motor Ramadan Iftar (Umara Mitra Kulina) — 9 March 2026
             // ─────────────────────────────────────────────
             [
-                'company'        => 'Umara Group',
+                'company'        => 'Umara Mitra Kulina',
+                'title'          => 'Energizing the Innovators: UMK Cikarang Hosts Ramadan Iftar for PT Electra Mobilitas Indonesia (Alva Motor)',
+                'published_at'   => Carbon::create(2026, 3, 9),
+                'main_image'     => $this->img('public/assets/umara-mitra-kulina/news/alva-motor/alva-motor1.jpeg'),
+                'gallery_images' => [
+                    $this->img('public/assets/umara-mitra-kulina/news/alva-motor/alva-motor2.jpeg'),
+                    $this->img('public/assets/umara-mitra-kulina/news/alva-motor/alva-motor3.jpeg'),
+                ],
+                'content' => '<p>Ramadan is a month of spiritual recharge and community. For the pioneers driving Indonesia\'s electric vehicle industry forward, it is also a vital time to pause and break bread together. On March 9, 2026, <strong>Umara Mitra Kulina (UMK)</strong> proudly hosted a vibrant Buka Bersama event for the dedicated team at <strong>PT Electra Mobilitas Indonesia (Alva Motor)</strong>.</p><p>Leveraging the agility and prime location of our Satellite Kitchen in Cikarang, we ensured that every meal was delivered with impeccable timing. In the fast-paced world of EV manufacturing, precision is everything — and our culinary team applied that exact same precision to serve piping hot, freshly prepared dishes to every guest.</p><p>The evening featured a thoughtfully crafted menu that blended comforting traditional Indonesian flavors with the nutritional balance needed to replenish energy after a long day of fasting. From refreshing sweet takjil to savory main courses, every bite was designed to spark joy and foster camaraderie.</p><p>Serving a forward-thinking company like PT Electra Mobilitas Indonesia is a true privilege. UMK remains committed to providing top-tier catering solutions that fuel the workforce behind Indonesia\'s green energy transition. We wish the entire Alva family a blessed Ramadan filled with peace and continued success.</p>',
+            ],
+
+            // ─────────────────────────────────────────────
+            // 1. PT Bintang Toedjoe Ramadan Iftar (Umara Mitra Kulina)
+            // ─────────────────────────────────────────────
+            [
+                'company'        => 'Umara Mitra Kulina',
+                'title'          => 'Fostering Togetherness: UMK Cikarang Hosts Ramadan Iftar for PT Bintang Toedjoe',
+                'published_at'   => Carbon::create(2026, 3, 9),
+                'main_image'     => 'posts/UMK-1.jpeg',
+                'gallery_images' => [
+                    'posts/UMK-1.jpeg',
+                    'posts/UMK-1.jpeg',
+                ],
+                'content' => '<p>The holy month of Ramadan is a time for reflection, gratitude, and strengthening bonds. Embracing this spirit of togetherness, <strong>Umara Mitra Kulina (UMK)</strong> had the distinct honor of hosting a special Iftar event directly at our state-of-the-art <strong>Satellite Kitchen in Cikarang</strong>.</p><p>This event was a beautiful demonstration of our commitment to not just nourishing our partners, but truly connecting with them on a deeper level. We believe that the best meals are shared with great company, and this Iftar gathering perfectly embodied that belief.</p><p>Our dedicated team prepared a sumptuous spread of traditional Ramadan dishes, ensuring every guest experienced the warmth and hospitality that defines Umara Mitra Kulina. It was an evening filled with gratitude, meaningful conversations, and the shared joy of breaking fast together.</p>',
+            ],
+
+            // ─────────────────────────────────────────────
+            // 2. HRD Cikarang Community Seminar (Umara Mitra Kulina)
+            // ─────────────────────────────────────────────
+            [
+                'company'        => 'Umara Mitra Kulina',
+                'title'          => 'Fueling Sustainable Growth: Umara Mitra Kulina Partners with HRD Cikarang',
+                'published_at'   => Carbon::create(2026, 3, 5),
+                'main_image'     => 'posts/Komunitas HRD Cikarang1.jpeg',
+                'gallery_images' => [
+                    'posts/Komunitas HRD Cikarang2.jpeg',
+                    'posts/Komunitas HRD Cikarang3.jpeg',
+                ],
+                'content' => '<p>As part of our commitment to supporting a professional and healthy industrial ecosystem, Umara Mitra Kulina proudly served as a strategic partner for the prestigious seminar <em>"Compliance to Sustainable Growth"</em>.</p><p>The seminar brought together hundreds of HR professionals from across the Cikarang industrial area, making it one of the most significant HR gatherings of the year. Umara Mitra Kulina played an integral role by providing catering services that fueled the participants throughout this knowledge-intensive day.</p><p>This partnership reflects our mission to be more than just a catering company — we are a catalyst for professional growth and community building within the industrial sector. We are proud to stand alongside HRD Cikarang Community in their mission to elevate HR practices across the region.</p>',
+            ],
+
+            // ─────────────────────────────────────────────
+            // 3. FIFA World Cup 2026 VVIP (Umara Cipta Rasa)
+            // ─────────────────────────────────────────────
+            [
+                'company'        => 'Umara Cipta Rasa',
+                'title'          => 'Chosen for Excellence: Umara Catering Serves VVIPs at FIFA World Cup 2026 Event',
+                'published_at'   => Carbon::create(2026, 1, 24),
+                'main_image'     => 'posts/fifa-world-cup1.jpg',
+                'gallery_images' => [
+                    'posts/fifa-world-cup2.jpg',
+                    'posts/fifa-world-cup3.jpg',
+                ],
+                'content' => '<p>A defining moment in our journey — <strong>Umara Catering</strong> was selected as the official catering partner to serve VVIPs at the prestigious <strong>FIFA World Cup 2026</strong> event. This remarkable honor places Umara Catering among the elite culinary services trusted to deliver excellence at one of the world\'s most watched sporting events.</p><p>Our team meticulously prepared a curated selection of premium dishes befitting the distinguished guests in attendance. Every detail — from menu design to presentation — reflected the highest standards of culinary artistry and hospitality.</p><p>Being chosen to serve VVIPs at a FIFA World Cup event is a testament to our team\'s unwavering commitment to quality, precision, and excellence. We are incredibly proud of this achievement and the trust placed in Umara Catering on the global stage.</p>',
+            ],
+
+            // ─────────────────────────────────────────────
+            // 4. Geely EX2 (Umara Cipta Rasa)
+            // ─────────────────────────────────────────────
+            [
+                'company'        => 'Umara Cipta Rasa',
                 'title'          => 'Fueling Innovation: Umara Catering Serves 1,000+ Guests at the Geely EX2 Grand Launch',
-                'published_at'   => Carbon::create(2026, 1, 20),
+                'published_at'   => Carbon::create(2026, 1, 22),
                 'main_image'     => $this->img('public/assets/news/geely-ex2/geely1.jpg'),
                 'gallery_images' => [
                     $this->img('public/assets/news/geely-ex2/geely2.jpg'),
@@ -155,25 +270,10 @@ class PostSeeder extends Seeder
             ],
 
             // ─────────────────────────────────────────────
-            // 2. Yoga at Prapanca (Umara Group → umara-nikmat-boga)
+            // 5. Wedding Market Fair 2026 (Umara Cipta Rasa)
             // ─────────────────────────────────────────────
             [
-                'company'        => 'Umara Group',
-                'title'          => 'Wellness Meets Culinary: A Morning of Yoga and Connection at Lumpang Emas Signature',
-                'published_at'   => Carbon::create(2026, 1, 4),
-                'main_image'     => $this->img('public/assets/news/yoga-at-prapanca/IMG_7978.jpg'),
-                'gallery_images' => [
-                    $this->img('public/assets/news/yoga-at-prapanca/IMG_7984.jpg'),
-                    $this->img('public/assets/news/yoga-at-prapanca/IMG_8001.jpg'),
-                ],
-                'content' => '<p>A serene morning unfolded at <strong>Lumpang Emas Signature</strong> as we hosted a special wellness event that beautifully combined the tranquility of yoga with the pleasures of fine dining. Guests began their morning with a guided yoga session in our outdoor garden, led by an experienced instructor who guided participants through a calming practice.</p><p>Following the session, attendees were treated to a specially curated healthy brunch menu that celebrated wholesome ingredients and balanced nutrition. Every dish was designed to complement the wellness theme while delivering the exceptional flavors that Lumpang Emas Signature is known for.</p><p>This event reflects our belief that true hospitality nourishes both body and soul. We are proud to create spaces where our guests can pause, reconnect with themselves, and enjoy the finest culinary experiences.</p>',
-            ],
-
-            // ─────────────────────────────────────────────
-            // 3. Wedding Market Fair 2026 (Umara Group → umara-nikmat-boga)
-            // ─────────────────────────────────────────────
-            [
-                'company'        => 'Umara Group',
+                'company'        => 'Umara Cipta Rasa',
                 'title'          => 'Blooming Love & Exquisite Tastes: Umara Catering at Wedding Market Fair 2026',
                 'published_at'   => Carbon::create(2026, 1, 16),
                 'main_image'     => $this->img('public/assets/news/wedding-market-fair-2026/wedding-market.jpg'),
@@ -185,12 +285,27 @@ class PostSeeder extends Seeder
             ],
 
             // ─────────────────────────────────────────────
-            // 4. Santa Visits (Umara Group → umara-nikmat-boga)
+            // 6. Yoga at Prapanca (Umara Cipta Rasa)
             // ─────────────────────────────────────────────
             [
-                'company'        => 'Umara Group',
+                'company'        => 'Umara Cipta Rasa',
+                'title'          => 'Wellness Meets Culinary: A Morning of Yoga and Connection at Lumpang Emas Signature',
+                'published_at'   => Carbon::create(2026, 1, 16),
+                'main_image'     => $this->img('public/assets/news/yoga-at-prapanca/IMG_7978.jpg'),
+                'gallery_images' => [
+                    $this->img('public/assets/news/yoga-at-prapanca/IMG_7984.jpg'),
+                    $this->img('public/assets/news/yoga-at-prapanca/IMG_8001.jpg'),
+                ],
+                'content' => '<p>A serene morning unfolded at <strong>Lumpang Emas Signature</strong> as we hosted a special wellness event that beautifully combined the tranquility of yoga with the pleasures of fine dining. Guests began their morning with a guided yoga session in our outdoor garden, led by an experienced instructor who guided participants through a calming practice.</p><p>Following the session, attendees were treated to a specially curated healthy brunch menu that celebrated wholesome ingredients and balanced nutrition. Every dish was designed to complement the wellness theme while delivering the exceptional flavors that Lumpang Emas Signature is known for.</p><p>This event reflects our belief that true hospitality nourishes both body and soul. We are proud to create spaces where our guests can pause, reconnect with themselves, and enjoy the finest culinary experiences.</p>',
+            ],
+
+            // ─────────────────────────────────────────────
+            // 7. Santa Visits (Rasa Nusantara Baru)
+            // ─────────────────────────────────────────────
+            [
+                'company'        => 'Rasa Nusantara Baru',
                 'title'          => 'A Magical Christmas: Santa Surprises Guests at Umara House & Lumpang Emas Signature',
-                'published_at'   => Carbon::create(2025, 12, 25),
+                'published_at'   => Carbon::create(2026, 1, 4),
                 'main_image'     => $this->img('public/assets/news/santa-umara/IMG_7935.jpg'),
                 'gallery_images' => [
                     $this->img('public/assets/news/santa-umara/IMG_7950.jpg'),
@@ -200,12 +315,12 @@ class PostSeeder extends Seeder
             ],
 
             // ─────────────────────────────────────────────
-            // 5. Chemco Funday (Umara Group → umara-nikmat-boga)
+            // 8. Chemco Funday (Umara Mitra Kulina)
             // ─────────────────────────────────────────────
             [
-                'company'        => 'Umara Group',
+                'company'        => 'Umara Mitra Kulina',
                 'title'          => 'The Vibrant Atmosphere of Chemco Funday 2025 at KIM Karawang Factory Grounds',
-                'published_at'   => Carbon::create(2025, 12, 14),
+                'published_at'   => Carbon::create(2025, 12, 25),
                 'main_image'     => $this->img('public/assets/umara-mitra-kulina/news/chemco-funday-2025.jpeg'),
                 'gallery_images' => [
                     $this->img('public/assets/umara-mitra-kulina/news/chemco-funday-2025-2.jpeg'),
@@ -215,12 +330,12 @@ class PostSeeder extends Seeder
             ],
 
             // ─────────────────────────────────────────────
-            // 6. Rakernas 2025 (Umara Group → umara-nikmat-boga)
+            // 9. Rakernas 2025 (Umara Group → umara-nikmat-boga)
             // ─────────────────────────────────────────────
             [
                 'company'        => 'Umara Group',
                 'title'          => 'Aligning Vision, Driving Growth: Umara Group National Working Meeting (Rakernas) 2025',
-                'published_at'   => Carbon::create(2025, 11, 24),
+                'published_at'   => Carbon::create(2025, 12, 14),
                 'main_image'     => $this->img('public/assets/news/raker/S5A5746.jpg'),
                 'gallery_images' => [
                     $this->img('public/assets/news/raker/S5A5667.jpg'),
@@ -230,12 +345,12 @@ class PostSeeder extends Seeder
             ],
 
             // ─────────────────────────────────────────────
-            // 7. Wedding Expo Danareksa (Umara Group → umara-nikmat-boga)
+            // 10. Wedding Expo Danareksa (Umara Cipta Rasa)
             // ─────────────────────────────────────────────
             [
-                'company'        => 'Umara Group',
+                'company'        => 'Umara Cipta Rasa',
                 'title'          => 'Elevating Your Special Day: Umara Catering at Menara Danareksa Wedding Expo',
-                'published_at'   => Carbon::create(2025, 11, 23),
+                'published_at'   => Carbon::create(2025, 11, 24),
                 'main_image'     => $this->img('public/assets/news/wedding-expo/wedding-expo.jpg'),
                 'gallery_images' => [
                     $this->img('public/assets/news/wedding-expo/wedding-expo-2.jpg'),
@@ -245,12 +360,12 @@ class PostSeeder extends Seeder
             ],
 
             // ─────────────────────────────────────────────
-            // 8. Honda Culture Indonesia (Umara Group → umara-nikmat-boga)
+            // 11. Honda Culture Indonesia (Umara Cipta Rasa)
             // ─────────────────────────────────────────────
             [
-                'company'        => 'Umara Group',
+                'company'        => 'Umara Cipta Rasa',
                 'title'          => 'Umara Catering at Honda Culture Indonesia',
-                'published_at'   => Carbon::create(2025, 11, 15),
+                'published_at'   => Carbon::create(2025, 11, 23),
                 'main_image'     => $this->img('public/assets/news/honda-cibis/4.jpeg'),
                 'gallery_images' => [
                     $this->img('public/assets/news/honda-cibis/3.jpg'),
@@ -262,12 +377,12 @@ class PostSeeder extends Seeder
             ],
 
             // ─────────────────────────────────────────────
-            // 9. SIAL InterFood 2025 (Laukita Bersama Indonesia)
+            // 12. SIAL InterFood 2025 (Laukita Bersama Indonesia)
             // ─────────────────────────────────────────────
             [
                 'company'        => 'Laukita Bersama Indonesia',
                 'title'          => 'Laukita Bersama Indonesia Showcases Food Manufacturing at SIAL InterFood 2025',
-                'published_at'   => Carbon::create(2025, 11, 12),
+                'published_at'   => Carbon::create(2025, 11, 15),
                 'main_image'     => $this->img('public/assets/news/sial-interfood/1.jpg'),
                 'gallery_images' => [
                     $this->img('public/assets/news/sial-interfood/2.jpg'),
@@ -277,12 +392,12 @@ class PostSeeder extends Seeder
             ],
 
             // ─────────────────────────────────────────────
-            // 10. IKASTARA IHFT 2025 (Umara Cipta Rasa)
+            // 13. IKASTARA IHFT 2025 (Umara Cipta Rasa)
             // ─────────────────────────────────────────────
             [
                 'company'        => 'Umara Cipta Rasa',
                 'title'          => 'IKASTARA IHFT 2025: Alumni Futsal Tournament & Reunion',
-                'published_at'   => Carbon::create(2025, 11, 9),
+                'published_at'   => Carbon::create(2025, 11, 14),
                 'main_image'     => $this->img('public/assets/news/ikastara-futsal/IMG_2.jpg'),
                 'gallery_images' => [
                     $this->img('public/assets/news/ikastara-futsal/IMG_3.jpg'),
@@ -292,12 +407,12 @@ class PostSeeder extends Seeder
             ],
 
             // ─────────────────────────────────────────────
-            // 11. Hayomoto 8th Anniversary (Rasa Nusantara Baru)
+            // 14. Hayomoto 8th Anniversary (Rasa Nusantara Baru)
             // ─────────────────────────────────────────────
             [
                 'company'        => 'Rasa Nusantara Baru',
                 'title'          => 'Lumpang Emas Bintaro Hosts the Vibrant 8th Anniversary Celebration of HayoMoto',
-                'published_at'   => Carbon::create(2025, 11, 8),
+                'published_at'   => Carbon::create(2025, 11, 9),
                 'main_image'     => $this->img('public/assets/news/hayomoto/1.jpeg'),
                 'gallery_images' => [
                     $this->img('public/assets/news/hayomoto/2.jpeg'),
@@ -309,12 +424,12 @@ class PostSeeder extends Seeder
             ],
 
             // ─────────────────────────────────────────────
-            // 12. Groundbreaking Restaurant (Umara Group → umara-nikmat-boga)
+            // 15. Groundbreaking Restaurant (Umara Group → umara-nikmat-boga)
             // ─────────────────────────────────────────────
             [
                 'company'        => 'Umara Group',
-                'title'          => 'Groundbreaking: Our New Restaurant Officially Opens',
-                'published_at'   => Carbon::create(2025, 10, 30),
+                'title'          => 'Groundbreaking Our New Restaurant Officially Opens',
+                'published_at'   => Carbon::create(2025, 11, 8),
                 'main_image'     => $this->img('public/assets/news/groundbreaking/img2.jpeg'),
                 'gallery_images' => [
                     $this->img('public/assets/news/groundbreaking/img1.jpeg'),
@@ -327,27 +442,12 @@ class PostSeeder extends Seeder
             ],
 
             // ─────────────────────────────────────────────
-            // 13. Gymnastics World Championships (Umara Mitra Kulina)
-            // ─────────────────────────────────────────────
-            [
-                'company'        => 'Umara Mitra Kulina',
-                'title'          => 'Fueling Excellence: Umara Catering at the Gymnastics World Championships',
-                'published_at'   => Carbon::create(2025, 10, 19),
-                'main_image'     => $this->img('public/assets/news/gymnastic-olympics/IMG_1564.jpg'),
-                'gallery_images' => [
-                    $this->img('public/assets/news/gymnastic-olympics/IMG_1569.jpg'),
-                    $this->img('public/assets/news/gymnastic-olympics/IMG-20251027.jpg'),
-                ],
-                'content' => '<p>In the world of elite sports, precision and performance are everything. <strong>Umara Mitra Kulina</strong> is incredibly proud to have been selected as the official catering partner for the <strong>Gymnastics World Championships</strong> held in Indonesia — a world-class sporting event that brought together the best gymnasts from across the globe.</p><p>Catering for elite athletes requires a deep understanding of nutrition, performance, and dietary requirements. Our team worked closely with sports nutritionists and event organizers to design menus that not only satisfied the palate but also optimized the energy and performance of world-class athletes.</p><p>Being trusted with the nutrition of world-class athletes is one of our greatest honors. This opportunity reflects our team\'s expertise, dedication, and ability to deliver exceptional catering services in the most demanding environments.</p>',
-            ],
-
-            // ─────────────────────────────────────────────
-            // 14. Kiddies Day Out AEON Mall (Laukita Niaga Indonesia)
+            // 16. Kiddies Day Out AEON Mall (Laukita Niaga Indonesia)
             // ─────────────────────────────────────────────
             [
                 'company'        => 'Laukita Niaga Indonesia',
                 'title'          => 'Laukita Brings Authentic Flavor to Kiddies Day Out at AEON Mall Tanjung Barat',
-                'published_at'   => Carbon::create(2025, 10, 26),
+                'published_at'   => Carbon::create(2025, 10, 30),
                 'main_image'     => $this->img('public/assets/news/kiddies-day-out/laukita-aeon.png'),
                 'gallery_images' => [
                     $this->img('public/assets/news/kiddies-day-out/laukita-aeon2.png'),
@@ -356,12 +456,12 @@ class PostSeeder extends Seeder
             ],
 
             // ─────────────────────────────────────────────
-            // 15. Wedding Market Fair 2025 (Umara Mitra Kulina)
+            // 17. Wedding Market Fair 2025 (Umara Cipta Rasa)
             // ─────────────────────────────────────────────
             [
-                'company'        => 'Umara Mitra Kulina',
-                'title'          => 'Crafting Dream Weddings: Umara Catering at Wedding Market Fair 2025',
-                'published_at'   => Carbon::create(2025, 10, 24),
+                'company'        => 'Umara Cipta Rasa',
+                'title'          => 'Crafting Dream Weddings: Umara Catering Showcases Excellence at Wedding Market Fair 2025',
+                'published_at'   => Carbon::create(2025, 10, 28),
                 'main_image'     => $this->img('public/assets/news/wedding-market-fair/wedding-market1.jpeg'),
                 'gallery_images' => [
                     $this->img('public/assets/news/wedding-market-fair/wedding-market2.jpeg'),
@@ -371,12 +471,27 @@ class PostSeeder extends Seeder
             ],
 
             // ─────────────────────────────────────────────
-            // 16. Rasa Umara x Wardah (Rasa Nusantara Baru)
+            // 18. Gymnastics World Championships (Umara Cipta Rasa)
+            // ─────────────────────────────────────────────
+            [
+                'company'        => 'Umara Cipta Rasa',
+                'title'          => 'Fueling Excellence: Umara Catering at the Gymnastics World Championships',
+                'published_at'   => Carbon::create(2025, 10, 24),
+                'main_image'     => $this->img('public/assets/news/gymnastic-olympics/IMG_1564.jpg'),
+                'gallery_images' => [
+                    $this->img('public/assets/news/gymnastic-olympics/IMG_1569.jpg'),
+                    $this->img('public/assets/news/gymnastic-olympics/IMG-20251027.jpg'),
+                ],
+                'content' => '<p>In the world of elite sports, precision and performance are everything. <strong>Umara Catering</strong> is incredibly proud to have been selected as the official catering partner for the <strong>Gymnastics World Championships</strong> held in Indonesia — a world-class sporting event that brought together the best gymnasts from across the globe.</p><p>Catering for elite athletes requires a deep understanding of nutrition, performance, and dietary requirements. Our team worked closely with sports nutritionists and event organizers to design menus that not only satisfied the palate but also optimized the energy and performance of world-class athletes.</p><p>Being trusted with the nutrition of world-class athletes is one of our greatest honors. This opportunity reflects our team\'s expertise, dedication, and ability to deliver exceptional catering services in the most demanding environments.</p>',
+            ],
+
+            // ─────────────────────────────────────────────
+            // 19. Rasa Umara x Wardah (Rasa Nusantara Baru)
             // ─────────────────────────────────────────────
             [
                 'company'        => 'Rasa Nusantara Baru',
                 'title'          => 'Rasa Umara x Wardah: Jelajahi Bazar Fashion & Beauty Experience',
-                'published_at'   => Carbon::create(2025, 6, 26),
+                'published_at'   => Carbon::create(2025, 10, 19),
                 'main_image'     => $this->img('public/assets/news/wardah/1.png'),
                 'gallery_images' => [
                     $this->img('public/assets/news/wardah/2.png'),
@@ -386,12 +501,12 @@ class PostSeeder extends Seeder
             ],
 
             // ─────────────────────────────────────────────
-            // 17. Ekspor to Saudi Arabia (Laukita Bersama Indonesia)
+            // 20. Ekspor to Saudi Arabia (Laukita Bersama Indonesia)
             // ─────────────────────────────────────────────
             [
                 'company'        => 'Laukita Bersama Indonesia',
                 'title'          => 'Expanding Horizons: Laukita Bersama Indonesia Exports Ready-to-Cook Meals to Saudi Arabia',
-                'published_at'   => Carbon::create(2025, 3, 6),
+                'published_at'   => Carbon::create(2025, 6, 26),
                 'main_image'     => $this->img('public/assets/laukkita-bersama/ekspor/eskpor-to-saudi.jpeg'),
                 'gallery_images' => [
                     $this->img('public/assets/laukkita-bersama/ekspor/eskpor-to-saudi3.jpeg'),
@@ -400,44 +515,18 @@ class PostSeeder extends Seeder
             ],
 
             // ─────────────────────────────────────────────
-            // 18. Music20 Summit (Umara Cipta Rasa)
+            // 21. Music20 Summit (Umara Cipta Rasa)
             // ─────────────────────────────────────────────
             [
                 'company'        => 'Umara Cipta Rasa',
                 'title'          => 'Harmonizing Flavors on the Global Stage: Umara Catering at the Music20 Summit',
-                'published_at'   => Carbon::create(2022, 10, 30),
+                'published_at'   => Carbon::create(2025, 3, 6),
                 'main_image'     => $this->img('public/assets/ucr-goverment/DSC00160.jpg'),
                 'gallery_images' => [
                     $this->img('public/assets/ucr-goverment/DSC00182.jpg'),
                     $this->img('public/assets/ucr-goverment/9.jpg'),
                 ],
                 'content' => '<p>The <strong>Music20 (M20) Summit</strong> is more than just a gathering of global musicians and policymakers; it is a movement that drives meaningful change through the universal language of music. <strong>Umara Catering</strong> was honored to be part of this prestigious international event, providing catering services for delegates and dignitaries from around the world.</p><p>Serving an international audience at a summit of this magnitude required exceptional culinary expertise and cultural sensitivity. Our team curated a menu that celebrated Indonesia\'s rich culinary heritage while incorporating international flavors to welcome guests from diverse backgrounds.</p><p>The opportunity to serve at the Music20 Summit was a defining moment for Umara Catering, demonstrating our capacity to deliver world-class catering at international events.</p>',
-            ],
-
-            // ─────────────────────────────────────────────
-            // 19. PT Bintang Toedjoe Ramadan Iftar (Umara Mitra Kulina)
-            //     Detail page tidak tersedia di website lama, gallery dikosongkan
-            // ─────────────────────────────────────────────
-            [
-                'company'        => 'Umara Mitra Kulina',
-                'title'          => 'Fostering Togetherness: UMK Cikarang Hosts Ramadan Iftar for PT Bintang Toedjoe',
-                'published_at'   => Carbon::create(2026, 3, 5),
-                'main_image'     => $this->img('public/assets/umara-mitra-kulina/news/pt-bintang-toedjoe/UMK-1.jpeg'),
-                'gallery_images' => [],
-                'content' => '<p>The holy month of Ramadan is a time for reflection, gratitude, and strengthening bonds. Embracing this spirit of togetherness, <strong>Umara Mitra Kulina (UMK)</strong> had the distinct honor of hosting a special Iftar event directly at our state-of-the-art <strong>Satellite Kitchen in Cikarang</strong>.</p><p>This event was a beautiful demonstration of our commitment to not just nourishing our partners, but truly connecting with them on a deeper level. We believe that the best meals are shared with great company, and this Iftar gathering perfectly embodied that belief.</p><p>Our dedicated team prepared a sumptuous spread of traditional Ramadan dishes, ensuring every guest experienced the warmth and hospitality that defines Umara Mitra Kulina. It was an evening filled with gratitude, meaningful conversations, and the shared joy of breaking fast together.</p>',
-            ],
-
-            // ─────────────────────────────────────────────
-            // 20. HRD Cikarang Community Seminar (Umara Mitra Kulina)
-            //     Detail page tidak tersedia di website lama, gallery dikosongkan
-            // ─────────────────────────────────────────────
-            [
-                'company'        => 'Umara Mitra Kulina',
-                'title'          => 'Fueling Sustainable Growth: Umara Mitra Kulina Partners with HRD Cikarang',
-                'published_at'   => Carbon::create(2026, 1, 24),
-                'main_image'     => $this->img('public/assets/news/Komunitas-HRD-Cikarang/Komunitas HRD Cikarang1.jpeg'),
-                'gallery_images' => [],
-                'content' => '<p>As part of our commitment to supporting a professional and healthy industrial ecosystem, Umara Mitra Kulina proudly served as a strategic partner for the prestigious seminar <em>"Compliance to Sustainable Growth"</em>.</p><p>The seminar brought together hundreds of HR professionals from across the Cikarang industrial area, making it one of the most significant HR gatherings of the year. Umara Mitra Kulina played an integral role by providing catering services that fueled the participants throughout this knowledge-intensive day.</p><p>This partnership reflects our mission to be more than just a catering company — we are a catalyst for professional growth and community building within the industrial sector. We are proud to stand alongside HRD Cikarang Community in their mission to elevate HR practices across the region.</p>',
             ],
         ];
     }

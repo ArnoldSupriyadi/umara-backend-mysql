@@ -36,13 +36,21 @@ class Post extends Model
         return $this->belongsTo(BusinessUnit::class);
     }
 
+    /**
+     * URL-encode only the filename part of a path, preserving slashes.
+     */
+    private function encodeR2Path(string $path): string
+    {
+        return implode('/', array_map('rawurlencode', explode('/', $path)));
+    }
+
     public function getMainImageUrlAttribute(): ?string
     {
         if (!$this->main_image) return null;
         if (str_starts_with($this->main_image, 'http')) return $this->main_image;
         $clean = ltrim($this->main_image, '/');
         if (str_starts_with($clean, 'images/')) return asset($clean);
-        return Storage::disk('r2')->url($this->main_image);
+        return Storage::disk('r2')->url($this->encodeR2Path($this->main_image));
     }
 
     public function getGalleryUrlsAttribute(): array
@@ -54,7 +62,7 @@ class Post extends Model
             if (str_starts_with($img, 'http')) return $img;
             $clean = ltrim($img, '/');
             if (str_starts_with($clean, 'images/')) return asset($clean);
-            return Storage::disk('r2')->url($img);
+            return Storage::disk('r2')->url($this->encodeR2Path($img));
         }, $this->gallery_images);
     }
 }

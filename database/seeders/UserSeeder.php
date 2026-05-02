@@ -11,7 +11,7 @@ class UserSeeder extends Seeder
 {
     public function run(): void
     {
-        // pastikan role ada
+        // pastikan role ada ya
         $role = Role::firstOrCreate([
             'name' => 'super_admin',
             'guard_name' => 'web'

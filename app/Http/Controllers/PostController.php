@@ -11,7 +11,7 @@ use Inertia\Inertia;
 
 class PostController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         // Latest post — always fixed, not affected by pagination
         $latestPost = Post::with('businessUnit')
@@ -35,6 +35,7 @@ class PostController extends Controller
             ->latest('published_at')
             ->when($latestPost, fn($q) => $q->where('id', '!=', $latestPost->id))
             ->paginate(9)
+            ->withPath($request->url())
             ->through(fn($post) => [
                 'id'         => $post->id,
                 'title'      => $post->title,
@@ -67,6 +68,7 @@ class PostController extends Controller
             ->whereNotNull('published_at')
             ->latest('published_at')
             ->paginate(9)
+            ->withPath($request->url())
             ->through(fn($post) => [
                 'id'         => $post->id,
                 'title'      => $post->title,

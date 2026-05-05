@@ -50,3 +50,4 @@ node_modules/
 *.odt
 *.ods
 *.rtf/public/hot
+public/build

@@ -208,8 +208,45 @@ export default function Index({ sliders, clients, posts }) {
                     </div>
                 </div>
             </div>
+
+            {/* --- 3b. HIGHLIGHTS SECTION --- */}
+            <div className="container mx-auto px-4 pt-20 text-white">
+                <div className="higlights" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+                    <h1 className="text-4xl font-bold text-center text-[#CE8131] font-['Playfair_Display']">HIGHLIGHTS</h1>
+                    <p className="text-lg text-center mt-4 max-w-3xl mx-auto">Discover our remarkable achievements and milestones that showcase our excellence, innovation, and delivering exceptional results for our clients.</p>
+                </div>
+                {/* 5 COLUMN GRID */}
+                <div className="flex flex-wrap lg:flex-nowrap gap-8 justify-center items-center mt-12">
+                    {/* Grid Item 1 */}
+                    <div className="p-8 text-center flex flex-col h-full" data-aos="fade-right" data-aos-duration="800" data-aos-delay="400">
+                        <h1 className="text-3xl font-bold mb-4 text-[#CE8131] font-['Playfair_Display']">+10.000</h1>
+                        <p className="text-lg font-medium">Event</p>
+                    </div>
+                    {/* Grid Item 2 */}
+                    <div className="p-8 text-center flex flex-col h-full" data-aos="fade-up" data-aos-duration="800" data-aos-delay="600">
+                        <h1 className="text-3xl font-bold mb-4 text-[#CE8131] font-['Playfair_Display']">+7 Years</h1>
+                        <p className="text-lg font-medium">Experience</p>
+                    </div>
+                    {/* Grid Item 3 */}
+                    <div className="p-8 text-center flex flex-col h-full" data-aos="fade-down" data-aos-duration="800" data-aos-delay="800">
+                        <h1 className="text-3xl font-bold mb-4 text-[#CE8131] font-['Playfair_Display']">5</h1>
+                        <p className="text-lg font-medium">Restaurant</p>
+                    </div>
+                    {/* Grid Item 4 */}
+                    <div className="p-8 text-center flex flex-col h-full" data-aos="fade-left" data-aos-duration="800" data-aos-delay="1000">
+                        <h1 className="text-3xl font-bold mb-4 text-[#CE8131] font-['Playfair_Display']">2</h1>
+                        <p className="text-lg font-medium">Factory</p>
+                    </div>
+                    {/* Grid Item 5 */}
+                    <div className="p-8 text-center flex flex-col h-full" data-aos="fade-left" data-aos-duration="800" data-aos-delay="1000">
+                        <h1 className="text-3xl font-bold mb-4 text-[#CE8131] font-['Playfair_Display']">4</h1>
+                        <p className="text-lg font-medium">Central Kitchen</p>
+                    </div>
+                </div>
+                {/* END OF 5 COLUMN GRID */}
+            </div>
             </section>
-            
+
 
             {/* --- 4. BAGIAN CLIENTS --- */}
             <section className="py-20" style={{

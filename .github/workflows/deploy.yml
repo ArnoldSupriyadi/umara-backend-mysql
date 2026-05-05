@@ -13,8 +13,10 @@ jobs:
         run: |
           sudo chown -R devcom:www-data /var/www/cms-compro-umara/storage/
           sudo chown -R devcom:www-data /var/www/cms-compro-umara/bootstrap/cache/
+          sudo chown -R devcom:www-data /var/www/cms-compro-umara/public/build/
           sudo chmod -R 775 /var/www/cms-compro-umara/storage/
           sudo chmod -R 775 /var/www/cms-compro-umara/bootstrap/cache/
+          sudo chmod -R 775 /var/www/cms-compro-umara/public/build/
 
       - name: Pull Latest Code
         run: |
@@ -47,5 +49,7 @@ jobs:
         run: |
           sudo chown -R devcom:www-data /var/www/cms-compro-umara/storage/
           sudo chown -R devcom:www-data /var/www/cms-compro-umara/bootstrap/cache/
+          sudo chown -R devcom:www-data /var/www/cms-compro-umara/public/build/
           sudo chmod -R 775 /var/www/cms-compro-umara/storage/
           sudo chmod -R 775 /var/www/cms-compro-umara/bootstrap/cache/
+          sudo chmod -R 775 /var/www/cms-compro-umara/public/build/

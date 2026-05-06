@@ -153,10 +153,10 @@ class PostSeeder extends Seeder
             ],
 
             // ─────────────────────────────────────────────
-            // 6. Yoga at Prapanca (Umara Cipta Rasa)
+            // 6. Yoga at Prapanca (Rasa Nusantara Baru)
             // ─────────────────────────────────────────────
             [
-                'company'        => 'Umara Cipta Rasa',
+                'company'        => 'Rasa Nusantara Baru',
                 'title'          => 'Wellness Meets Culinary: A Morning of Yoga and Connection at Lumpang Emas Signature',
                 'published_at'   => Carbon::create(2026, 1, 4),
                 'main_image'     => 'posts/yoga-at-prapanca-1.jpg',
@@ -369,7 +369,7 @@ class PostSeeder extends Seeder
                 'company'        => 'Laukita Bersama Indonesia',
                 'title'          => 'Expanding Horizons: Laukita Bersama Indonesia Exports Ready-to-Cook Meals to Saudi Arabia',
                 'published_at'   => Carbon::create(2025, 3, 6),
-                'main_image'     => 'posts/eskpor-to-saudi.jpeg',
+                'main_image'     => 'posts/eskpor-to-Saudi.jpeg',
                 'gallery_images' => [
                     'posts/eskpor-to-saudi4.jpeg',
                     'posts/eskpor-to-saudi5.jpeg',

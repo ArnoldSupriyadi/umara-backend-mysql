@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
+   <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
-        <!-- Favicon -->
-        <link rel="icon" type="image/png" href="https://assets.bridgeflow.my.id/logos/umara-group.png">
-        <link rel="shortcut icon" href="https://assets.bridgeflow.my.id/logos/umara-group.png">
-        <link rel="apple-touch-icon" href="https://assets.bridgeflow.my.id/logos/umara-group.png">
+        {{-- Preconnect ke R2 CDN (gambar) --}}
+        <link rel="preconnect" href="https://assets.bridgeflow.my.id" crossorigin>
+        <link rel="dns-prefetch" href="https://assets.bridgeflow.my.id">
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
-        <!-- Scripts -->
+        {{-- Preconnect ke Google Fonts --}}
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+        {{-- Konsolidasi semua font ke Google Fonts (1 request) --}}
+        <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Merriweather:wght@400;700&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
+
+        {{-- Scripts --}}
         @routes
         @viteReactRefresh
         @vite(['resources/js/app.jsx', "resources/js/Pages/{$page['component']}.jsx"])

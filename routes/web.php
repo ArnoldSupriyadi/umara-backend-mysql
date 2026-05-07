@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\ApplicantCvController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CareerController;
 use App\Http\Controllers\CatalogController;
@@ -33,12 +34,13 @@ Route::get('/catalogs', [CatalogController::class, 'index'])->name('catalogs.ind
 // Careers
 Route::get('/careers', [CareerController::class, 'index'])->name('careers.index');
 Route::get('/careers/{slug}', [CareerController::class, 'show'])->name('careers.show');
-
 // Route untuk menampilkan halaman form (GET)
 Route::get('/careers/{slug}/apply', [CareerController::class, 'applyForm'])->name('careers.apply.form');
-
 // 👇 Route untuk MENYIMPAN data form (WAJIB POST)
 Route::post('/careers/apply', [CareerController::class, 'apply'])->name('careers.apply');
+Route::get('/cms/applicants/{id}/cv-download', [ApplicantCvController::class, 'download'])
+    ->name('applicant.cv.download')
+    ->middleware(['auth']);
 
 // Posts — global listing & detail
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');

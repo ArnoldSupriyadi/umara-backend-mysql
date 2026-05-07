@@ -23,8 +23,10 @@ return new class extends Migration
             $table->string('phone'); // Phone Number *
             $table->text('address')->nullable(); // Address
             $table->boolean('willing_to_relocate')->default(false); // Willing to Relocate
-            $table->text('cv_path'); // Upload  CV
-            $table->string('photo_path'); // Selfie Photo *
+            // $table->text('cv_path'); // Upload  CV
+            // $table->string('photo_path'); // Selfie Photo *
+            $table->longText('cv_path');    // PDF base64 ~1.33MB
+            $table->longText('photo_path'); // Foto WebP base64 ~200KB
 
             $table->timestamps();
         });

@@ -30,7 +30,7 @@ class UserSeeder extends Seeder
             ['email' => 'recruitment@umaragroup.com'],
             [
                 'name' => 'HRD',
-                'password' => Hash::make('password'),
+                'password' => Hash::make('Umara2026!'),
                 'email_verified_at' => now(),
             ]
         );

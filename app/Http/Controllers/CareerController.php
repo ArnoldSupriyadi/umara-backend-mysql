@@ -6,9 +6,12 @@ use App\Models\Applicant;
 use App\Models\Career;
 use App\Services\ImageService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use Inertia\Inertia;
+use Illuminate\Support\Str;
+
+// ============================================================
+// Storage dan Str tidak dipakai lagi — sudah dihapus dari use
+// ============================================================
 
 class CareerController extends Controller
 {
@@ -80,27 +83,30 @@ class CareerController extends Controller
             'address'             => 'nullable|string',
             'willing_to_relocate' => 'required|in:yes,no',
             // ============================================================
-            // Batas ukuran file: max 1MB (1024 KB)
-            // Sebelumnya: max:2048 (2MB)
+            // CV: hanya PDF (doc/docx dihapus karena tidak bisa di-encode
+            // dengan cara yang konsisten untuk preview di browser)
             // ============================================================
-            'cv'    => 'required|file|mimes:pdf,doc,docx|max:1024',
+            'cv'    => 'required|file|mimes:pdf|max:1024',
             'photo' => 'required|image|max:1024',
         ]);
 
-        $cvFile    = $request->file('cv');
-        $photoFile = $request->file('photo');
-
         // ============================================================
-        // UPLOAD CV — langsung ke R2 tanpa konversi
+        // FOTO → compress ke WebP dulu via ImageService,
+        // lalu encode ke base64 → disimpan di DB
+        // Estimasi ukuran di DB: ~200KB
         // ============================================================
-        $cvFilename = 'cv_' . now()->format('Ymd_His') . '_' . Str::random(6) . '.' . $cvFile->getClientOriginalExtension();
-        $cvPath     = Storage::disk('r2')->putFileAs('applicants/cv', $cvFile, $cvFilename);
-
-        $photoPath = ImageService::convertAndUpload(
-            file: $photoFile,
-            folder: 'applicants/photo',
+        $photoBase64 = ImageService::convertToBase64(
+            file: $request->file('photo'),
             quality: 85,
             maxWidth: 800
+        );
+
+        // ============================================================
+        // CV PDF → langsung encode ke base64 → disimpan di DB
+        // PDF tidak bisa dicompress, estimasi ukuran di DB: ~1.33MB
+        // ============================================================
+        $cvBase64 = base64_encode(
+            file_get_contents($request->file('cv')->getPathname())
         );
 
         Applicant::create([
@@ -112,8 +118,8 @@ class CareerController extends Controller
             'phone'               => $request->phone,
             'address'             => $request->address,
             'willing_to_relocate' => $request->willing_to_relocate === 'yes',
-            'cv_path'             => $cvPath,
-            'photo_path'          => $photoPath,
+            'cv_path'             => $cvBase64,    // base64 tanpa prefix data URI
+            'photo_path'          => $photoBase64, // base64 tanpa prefix data URI
         ]);
 
         return back()->with('success', 'Lamaran berhasil dikirim!');

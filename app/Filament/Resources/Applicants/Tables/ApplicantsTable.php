@@ -13,8 +13,8 @@ use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
-use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Database\Eloquent\Builder;
 
 class ApplicantsTable
 {
@@ -25,7 +25,8 @@ class ApplicantsTable
                 ImageColumn::make('photo_path')
                     ->label('Foto')
                     ->circular()
-                    ->getStateUsing(fn($record) => Storage::disk('r2')->url($record->photo_path)),
+                    // ->getStateUsing(fn($record) => Storage::disk('r2')->url($record->photo_path)),
+                    ->getStateUsing(fn($record) => 'data:image/webp;base64,' . $record->photo_path),
 
                 TextColumn::make('name')
                     ->label('Nama Pelamar')
@@ -34,6 +35,11 @@ class ApplicantsTable
 
                 TextColumn::make('career.job_title')
                     ->label('Posisi Dilamar')
+                    ->searchable(query: function (Builder $query, string $search): Builder {
+                        return $query->whereHas('career', fn($q) =>
+                            $q->where('job_title', 'like', "%{$search}%")
+                        );
+                    })
                     ->sortable()
                     ->badge()
                     ->color('info'),
@@ -63,7 +69,8 @@ class ApplicantsTable
                 TextColumn::make('cv_path')
                     ->label('File CV')
                     ->formatStateUsing(fn() => '⬇ Download CV')
-                    ->url(fn($record) => Storage::disk('r2')->url($record->cv_path))
+                    // ->url(fn($record) => Storage::disk('r2')->url($record->cv_path))
+                    ->url(fn($record) => route('applicant.cv.download', $record->id))
                     ->openUrlInNewTab()
                     ->color('primary'),
 

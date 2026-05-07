@@ -37,6 +37,11 @@ class CatalogPolicy
         return $authUser->can('Delete:Catalog');
     }
 
+    public function deleteAny(AuthUser $authUser): bool
+    {
+        return $authUser->can('DeleteAny:Catalog');
+    }
+
     public function restore(AuthUser $authUser, Catalog $catalog): bool
     {
         return $authUser->can('Restore:Catalog');

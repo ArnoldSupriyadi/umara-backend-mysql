@@ -46,11 +46,6 @@ export default function Show({ career }) {
 
                 {/* BAGIAN INFO LOWONGAN */}
                 <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden mb-10">
-                    {career.image_url && (
-                        <div className="w-full h-64 m:h-80 bg-gray-200">
-                            <img src={career.image_url} alt="{career.job_title}" className="w-full h-full object-contain" />
-                        </div>
-                    )}
                     <div className="p-8 md:p-12">
                         <div className="mb-6 border-b border-gray-100 pb-6">
                             <span className="text-white text-sm font-bold px-3 py-1 rounded-full mb-4 inline-block" style={{ backgroundColor: '#CE8131' }}>
@@ -73,7 +68,7 @@ export default function Show({ career }) {
 
                             <a href={`/careers/${career.slug}/apply`}
                                 className="w-full sm:w-auto px-8 py-3 text-white font-bold rounded-lg transition text-center"
-                                style={{ backgroundColor: '#56B6C6' }}
+                                style={{ backgroundColor: '#16d19fff' }}
                                 onMouseEnter={e => e.target.style.opacity = '0.85'}
                                 onMouseLeave={e => e.target.style.opacity = '1'}
                             >

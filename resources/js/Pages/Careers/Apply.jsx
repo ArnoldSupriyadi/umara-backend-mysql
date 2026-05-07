@@ -44,7 +44,7 @@ export default function Apply({ career }) {
     };
 
     const brandColor = '#CE8131';
-    const submitColor = '#56B6C6';
+    const submitColor = '#16d19fff';
 
     return (
         <div className="min-h-screen bg-gray-50 py-12 px-4 font-sans text-gray-800">

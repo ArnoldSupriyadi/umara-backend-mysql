@@ -96,18 +96,6 @@ class CareerController extends Controller
         $cvFilename = 'cv_' . now()->format('Ymd_His') . '_' . Str::random(6) . '.' . $cvFile->getClientOriginalExtension();
         $cvPath     = Storage::disk('r2')->putFileAs('applicants/cv', $cvFile, $cvFilename);
 
-        // ============================================================
-        // UPLOAD PHOTO — dikonversi ke WebP via ImageService sebelum upload ke R2
-        // Menghemat storage: foto asli (jpg/png) bisa 1MB+ → WebP ~100-300KB
-        //
-        // Jika ingin kembali ke upload langsung tanpa konversi, comment blok
-        // ImageService di bawah dan uncomment blok "PHOTO TANPA KONVERSI":
-        //
-        // --- PHOTO TANPA KONVERSI (uncomment jika ingin kembali) ---
-        // $photoFilename = 'photo_' . now()->format('Ymd_His') . '_' . Str::random(6) . '.' . $photoFile->getClientOriginalExtension();
-        // $photoPath     = Storage::disk('r2')->putFileAs('applicants/photo', $photoFile, $photoFilename);
-        // ------------------------------------------------------------
-        // ============================================================
         $photoPath = ImageService::convertAndUpload(
             file: $photoFile,
             folder: 'applicants/photo',

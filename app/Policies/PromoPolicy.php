@@ -37,6 +37,11 @@ class PromoPolicy
         return $authUser->can('Delete:Promo');
     }
 
+    public function deleteAny(AuthUser $authUser): bool
+    {
+        return $authUser->can('DeleteAny:Promo');
+    }
+
     public function restore(AuthUser $authUser, Promo $promo): bool
     {
         return $authUser->can('Restore:Promo');

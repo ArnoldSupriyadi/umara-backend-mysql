@@ -37,6 +37,11 @@ class MenuPolicy
         return $authUser->can('Delete:Menu');
     }
 
+    public function deleteAny(AuthUser $authUser): bool
+    {
+        return $authUser->can('DeleteAny:Menu');
+    }
+
     public function restore(AuthUser $authUser, Menu $menu): bool
     {
         return $authUser->can('Restore:Menu');

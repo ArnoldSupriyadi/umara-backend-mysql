@@ -32,7 +32,6 @@ class Career extends Model
         'job_title',
         'slug',
         'description',
-        'image',
         'is_active',
     ];
 
@@ -45,12 +44,4 @@ class Career extends Model
         return $this->belongsTo(BusinessUnit::class);
     }
 
-    public function getImageUrlAttribute(): ?string
-    {
-        if (!$this->image) return null;
-        if (str_starts_with($this->image, 'http')) return $this->image;
-        $clean = ltrim($this->image, '/');
-        if (str_starts_with($clean, 'images/')) return asset($clean);
-        return Storage::disk('r2')->url($this->image);
-    }
 }

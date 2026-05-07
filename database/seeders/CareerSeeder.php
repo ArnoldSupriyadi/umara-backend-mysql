@@ -48,7 +48,6 @@ class CareerSeeder extends Seeder
             [
                 'business_unit_id' => $ucr->id,
                 'job_title' => 'Chef de Partie - Jakarta',
-                'image' => $ucr->logo,
                 'description' => '
                     <h3 class="font-bold mb-2">Responsibilities:</h3>
                     <ul class="list-disc pl-5 mb-4">
@@ -80,7 +79,6 @@ class CareerSeeder extends Seeder
                 'slug' => Str::slug($data['job_title'] . '-' . Str::random(5)),
                 'description' => $data['description'],
                 'is_active' => true,
-                'image' => $data['image'], // Menggunakan data image yang sudah diset di atas
             ]);
         }
     }

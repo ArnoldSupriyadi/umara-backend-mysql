@@ -37,6 +37,11 @@ class BusinessUnitPolicy
         return $authUser->can('Delete:BusinessUnit');
     }
 
+    public function deleteAny(AuthUser $authUser): bool
+    {
+        return $authUser->can('DeleteAny:BusinessUnit');
+    }
+
     public function restore(AuthUser $authUser, BusinessUnit $businessUnit): bool
     {
         return $authUser->can('Restore:BusinessUnit');

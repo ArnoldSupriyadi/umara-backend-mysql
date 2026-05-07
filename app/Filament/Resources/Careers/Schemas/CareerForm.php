@@ -85,21 +85,6 @@ class CareerForm
                             );
                         }),
 
-                    FileUpload::make('image')
-                        ->label('Banner Lowongan (Opsional)')
-                        ->disk('r2')
-                        ->directory('careers')
-                        ->visibility('public')
-                        ->image()
-                        ->imagePreviewHeight('120')
-                        ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
-                        ->nullable()
-                        ->dehydrated(fn($state) => filled($state))
-                        ->helperText(fn($record) => $record ? 'Biarkan kosong jika tidak ingin mengganti banner.' : null)
-                        ->saveUploadedFileUsing(function (TemporaryUploadedFile $file) {
-                            return ImageService::convertAndUpload($file, 'careers');
-                        }),
-
                     RichEditor::make('description')
                         ->label('Deskripsi Pekerjaan')
                         ->required()

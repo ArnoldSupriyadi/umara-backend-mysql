@@ -20,21 +20,7 @@ class ClientsTable
                 ImageColumn::make('logo')
                     ->label('Logo')
                     ->circular()
-                    ->getStateUsing(function ($record) {
-                        if (! $record->logo) {
-                            return null;
-                        }
-
-                        if (str_starts_with($record->logo, 'http')) {
-                            return $record->logo;
-                        }
-
-                        if (str_starts_with($record->logo, '/')) {
-                            return asset($record->logo);
-                        }
-
-                        return asset('storage/' . $record->logo);
-                    }),
+                    ->getStateUsing(fn ($record) => $record->logo_url),
                 TextColumn::make('name')
                     ->label('Nama Client')
                     ->searchable()

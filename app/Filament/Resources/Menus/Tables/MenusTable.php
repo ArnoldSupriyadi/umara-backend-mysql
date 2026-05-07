@@ -20,21 +20,7 @@ class MenusTable
                 ImageColumn::make('image')
                     ->label('Gambar')
                     ->circular()
-                    ->getStateUsing(function ($record) {
-                        if (! $record->image) {
-                            return null;
-                        }
-
-                        if (str_starts_with($record->image, 'http')) {
-                            return $record->image;
-                        }
-
-                        if (str_starts_with($record->image, '/')) {
-                            return asset($record->image);
-                        }
-
-                        return asset('storage/' . $record->image);
-                    }),
+                    ->getStateUsing(fn ($record) => $record->image_url),
                 TextColumn::make('title')
                     ->label('Judul')
                     ->searchable()

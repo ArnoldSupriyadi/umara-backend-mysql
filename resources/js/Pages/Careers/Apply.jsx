@@ -1,9 +1,7 @@
-import React, { useState } from "react";
-import { Head, Link, useForm, router } from "@inertiajs/react";
+import React from "react";
+import { Head, Link, useForm } from "@inertiajs/react";
 
 export default function Apply({ career }) {
-    const [isSuccess, setIsSuccess] = useState(false);
-
     const { data, setData, post, processing, errors, setError, clearErrors } = useForm({
         career_id:           career.id,
         name:                '',
@@ -34,12 +32,11 @@ export default function Apply({ career }) {
         }
         if (hasError) return;
 
+        // Inertia auto-handle redirect dari backend.
+        // Backend return redirect ke /careers + flash 'success' →
+        // FlashToast di FrontendLayout akan tampil otomatis.
         post('/careers/apply', {
             forceFormData: true,
-            onSuccess: () => {
-                setIsSuccess(true);
-                setTimeout(() => router.get(`/careers/${career.slug}`), 3000);
-            },
         });
     };
 
@@ -69,13 +66,6 @@ export default function Apply({ career }) {
                         Job Application Form
                     </h2>
                     <p className="text-gray-500 text-sm mb-6">* Indicates required fields</p>
-
-                    {isSuccess && (
-                        <div className="mb-6 bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg flex items-center">
-                            <span className="mr-2">✅</span>
-                            Lamaran berhasil dikirim! Mengalihkan halaman dalam 3 detik...
-                        </div>
-                    )}
 
                     <form onSubmit={handleSubmit} className="space-y-6">
 

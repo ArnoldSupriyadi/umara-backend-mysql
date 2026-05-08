@@ -1,5 +1,107 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, usePage } from '@inertiajs/react';
+
+// ============================================================
+// FlashToast — notifikasi global success/error dari backend.
+// Membaca flash session yang di-share via HandleInertiaRequests.
+//
+// Behavior:
+// - Muncul saat ada flash.success atau flash.error
+// - Auto-dismiss setelah 5 detik
+// - Bisa di-close manual via button X
+// - Animasi slide-in dari atas
+//
+// Responsive positioning:
+// - Mobile  : full-width dengan inset 16px dari kiri-kanan
+// - Tablet+ : center horizontal, max-width 28rem (448px)
+// ============================================================
+function FlashToast() {
+    const { flash } = usePage().props;
+    const [show, setShow] = useState(false);
+    const [message, setMessage] = useState('');
+    const [type, setType] = useState('success');
+
+    useEffect(() => {
+        const successMsg = flash?.success;
+        const errorMsg   = flash?.error;
+        const msg        = successMsg || errorMsg;
+
+        if (!msg) return;
+
+        setMessage(msg);
+        setType(successMsg ? 'success' : 'error');
+        setShow(true);
+
+        const timer = setTimeout(() => setShow(false), 5000);
+        return () => clearTimeout(timer);
+    }, [flash?.success, flash?.error]);
+
+    if (!message) return null;
+
+    const isSuccess = type === 'success';
+
+    return (
+        <div
+            className="fixed top-4 inset-x-4 md:inset-x-0 z-[100] flex justify-center pointer-events-none"
+            role="alert"
+            aria-live="polite"
+        >
+            <div
+                className={`
+                    w-full max-w-md
+                    transition-all duration-300 ease-out pointer-events-auto
+                    ${show ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}
+                `}
+            >
+                <div
+                    className={`
+                        flex items-start gap-3 p-4 pr-3 rounded-lg shadow-xl bg-white border-l-4
+                        ${isSuccess ? 'border-green-500' : 'border-red-500'}
+                    `}
+                >
+                    {/* Icon */}
+                    <div
+                        className={`
+                            flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white
+                            ${isSuccess ? 'bg-green-500' : 'bg-red-500'}
+                        `}
+                    >
+                        {isSuccess ? (
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                            </svg>
+                        ) : (
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        )}
+                    </div>
+
+                    {/* Content */}
+                    <div className="flex-1 min-w-0 pt-0.5">
+                        <p className={`text-sm font-semibold ${isSuccess ? 'text-green-900' : 'text-red-900'}`}>
+                            {isSuccess ? 'Berhasil' : 'Terjadi Kesalahan'}
+                        </p>
+                        <p className="text-sm text-gray-600 mt-0.5 break-words">
+                            {message}
+                        </p>
+                    </div>
+
+                    {/* Close Button */}
+                    <button
+                        onClick={() => setShow(false)}
+                        className="flex-shrink-0 ml-2 -mr-1 -mt-1 p-1 text-gray-400 hover:text-gray-700 hover:bg-gray-100 rounded-md transition-colors"
+                        aria-label="Tutup notifikasi"
+                    >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    );
+}
 
 export default function FrontendLayout({ children }) {
     const { url } = usePage();
@@ -25,6 +127,9 @@ export default function FrontendLayout({ children }) {
 
     return (
         <div className="min-h-screen bg-gray-50 font-sans text-gray-900 flex flex-col">
+            {/* --- FLASH TOAST (global success/error notification) --- */}
+            <FlashToast />
+
             {/* --- NAVIGATION BAR --- */}
             <nav className="bg-gradient-to-r from-card-umara-group-brown-light to-card-umara-group-brown-dark shadow-sm sticky top-0 z-50">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

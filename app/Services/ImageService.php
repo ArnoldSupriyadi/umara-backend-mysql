@@ -86,9 +86,13 @@ class ImageService
     }
 
     /**
-     * Convert UploadedFile ke WebP lalu encode ke base64.
-     * Return base64 string TANPA prefix data URI — prefix ditambah saat serve.
-     * Contoh return: "UklGRlYAAABXRUJQVlA4..."
+     * Convert UploadedFile ke WebP lalu encode ke base64 DENGAN prefix HRIS.
+     *
+     * Format return mengikuti konvensi HRIS Program (hardcoded image/png):
+     *   "data:image/png;base64,UklGRlYAAABXRUJQVlA4..."
+     *
+     * Note: prefix "image/png" sengaja hardcoded untuk konsistensi dengan
+     * HRIS, meski isi sebenarnya WebP. Browser lenient → tetap render.
      *
      * @param UploadedFile $file      File foto yang diupload user
      * @param int          $quality   Kualitas WebP 1-100 (default 85)
@@ -107,6 +111,7 @@ class ImageService
 
         $webpContent = $image->toWebp(quality: $quality)->toString();
 
-        return base64_encode($webpContent);
+        // Format HRIS-style: prefix data URI hardcoded image/png
+        return \App\Models\Applicant::addHrisPrefix(base64_encode($webpContent));
     }
 }

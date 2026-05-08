@@ -27,14 +27,14 @@ class ApplicantsTable
             ->columns([
                 // ============================================================
                 // FOTO COLUMN
-                // Pakai TextColumn + html() karena ImageColumn di Filament v4
-                // tidak reliable untuk render base64 data URI.
+                // Format DB: "data:image/png;base64,..." (HRIS-style, prefix
+                // sudah include). Pakai $state langsung tanpa prepend prefix.
                 // ============================================================
                 TextColumn::make('photo_path')
                     ->label('Foto')
                     ->html()
                     ->formatStateUsing(fn ($state) => $state
-                        ? '<img src="data:image/webp;base64,' . $state . '" '
+                        ? '<img src="' . $state . '" '
                             . 'style="width:40px;height:40px;border-radius:50%;'
                             . 'object-fit:cover;border:1px solid #e5e7eb;" '
                             . 'alt="Foto Pelamar" />'
@@ -177,8 +177,7 @@ class ApplicantsTable
                         $record->photo_path
                             ? '<div style="display:flex;justify-content:center;'
                                 . 'padding:1rem;background:#f9fafb;border-radius:8px;">'
-                                . '<img src="data:image/webp;base64,'
-                                . $record->photo_path . '" '
+                                . '<img src="' . $record->photo_path . '" '
                                 . 'style="max-width:100%;max-height:70vh;'
                                 . 'border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.1);" '
                                 . 'alt="Foto Pelamar" />'
@@ -195,7 +194,8 @@ class ApplicantsTable
                     ->icon('heroicon-o-arrow-down-tray')
                     ->color('success')
                     ->action(function ($record) {
-                        $content  = base64_decode($record->photo_path);
+                        // Pakai accessor → otomatis strip prefix HRIS + decode
+                        $content  = $record->photo_binary;
                         $safeName = str_replace(' ', '_', $record->name);
                         $filename = 'Foto_' . $safeName . '.webp';
 

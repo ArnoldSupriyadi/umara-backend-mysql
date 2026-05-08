@@ -86,7 +86,10 @@ class CareerController extends Controller
             // CV: hanya PDF (doc/docx dihapus karena tidak bisa di-encode
             // dengan cara yang konsisten untuk preview di browser)
             // ============================================================
-            'cv'    => 'required|file|mimes:pdf|max:1024',
+            // Size dalam KB:
+            // - CV PDF : max 2048 KB (2 MB)
+            // - Photo  : max 1024 KB (1 MB)
+            'cv'    => 'required|file|mimes:pdf|max:2048',
             'photo' => 'required|image|max:1024',
         ]);
 

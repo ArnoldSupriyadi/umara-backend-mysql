@@ -35,4 +35,22 @@ return [
         ],
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Applicants - Email Workflow Configuration
+    |--------------------------------------------------------------------------
+    |
+    | URL Google Form yang dikirim ke applicant via email setelah HR Accept.
+    | Set di .env: APPLICANT_BIODATA_FORM_URL=https://forms.gle/your-form-id
+    |
+    | Logo Umara Group (parent) — ditampilkan di header email bersama logo
+    | sub-brand. Pakai URL public yang permanent (bukan file local) agar
+    | tetap accessible saat email dibuka di mana saja.
+    |
+    */
+    'applicants' => [
+        'biodata_form_url' => env('APPLICANT_BIODATA_FORM_URL', 'https://forms.gle/placeholder'),
+        'parent_logo_url'  => env('APPLICANT_PARENT_LOGO_URL', 'https://assets.bridgeflow.my.id/logos/umara-group.png'),
+    ],
+
 ];

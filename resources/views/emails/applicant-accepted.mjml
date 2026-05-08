@@ -1,0 +1,157 @@
+{{--
+  ============================================================
+  MJML Source Template — Applicant Accepted Email
+  ============================================================
+
+  File ini adalah MJML SOURCE (bukan yang di-render).
+  Yang sebenarnya dipakai Mailer adalah file:
+    resources/views/emails/applicant-accepted.blade.php
+
+  Cara update template:
+  1. Edit file .mjml ini
+  2. Compile ke HTML: https://mjml.io/try-it-live (atau install MJML CLI)
+  3. Copy hasil compile + ganti placeholder ke variabel Blade
+  4. Paste ke applicant-accepted.blade.php
+
+  Variabel yang tersedia (sudah di-pass dari Mailable):
+  - $applicantName  : Nama lengkap applicant
+  - $jobTitle       : Posisi yang dilamar
+  - $brandName      : Nama sub-brand (business unit)
+  - $brandLogoUrl   : URL public logo sub-brand (bisa null)
+  - $biodataFormUrl : URL Google Form untuk isi biodata
+  ============================================================
+--}}
+
+<mjml>
+  <mj-head>
+    <mj-title>Lamaran Diterima — {{ $brandName }}</mj-title>
+    <mj-preview>Selamat! Anda diterima sebagai {{ $jobTitle }}. Mohon lengkapi biodata Anda.</mj-preview>
+    <mj-attributes>
+      <mj-all font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" />
+      <mj-text font-size="15px" line-height="1.6" color="#333333" />
+      <mj-button background-color="#1e3a8a" color="#ffffff" font-weight="bold" border-radius="6px" />
+    </mj-attributes>
+    <mj-style inline="inline">
+      .info-card {
+        background-color: #f9fafb;
+        border-left: 4px solid #1e3a8a;
+        border-radius: 6px;
+      }
+      .label-uppercase {
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-size: 11px;
+        color: #6b7280;
+      }
+    </mj-style>
+  </mj-head>
+
+  <mj-body background-color="#f4f4f7" width="600px">
+
+    {{-- Dual Logo Header — Umara Group (parent) + Brand sub-perusahaan --}}
+    {{-- Brand name diambil dari business_units table via relasi career.businessUnit --}}
+    <mj-section background-color="#ffffff" padding="28px 24px 20px 24px" border-radius="8px 8px 0 0">
+      {{-- Kolom kiri: Logo Umara Group (parent) --}}
+      <mj-column width="50%" border-right="1px solid #e5e7eb">
+        <mj-image src="{{ $parentLogoUrl }}" alt="Umara Group" width="120px" align="center" padding="0" />
+      </mj-column>
+      {{-- Kolom kanan: Logo brand sub-perusahaan --}}
+      <mj-column width="50%">
+        @if($brandLogoUrl)
+          <mj-image src="{{ $brandLogoUrl }}" alt="{{ $brandName }}" width="120px" align="center" padding="0" />
+        @else
+          {{-- Fallback teks kalau brand belum punya logo --}}
+          <mj-text align="center" font-size="16px" color="#1e3a8a" font-weight="bold" padding="0">
+            {{ $brandName }}
+          </mj-text>
+        @endif
+      </mj-column>
+    </mj-section>
+
+    {{-- Hero Banner --}}
+    <mj-section background-color="#1e3a8a" padding="36px 24px">
+      <mj-column>
+        <mj-text align="center" color="#ffffff" font-size="22px" font-weight="bold" padding="0">
+          Selamat, {{ $applicantName }}!
+        </mj-text>
+        <mj-text align="center" color="#dbeafe" font-size="14px" padding="8px 0 0 0">
+          Lamaran Anda telah diterima
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    {{-- Body Content --}}
+    <mj-section background-color="#ffffff" padding="32px 24px">
+      <mj-column>
+        <mj-text font-size="16px" padding="0 0 16px 0">
+          Halo <strong>{{ $applicantName }}</strong>,
+        </mj-text>
+
+        <mj-text padding="0 0 20px 0">
+          Terima kasih atas ketertarikan Anda untuk bergabung bersama <strong>{{ $brandName }}</strong>.
+          Dengan senang hati kami informasikan bahwa lamaran Anda telah
+          <strong style="color:#16a34a;">DITERIMA</strong> untuk lanjut ke tahap berikutnya.
+        </mj-text>
+
+        {{-- Info Card: Role + Brand --}}
+        <mj-table css-class="info-card" padding="16px">
+          <tr>
+            <td style="padding:16px 20px;">
+              <p class="label-uppercase" style="margin:0 0 6px 0;">Posisi yang Dilamar</p>
+              <p style="margin:0 0 12px 0; font-size:18px; font-weight:bold; color:#1e3a8a;">
+                {{ $jobTitle }}
+              </p>
+              <p class="label-uppercase" style="margin:0 0 6px 0;">Unit Bisnis</p>
+              <p style="margin:0; font-size:14px; color:#374151;">
+                {{ $brandName }}
+              </p>
+            </td>
+          </tr>
+        </mj-table>
+
+        <mj-text padding="20px 0 16px 0">
+          Sebagai langkah selanjutnya, mohon lengkapi data biodata Anda melalui form berikut:
+        </mj-text>
+
+        <mj-button href="{{ $biodataFormUrl }}" font-size="16px" padding="0 0 8px 0" inner-padding="14px 32px">
+          Isi Form Biodata
+        </mj-button>
+
+        <mj-text align="center" font-size="12px" color="#6b7280" padding="8px 0 0 0">
+          Atau salin link berikut ke browser Anda:<br>
+          <a href="{{ $biodataFormUrl }}" style="color:#1e3a8a; word-break:break-all;">{{ $biodataFormUrl }}</a>
+        </mj-text>
+
+        <mj-divider border-color="#e5e7eb" border-width="1px" padding="24px 0" />
+
+        <mj-text font-weight="bold" font-size="14px" padding="0 0 8px 0">
+          Catatan Penting:
+        </mj-text>
+        <mj-text font-size="14px" line-height="1.8" color="#4b5563" padding="0 0 16px 0">
+          &bull; Mohon lengkapi form dalam waktu maksimal <strong>3 hari</strong> sejak email ini diterima.<br>
+          &bull; Pastikan data yang diisi benar dan dapat dipertanggungjawabkan.<br>
+          &bull; Tim HR akan menghubungi Anda untuk informasi tahap selanjutnya.
+        </mj-text>
+
+        <mj-text padding="16px 0 0 0">
+          Salam hangat,<br>
+          <strong>HR Team — Umara Group</strong>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    {{-- Footer with No-Reply Notice --}}
+    <mj-section background-color="#f9fafb" padding="20px 24px" border-radius="0 0 8px 8px">
+      <mj-column>
+        <mj-text align="center" font-size="12px" color="#6b7280" line-height="1.6" padding="0">
+          Email ini dikirim otomatis dari sistem rekrutmen Umara Group.<br>
+          <strong style="color:#dc2626;">Mohon JANGAN membalas email ini.</strong>
+        </mj-text>
+        <mj-text align="center" font-size="11px" color="#9ca3af" padding="8px 0 0 0">
+          &copy; {{ date('Y') }} Umara Group. All rights reserved.
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+  </mj-body>
+</mjml>

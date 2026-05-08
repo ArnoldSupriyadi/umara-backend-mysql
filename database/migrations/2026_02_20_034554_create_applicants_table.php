@@ -23,6 +23,19 @@ return new class extends Migration
             $table->string('phone'); // Phone Number *
             $table->text('address')->nullable(); // Address
             $table->boolean('willing_to_relocate')->default(false); // Willing to Relocate
+
+            // Status workflow review HR:
+            // - pending  : default saat applicant submit form
+            // - accepted : HR menerima pelamar
+            // - rejected : HR menolak pelamar
+            // Setelah accepted/rejected, status dikunci di UI Filament.
+            $table->string('status', 20)->default('pending');
+
+            // Track kapan email biodata form dikirim ke applicant.
+            // Diisi otomatis saat HR klik tombol Accept dan email berhasil terkirim.
+            // Null = belum pernah dikirim.
+            $table->timestamp('email_sent_at')->nullable();
+
             // $table->text('cv_path'); // Upload  CV
             // $table->string('photo_path'); // Selfie Photo *
             $table->longText('cv_path');    // PDF base64 ~1.33MB

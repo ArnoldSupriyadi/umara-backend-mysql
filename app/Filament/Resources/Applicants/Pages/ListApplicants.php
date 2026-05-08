@@ -22,7 +22,9 @@ class ListApplicants extends ListRecords
             'phone',
             'date_of_birth',
             'willing_to_relocate',
-            'photo_path',  // tetap diambil untuk ImageColumn
+            'status',          // diperlukan untuk badge & visibility action Accept/Reject
+            'email_sent_at',   // tracking email biodata form
+            'photo_path',      // tetap diambil untuk ImageColumn
             'created_at',
         ]);
     }

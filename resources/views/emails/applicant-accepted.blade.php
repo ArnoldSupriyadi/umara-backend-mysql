@@ -40,22 +40,6 @@
             .text-mobile-lg { font-size: 20px !important; }
             .btn-mobile { width: 100% !important; }
             .btn-mobile a { display: block !important; width: 100% !important; box-sizing: border-box; }
-
-            /* Dual logo header → stack vertikal di mobile */
-            .logo-cell {
-                display: block !important;
-                width: 100% !important;
-                border-right: none !important;
-                border-bottom: 1px solid #e5e7eb !important;
-                padding: 20px 0 !important;
-                text-align: center !important;
-            }
-            .logo-cell:last-child {
-                border-bottom: none !important;
-            }
-            .logo-cell img {
-                margin: 0 auto !important;
-            }
         }
 
         /* Dark mode hint (limited support) */
@@ -78,22 +62,11 @@
                 <table role="presentation" class="container" border="0" cellpadding="0" cellspacing="0" width="600" style="max-width:600px; background-color:#ffffff; border-radius:8px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.05);">
 
                     {{-- ====================================== --}}
-                    {{-- DUAL LOGO HEADER                         --}}
-                    {{-- Kiri  : Logo Umara Group (parent)        --}}
-                    {{-- Kanan : Logo brand sub-perusahaan dari   --}}
-                    {{--         business_units table              --}}
-                    {{-- Mobile: stacked vertically                --}}
+                    {{-- LOGO HEADER — Umara Group               --}}
                     {{-- ====================================== --}}
                     <tr>
                         <td class="px-mobile" align="center" style="background-color:#ffffff; padding:32px 24px;">
-                            <table role="presentation" border="0" cellpadding="0" cellspacing="0" align="center" style="margin:0 auto;">
-                                <tr>
-                                    {{-- Logo Umara Group (parent) --}}
-                                    <td class="logo-cell" align="center" valign="middle" style="padding:0 24px; border-right:1px solid #e5e7eb;">
-                                        <img src="{{ $parentLogoUrl }}" alt="Umara Group" width="130" height="auto" style="display:block; max-width:130px; height:auto; margin:0 auto; border:0; outline:none; text-decoration:none;" />
-                                    </td>
-                                </tr>
-                            </table>
+                            <img src="{{ $parentLogoUrl }}" alt="Umara Group" width="130" height="auto" style="display:block; max-width:130px; height:auto; margin:0 auto; border:0; outline:none; text-decoration:none;" />
                         </td>
                     </tr>
 

@@ -28,10 +28,33 @@ export default function Show({ career }) {
             },
         });
     }
+    // Strip HTML tags dari description untuk OG description
+    const plainDescription = career.description
+        ? career.description.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim().slice(0, 160)
+        : `Bergabunglah bersama ${career.unit_name} sebagai ${career.job_title}. Lamar sekarang di Umara Group.`;
+
+    const pageUrl = `https://umaragroup.com/careers/${career.slug}`;
+
     return (
         <div className="min-h-screen bg-gray-50 py-12 px-4 font-sans text-gray-800">
-            {/* Judul Tab Browser yang Dinamis */}
-            <Head title={`${career.job_title} - Umara Karir`} />
+            {/* Judul Tab Browser + Open Graph meta tags untuk link preview WhatsApp/Telegram */}
+            <Head title={`${career.job_title} - Umara Karir`}>
+                {/* Open Graph */}
+                <meta head-key="og:type"        property="og:type"        content="website" />
+                <meta head-key="og:url"         property="og:url"         content={pageUrl} />
+                <meta head-key="og:title"       property="og:title"       content={`${career.job_title} — ${career.unit_name}`} />
+                <meta head-key="og:description" property="og:description" content={plainDescription} />
+                {career.image_url && (
+                    <meta head-key="og:image" property="og:image" content={career.image_url} />
+                )}
+                {/* Twitter Card (juga dibaca WhatsApp sebagai fallback) */}
+                <meta head-key="twitter:card"        name="twitter:card"        content="summary_large_image" />
+                <meta head-key="twitter:title"       name="twitter:title"       content={`${career.job_title} — ${career.unit_name}`} />
+                <meta head-key="twitter:description" name="twitter:description" content={plainDescription} />
+                {career.image_url && (
+                    <meta head-key="twitter:image" name="twitter:image" content={career.image_url} />
+                )}
+            </Head>
 
             <div className="max-w-4xl mx-auto">
 

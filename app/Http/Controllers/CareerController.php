@@ -124,6 +124,8 @@ class CareerController extends Controller
             'willing_to_relocate' => $request->willing_to_relocate === 'yes',
             'cv_path'             => $cvData,    // "data:image/png;base64,JVBERi..." (PDF di-prefix HRIS)
             'photo_path'          => $photoData, // "data:image/png;base64,UklGRl..." (WebP di-prefix HRIS)
+            'cv_filename'         => $request->file('cv')->getClientOriginalName(),    // Nama file original CV
+            'photo_filename'      => $request->file('photo')->getClientOriginalName(), // Nama file original foto
         ]);
 
         // Redirect ke list careers (/careers) setelah submit berhasil,

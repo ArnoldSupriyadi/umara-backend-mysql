@@ -41,6 +41,11 @@ return new class extends Migration
             $table->longText('cv_path');    // PDF base64 ~1.33MB
             $table->longText('photo_path'); // Foto WebP base64 ~200KB
 
+            // Nama file original dari upload user (untuk keperluan HRIS).
+            // Contoh: cv_filename = "CV_Arnold.pdf", photo_filename = "selfie.jpg"
+            $table->string('cv_filename')->nullable();    // Nama file original CV
+            $table->string('photo_filename')->nullable(); // Nama file original foto
+
             $table->timestamps();
         });
     }

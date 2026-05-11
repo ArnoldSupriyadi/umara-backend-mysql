@@ -37,11 +37,6 @@ class CareerPolicy
         return $authUser->can('Delete:Career');
     }
 
-    public function deleteAny(AuthUser $authUser): bool
-    {
-        return $authUser->can('DeleteAny:Career');
-    }
-
     public function restore(AuthUser $authUser, Career $career): bool
     {
         return $authUser->can('Restore:Career');

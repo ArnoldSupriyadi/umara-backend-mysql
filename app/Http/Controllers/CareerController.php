@@ -133,6 +133,6 @@ class CareerController extends Controller
         // browse lowongan lain.
         return redirect()
             ->route('careers.index')
-            ->with('success', 'Lamaran berhasil dikirim!');
+            ->with('success', 'Lamaran berhasil dikirim! Kami akan mengirimkan konfirmasi ke email Anda. Jika tidak masuk ke inbox, mohon cek folder Spam atau Junk.');
     }
 }

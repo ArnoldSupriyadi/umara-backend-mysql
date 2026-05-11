@@ -32,7 +32,7 @@ function FlashToast() {
         setType(successMsg ? 'success' : 'error');
         setShow(true);
 
-        const timer = setTimeout(() => setShow(false), 5000);
+        const timer = setTimeout(() => setShow(false), 10000);
         return () => clearTimeout(timer);
     }, [flash?.success, flash?.error]);
 

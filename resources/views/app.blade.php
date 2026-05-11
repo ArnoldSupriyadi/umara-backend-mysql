@@ -6,6 +6,9 @@
 
         <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
+        {{-- Favicon --}}
+        <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
         {{-- Preconnect ke R2 CDN (gambar) --}}
         <link rel="preconnect" href="https://assets.bridgeflow.my.id" crossorigin>
         <link rel="dns-prefetch" href="https://assets.bridgeflow.my.id">

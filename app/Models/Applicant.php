@@ -42,11 +42,23 @@ class Applicant extends Model
     public const HRIS_DATA_URI_PREFIX = 'data:image/png;base64,';
 
     /**
-     * cv_path    : longText - base64 encoded PDF (DENGAN prefix HRIS)
-     * photo_path : longText - base64 encoded WebP image (DENGAN prefix HRIS)
-     * status     : string   - pending|accepted|rejected (default: pending)
+     * cv_path        : longText - base64 encoded PDF (DENGAN prefix HRIS)
+     * photo_path     : longText - base64 encoded WebP image (DENGAN prefix HRIS)
+     * cv_filename    : string   - nama file original CV upload user
+     * photo_filename : string   - nama file original foto upload user
+     * status         : string   - pending|accepted|rejected (default: pending)
      */
     protected $guarded = [];
+
+    /**
+     * Cast otomatis untuk date_of_birth ke Carbon — supaya bisa pakai
+     * ->format() di blade, export Excel, atau Filament tanpa error.
+     */
+    protected $casts = [
+        'date_of_birth'       => 'date',
+        'email_sent_at'       => 'datetime',
+        'willing_to_relocate' => 'boolean',
+    ];
 
     // ============================================================
     // ACCESSORS — strip prefix data URI lalu decode ke binary

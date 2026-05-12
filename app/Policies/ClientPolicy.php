@@ -37,6 +37,11 @@ class ClientPolicy
         return $authUser->can('Delete:Client');
     }
 
+    public function deleteAny(AuthUser $authUser): bool
+    {
+        return $authUser->can('DeleteAny:Client');
+    }
+
     public function restore(AuthUser $authUser, Client $client): bool
     {
         return $authUser->can('Restore:Client');

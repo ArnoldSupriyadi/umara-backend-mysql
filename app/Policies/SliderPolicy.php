@@ -37,6 +37,11 @@ class SliderPolicy
         return $authUser->can('Delete:Slider');
     }
 
+    public function deleteAny(AuthUser $authUser): bool
+    {
+        return $authUser->can('DeleteAny:Slider');
+    }
+
     public function restore(AuthUser $authUser, Slider $slider): bool
     {
         return $authUser->can('Restore:Slider');

@@ -41,6 +41,9 @@ Route::post('/careers/apply', [CareerController::class, 'apply'])->name('careers
 Route::get('/cms/applicants/{id}/cv-download', [ApplicantCvController::class, 'download'])
     ->name('applicant.cv.download')
     ->middleware(['auth']);
+Route::get('/cms/applicants/{id}/cv-view', [ApplicantCvController::class, 'view'])
+    ->name('applicant.cv.view')
+    ->middleware(['auth']);
 
 // Posts — global listing & detail
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');

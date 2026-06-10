@@ -31,4 +31,25 @@ class ApplicantCvController extends Controller
             'Content-Disposition' => 'attachment; filename="' . $filename . '"',
         ]);
     }
+
+    /**
+     * Preview CV applicant secara inline di browser (tanpa force download).
+     *
+     * Digunakan oleh fitur "Lihat CV" di Filament — PDF ditampilkan
+     * dalam <iframe> modal. Content-Disposition: inline supaya browser
+     * render PDF-nya langsung, bukan trigger download.
+     */
+    public function view(int $id)
+    {
+        $applicant = Applicant::select('id', 'name', 'cv_path')
+            ->findOrFail($id);
+
+        $pdfContent = $applicant->cv_binary;
+        $filename   = 'CV_' . str_replace(' ', '_', $applicant->name) . '.pdf';
+
+        return response($pdfContent, 200, [
+            'Content-Type'        => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="' . $filename . '"',
+        ]);
+    }
 }

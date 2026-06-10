@@ -161,8 +161,9 @@ class ApplicantsTable
             // RECORD ACTIONS - per row
             // 1. Lihat Foto    → modal preview ukuran besar
             // 2. Download Foto → stream download file WebP
-            // 3. Accept        → set status = accepted (hanya muncul jika pending)
-            // 4. Reject        → set status = rejected (hanya muncul jika pending)
+            // 3. Lihat CV      → modal iframe PDF (inline, tidak force download)
+            // 4. Accept        → set status = accepted (hanya muncul jika pending)
+            // 5. Reject        → set status = rejected (hanya muncul jika pending)
             //
             // Setelah accept/reject, button dikunci (visible: false) supaya
             // status final dan tidak bisa diubah lagi.
@@ -188,6 +189,34 @@ class ApplicantsTable
                     ->modalSubmitAction(false)
                     ->modalCancelActionLabel('Tutup')
                     ->modalWidth('2xl'),
+
+                // ============================================================
+                // LIHAT CV - preview PDF di dalam modal (iframe, inline)
+                //
+                // Menggunakan endpoint /cms/applicants/{id}/cv-view yang
+                // return PDF dengan Content-Disposition: inline supaya
+                // browser render langsung, bukan trigger download.
+                //
+                // Fallback teks muncul jika cv_path kosong (tidak ada CV).
+                // ============================================================
+                Action::make('viewCv')
+                    ->label('Lihat CV')
+                    ->icon('heroicon-o-document-text')
+                    ->color('warning')
+                    ->modalHeading(fn ($record) => 'CV — ' . $record->name)
+                    ->modalContent(fn ($record) => new HtmlString(
+                        $record->cv_path
+                            ? '<iframe src="' . route('applicant.cv.view', $record->id) . '" '
+                                . 'style="width:100%;height:80vh;border:none;border-radius:8px;" '
+                                . 'title="CV ' . e($record->name) . '">'
+                                . '<p style="padding:1rem;color:#6b7280;">Browser Anda tidak mendukung preview PDF. '
+                                . '<a href="' . route('applicant.cv.download', $record->id) . '" style="color:#2563eb;">Download CV</a> sebagai gantinya.</p>'
+                                . '</iframe>'
+                            : '<div style="text-align:center;padding:2rem;color:#9ca3af;">CV tidak tersedia.</div>'
+                    ))
+                    ->modalSubmitAction(false)
+                    ->modalCancelActionLabel('Tutup')
+                    ->modalWidth('5xl'),
 
                 Action::make('downloadPhoto')
                     ->label('Download Foto')

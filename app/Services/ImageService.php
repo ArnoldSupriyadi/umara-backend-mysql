@@ -6,6 +6,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Laravel\Facades\Image;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 class ImageService
 {
@@ -24,7 +25,13 @@ class ImageService
         int $quality = 85,
         ?int $maxWidth = 1920
     ): string {
-        $image = Image::read($file->getPathname());
+        // TemporaryUploadedFile dari R2/S3: getPathname() mengembalikan storage key,
+        // bukan local path. Gunakan get() untuk membaca konten langsung dari storage.
+        $source = $file instanceof TemporaryUploadedFile
+            ? $file->get()
+            : $file->getPathname();
+
+        $image = Image::read($source);
 
         if ($maxWidth && $image->width() > $maxWidth) {
             $image->scale(width: $maxWidth);

@@ -44,13 +44,13 @@ const Index = ({ brand, posts }) => {
             // Nanti slug ini dipakai untuk Link halaman detail
             slug: "lumpang-emas-signature"
         },
-        {
-            name: "Lumpang Emas By Umara",
-            logo: `${r2Url}/logos/lumpang-bintaro-putih.png`,
-            desc: "Nusantara Modern Restaurant, Bintaro Jaya CBD",
-            mapUrl: "https://maps.app.goo.gl/vCF4k3tXeyZ61tvp7",
-            slug: "lumpang-emas-bintaro"
-        },
+        // {
+        //     name: "Lumpang Emas By Umara",
+        //     logo: `${r2Url}/logos/lumpang-bintaro-putih.png`,
+        //     desc: "Nusantara Modern Restaurant, Bintaro Jaya CBD",
+        //     mapUrl: "https://maps.app.goo.gl/vCF4k3tXeyZ61tvp7",
+        //     slug: "lumpang-emas-bintaro"
+        // },
         {
             name: "Umara House",
             logo: `${r2Url}/logos/umarahouse-putih.png`,
@@ -93,7 +93,7 @@ const Index = ({ brand, posts }) => {
                         <h2 className="text-3xl md:text-4xl font-bold text-palette2-e mb-4">Our Restaurant</h2>
                         <p className="text-xl text-white max-w-2xl mx-auto">We provide comprehensive business solutions tailored to your needs</p>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
                         {restaurants.map((resto, index) => (
                              <div key={index} className="bg-amber-50 border-2 border-[#d7b35c] p-8 rounded-lg hover:shadow-lg transition-shadow flex flex-col h-full" data-aos="fade-up" data-aos-delay={200 * index + 1}>
                                     <div className="w-28 h-28 bg-palette2-a rounded-full flex items-center justify-center mb-6 mx-auto">

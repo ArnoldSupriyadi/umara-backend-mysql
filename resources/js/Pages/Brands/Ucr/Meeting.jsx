@@ -14,15 +14,15 @@ export default function Meeting({ brand }) {
     // Data untuk Carousel Featured Moments
     const featuredMoments = [
         {
-            image: "/assets/ucr/UCR-WEB/meeting/meeting1.jpg",
+            image: "https://assets.bridgeflow.my.id/ucr-assets/meeting/meeting1.jpg",
             title: "Executive Meeting service"
         },
         {
-            image: "/assets/ucr/UCR-WEB/meeting/meeting4.jpg",
+            image: "https://assets.bridgeflow.my.id/ucr-assets/meeting/meeting4.jpg",
             title: "Table Dining for Partners"
         },
         {
-            image: "/assets/ucr/UCR-WEB/meeting/meeting5.jpg",
+            image: "https://assets.bridgeflow.my.id/ucr-assets/meeting/meeting5.jpg",
             title: "Townhall Meeting"
         }
     ];
@@ -37,7 +37,7 @@ export default function Meeting({ brand }) {
                     <div className="container-hero-fluid w-full">
                         <div className="hero-media relative w-full h-[50vh] md:h-[70vh] overflow-hidden">
                             <img 
-                                src="/assets/ucr/UCR-WEB/meeting/meeting-cover.png" 
+                                src="https://assets.bridgeflow.my.id/ucr-assets/meeting/meeting-cover.png" 
                                 alt="Umara Meeting" 
                                 className="absolute inset-0 w-full h-full object-cover"
                             />
@@ -71,7 +71,7 @@ export default function Meeting({ brand }) {
                             </div>
                             <div className="order-1 md:order-2">
                                 <img 
-                                    src="/assets/ucr/UCR-WEB/meeting/meeting2.jpg" 
+                                    src="https://assets.bridgeflow.my.id/ucr-assets/meeting/meeting2.jpg" 
                                     alt="Meeting Package" 
                                     className="w-full h-auto rounded-sm shadow-xl object-cover"
                                 />
